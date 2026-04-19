@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Nexora Consultancy</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+/* ══ RESET & VARS ══ */
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --navy:#08172E;--navy2:#0F2444;--gold:#D4A843;--gold2:#F0C96A;--gold3:#A07820;
+  --cream:#FAF7F2;--white:#fff;--gray:#64748B;--lgray:#F1F5F9;
+  --border:rgba(8,23,46,0.1);--red:#EF4444;--green:#10B981;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;color:var(--navy);background:var(--white);overflow-x:hidden;}
+
+/* ══ VIEWS ══ */
+#view-site{display:block;}
+#view-admin{display:none;}
+#view-login{display:none;}
+
+/* ══ ADMIN LOGIN ══ */
+.login-wrap{min-height:100vh;background:var(--navy);display:flex;align-items:center;justify-content:center;}
+.login-box{background:var(--white);border-radius:12px;padding:48px;width:100%;max-width:400px;text-align:center;}
+.login-logo{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:700;color:var(--navy);margin-bottom:4px;}
+.login-logo span{color:var(--gold);}
+.login-sub{font-size:13px;color:var(--gray);margin-bottom:32px;}
+.login-box .fg{text-align:left;margin-bottom:16px;}
+.login-box label{display:block;font-size:13px;font-weight:500;margin-bottom:5px;}
+.login-box input{width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:6px;font-family:'Inter',sans-serif;font-size:14px;outline:none;transition:border-color 0.2s;}
+.login-box input:focus{border-color:var(--gold);}
+.login-btn{width:100%;padding:13px;background:var(--navy);color:var(--white);border:none;border-radius:6px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;margin-top:8px;transition:background 0.2s;}
+.login-btn:hover{background:var(--gold);color:var(--navy);}
+.login-err{color:var(--red);font-size:13px;margin-top:10px;display:none;}
+
+/* ══ ADMIN PANEL ══ */
+.admin-wrap{display:flex;min-height:100vh;}
+.admin-sidebar{
+  width:240px;background:var(--navy);flex-shrink:0;
+  display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto;
+}
+.admin-brand{padding:24px 20px;border-bottom:1px solid rgba(255,255,255,0.07);}
+.admin-brand .logo{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--white);}
+.admin-brand .logo span{color:var(--gold);}
+.admin-brand p{font-size:11px;color:rgba(255,255,255,0.35);margin-top:2px;}
+.admin-nav{flex:1;padding:16px 0;}
+.admin-nav-item{
+  display:flex;align-items:center;gap:10px;padding:11px 20px;
+  font-size:13px;font-weight:500;color:rgba(255,255,255,0.55);cursor:pointer;
+  transition:all 0.18s;border-left:3px solid transparent;
+}
+.admin-nav-item:hover{color:var(--white);background:rgba(255,255,255,0.04);}
+.admin-nav-item.active{color:var(--white);background:rgba(212,168,67,0.1);border-left-color:var(--gold);}
+.admin-nav-icon{font-size:16px;width:20px;text-align:center;}
+.admin-nav-sep{padding:8px 20px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-top:8px;}
+.admin-bottom{padding:16px 20px;border-top:1px solid rgba(255,255,255,0.07);}
+.admin-bottom-btns{display:flex;gap:8px;}
+.abot-btn{
+  flex:1;padding:8px 6px;border-radius:5px;font-size:12px;font-weight:500;cursor:pointer;
+  border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.6);background:transparent;
+  font-family:'Inter',sans-serif;transition:all 0.2s;text-align:center;
+}
+.abot-btn:hover{background:rgba(255,255,255,0.1);color:var(--white);}
+.abot-btn.view{border-color:rgba(212,168,67,0.4);color:var(--gold2);}
+
+.admin-main{flex:1;background:#F8FAFC;overflow-y:auto;}
+.admin-topbar{
+  background:var(--white);border-bottom:1px solid var(--border);
+  padding:0 32px;height:60px;display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:10;
+}
+.admin-topbar h2{font-size:17px;font-weight:600;}
+.save-indicator{font-size:12px;color:var(--green);display:flex;align-items:center;gap:6px;}
+.save-indicator.saving{color:var(--gray);}
+
+.admin-panel{display:none;padding:32px;}
+.admin-panel.active{display:block;animation:fadeUp 0.3s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* admin cards */
+.acard{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:24px;margin-bottom:20px;}
+.acard-title{font-size:14px;font-weight:600;margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;}
+.acard-title span{font-size:18px;}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+.afield{display:flex;flex-direction:column;gap:5px;margin-bottom:16px;}
+.afield label{font-size:12px;font-weight:600;color:var(--gray);text-transform:uppercase;letter-spacing:0.5px;}
+.afield input,.afield textarea,.afield select{
+  padding:10px 14px;border:1px solid var(--border);border-radius:6px;
+  font-family:'Inter',sans-serif;font-size:14px;color:var(--navy);
+  background:var(--white);outline:none;transition:border-color 0.2s;
+}
+.afield input:focus,.afield textarea:focus,.afield select:focus{border-color:var(--gold);}
+.afield textarea{resize:vertical;min-height:90px;}
+.afield input[type=color]{height:40px;padding:4px 8px;cursor:pointer;}
+.afield input[type=range]{padding:8px 0;}
+
+/* stats overview */
+.stats-overview{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;}
+.stat-ov{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:20px;}
+.stat-ov-num{font-size:28px;font-weight:700;color:var(--navy);margin-bottom:4px;}
+.stat-ov-lbl{font-size:12px;color:var(--gray);}
+.stat-ov-icon{font-size:20px;margin-bottom:8px;}
+
+/* list items */
+.list-item{
+  background:var(--white);border:1px solid var(--border);border-radius:8px;
+  padding:16px 18px;margin-bottom:10px;display:flex;align-items:center;gap:14px;
+}
+.li-icon{font-size:24px;width:36px;text-align:center;flex-shrink:0;}
+.li-body{flex:1;}
+.li-body strong{display:block;font-size:14px;font-weight:600;margin-bottom:2px;}
+.li-body span{font-size:12px;color:var(--gray);}
+.li-actions{display:flex;gap:8px;}
+.li-btn{
+  padding:6px 14px;border-radius:5px;font-size:12px;font-weight:500;cursor:pointer;
+  border:1px solid var(--border);background:var(--white);font-family:'Inter',sans-serif;
+  transition:all 0.18s;
+}
+.li-btn:hover{background:var(--lgray);}
+.li-btn.danger{color:var(--red);border-color:rgba(239,68,68,0.3);}
+.li-btn.danger:hover{background:rgba(239,68,68,0.05);}
+.li-btn.primary{background:var(--navy);color:var(--white);border-color:var(--navy);}
+.li-btn.primary:hover{background:var(--gold);border-color:var(--gold);color:var(--navy);}
+
+/* add item form */
+.add-form{background:var(--cream);border:1px dashed var(--border);border-radius:8px;padding:20px;margin-top:16px;}
+.add-form-title{font-size:13px;font-weight:600;margin-bottom:14px;color:var(--gray);}
+.add-btn-row{display:flex;gap:10px;margin-top:4px;}
+.btn-add{padding:9px 20px;background:var(--navy);color:var(--white);border:none;border-radius:5px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:background 0.2s;}
+.btn-add:hover{background:var(--gold);color:var(--navy);}
+.btn-cancel{padding:9px 16px;background:transparent;color:var(--gray);border:1px solid var(--border);border-radius:5px;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;}
+
+/* save bar */
+.save-bar{
+  position:fixed;bottom:24px;right:24px;z-index:100;
+  background:var(--navy);color:var(--white);
+  padding:14px 24px;border-radius:8px;display:flex;align-items:center;gap:12px;
+  box-shadow:0 4px 20px rgba(0,0,0,0.2);
+  transform:translateY(100px);opacity:0;transition:all 0.35s cubic-bezier(0.22,1,0.36,1);
+}
+.save-bar.show{transform:translateY(0);opacity:1;}
+.save-bar-btn{padding:9px 20px;background:var(--gold);color:var(--navy);border:none;border-radius:5px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif;}
+.save-bar-btn:hover{background:var(--gold2);}
+
+/* color swatches */
+.color-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;}
+.color-swatch{
+  width:32px;height:32px;border-radius:6px;cursor:pointer;border:3px solid transparent;
+  transition:transform 0.15s;
+}
+.color-swatch:hover{transform:scale(1.1);}
+.color-swatch.active{border-color:var(--navy);}
+
+/* toggle */
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);}
+.toggle-row:last-child{border-bottom:none;}
+.toggle-row-info strong{font-size:14px;font-weight:500;display:block;}
+.toggle-row-info span{font-size:12px;color:var(--gray);}
+.toggle{width:44px;height:24px;background:#CBD5E1;border-radius:12px;cursor:pointer;position:relative;transition:background 0.2s;flex-shrink:0;}
+.toggle.on{background:var(--gold);}
+.toggle::after{content:'';width:18px;height:18px;background:var(--white);border-radius:50%;position:absolute;top:3px;left:3px;transition:left 0.2s;}
+.toggle.on::after{left:23px;}
+
+/* inquiry table */
+.inq-table{width:100%;border-collapse:collapse;font-size:13px;}
+.inq-table th{padding:10px 14px;text-align:left;font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;color:var(--gray);border-bottom:2px solid var(--border);}
+.inq-table td{padding:12px 14px;border-bottom:1px solid var(--border);vertical-align:middle;}
+.inq-table tr:last-child td{border-bottom:none;}
+.inq-table tr:hover td{background:var(--cream);}
+.status-badge{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;}
+.status-new{background:#DBEAFE;color:#1D4ED8;}
+.status-read{background:#F3F4F6;color:var(--gray);}
+
+/* ══════════════════════════
+   WEBSITE STYLES
+══════════════════════════ */
+nav{display:flex;align-items:center;justify-content:space-between;padding:0 6%;height:70px;background:rgba(8,23,46,0.97);backdrop-filter:blur(12px);position:fixed;top:0;left:0;right:0;z-index:200;border-bottom:1px solid rgba(212,168,67,0.15);}
+.logo{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;color:var(--white);letter-spacing:0.5px;}
+.logo span{color:var(--gold);}
+.nav-links{display:flex;gap:32px;list-style:none;}
+.nav-links a{text-decoration:none;font-size:13px;font-weight:500;color:rgba(255,255,255,0.65);letter-spacing:0.3px;transition:color 0.2s;cursor:pointer;position:relative;padding-bottom:2px;}
+.nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--gold);transition:width 0.25s;}
+.nav-links a:hover,.nav-links a.active{color:var(--white);}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%;}
+.nav-cta{background:var(--gold);color:var(--navy);padding:9px 22px;border-radius:3px;font-size:13px;font-weight:600;border:none;cursor:pointer;font-family:'Inter',sans-serif;transition:background 0.2s,transform 0.15s;}
+.nav-cta:hover{background:var(--gold2);transform:translateY(-1px);}
+.page{display:none;padding-top:70px;}
+.page.active{display:block;animation:rise 0.45s cubic-bezier(0.22,1,0.36,1);}
+@keyframes rise{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+.hero{min-height:calc(100vh - 70px);background:var(--navy);display:flex;flex-direction:column;justify-content:center;padding:80px 6% 60px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 85% 40%,rgba(212,168,67,0.09) 0%,transparent 60%),radial-gradient(ellipse 40% 50% at 10% 80%,rgba(212,168,67,0.05) 0%,transparent 50%);}
+.hero-grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(212,168,67,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(212,168,67,0.04) 1px,transparent 1px);background-size:60px 60px;}
+.hero-inner{position:relative;z-index:2;display:grid;grid-template-columns:1.1fr 0.9fr;gap:80px;align-items:center;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;background:rgba(212,168,67,0.1);border:1px solid rgba(212,168,67,0.25);padding:7px 16px;border-radius:2px;margin-bottom:28px;}
+.hero-eyebrow span{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold2);}
+.hero-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;};}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(42px,5vw,68px);line-height:1.08;color:var(--white);margin-bottom:24px;font-weight:600;}
+.hero h1 em{color:var(--gold);font-style:italic;}
+.hero-sub{font-size:16px;color:rgba(255,255,255,0.6);line-height:1.75;max-width:480px;margin-bottom:40px;font-weight:300;}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:56px;}
+.btn-gold{background:var(--gold);color:var(--navy);padding:15px 32px;border-radius:3px;font-weight:600;font-size:14px;border:none;cursor:pointer;font-family:'Inter',sans-serif;transition:background 0.2s,transform 0.15s;}
+.btn-gold:hover{background:var(--gold2);transform:translateY(-2px);}
+.btn-ghost{background:transparent;color:var(--white);padding:15px 32px;border-radius:3px;font-weight:500;font-size:14px;border:1px solid rgba(255,255,255,0.2);cursor:pointer;font-family:'Inter',sans-serif;transition:border-color 0.2s,color 0.2s;}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);}
+.trust-bar{display:flex;gap:28px;flex-wrap:wrap;}
+.trust-item{display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.5);}
+.trust-sep{color:rgba(255,255,255,0.15);font-size:20px;}
+.hero-stats-card{background:rgba(255,255,255,0.04);border:1px solid rgba(212,168,67,0.2);border-radius:12px;padding:40px;position:relative;}
+.hero-stats-card::before{content:'';position:absolute;top:-1px;left:30px;right:30px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:rgba(255,255,255,0.05);border-radius:8px;overflow:hidden;}
+.stat-cell{padding:28px 20px;text-align:center;background:rgba(8,23,46,0.6);}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:700;color:var(--gold);line-height:1;margin-bottom:6px;display:block;}
+.stat-lbl{font-size:12px;color:rgba(255,255,255,0.45);letter-spacing:0.5px;}
+.card-footer-text{margin-top:24px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.06);font-size:13px;color:rgba(255,255,255,0.4);text-align:center;}
+.card-footer-text strong{color:var(--gold);font-weight:500;}
+.float-badge{position:absolute;bottom:-20px;left:-24px;background:var(--gold);color:var(--navy);padding:14px 20px;border-radius:8px;font-size:13px;font-weight:600;box-shadow:0 8px 24px rgba(212,168,67,0.35);display:flex;align-items:center;gap:10px;animation:float 3s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);};}
+.ticker-wrap{background:var(--cream);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:18px 0;overflow:hidden;position:relative;}
+.ticker-label{position:absolute;left:0;top:0;bottom:0;z-index:2;background:linear-gradient(90deg,var(--cream) 70%,transparent);padding:0 24px 0 6%;display:flex;align-items:center;font-size:11px;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;color:var(--gray);white-space:nowrap;}
+.ticker-track{display:flex;gap:0;width:max-content;animation:ticker 28s linear infinite;}
+@keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%)};}
+.ticker-item{display:flex;align-items:center;gap:10px;padding:0 30px;font-size:14px;font-weight:500;white-space:nowrap;color:var(--navy);border-right:1px solid var(--border);}
+.section{padding:100px 6%;}
+.section.alt{background:var(--cream);}
+.s-label{font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold3);margin-bottom:12px;}
+.s-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3.5vw,44px);font-weight:600;line-height:1.2;color:var(--navy);margin-bottom:16px;}
+.s-sub{font-size:15px;color:var(--gray);line-height:1.75;max-width:560px;font-weight:300;}
+.steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:64px;position:relative;}
+.steps-grid::before{content:'';position:absolute;top:28px;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,var(--gold),var(--gold),transparent);opacity:0.3;z-index:0;}
+.step{text-align:center;padding:0 16px;position:relative;z-index:1;}
+.step-num{width:56px;height:56px;border-radius:50%;background:var(--navy);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--gold);transition:background 0.2s;}
+.step:hover .step-num{background:var(--gold);color:var(--navy);}
+.step h4{font-size:14px;font-weight:600;margin-bottom:8px;}
+.step p{font-size:13px;color:var(--gray);line-height:1.6;}
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px;}
+.why-card{padding:32px 28px;border:1px solid var(--border);border-radius:8px;transition:border-color 0.2s,transform 0.2s;}
+.why-card:hover{border-color:var(--gold);transform:translateY(-4px);}
+.why-icon{width:48px;height:48px;border-radius:10px;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:18px;border:1px solid var(--border);}
+.why-card h3{font-size:15px;font-weight:600;margin-bottom:8px;}
+.why-card p{font-size:13px;color:var(--gray);line-height:1.65;}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px;}
+.testi-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:28px;transition:box-shadow 0.2s;}
+.testi-card:hover{box-shadow:0 8px 32px rgba(8,23,46,0.08);}
+.testi-stars{color:var(--gold);font-size:14px;margin-bottom:14px;letter-spacing:2px;}
+.testi-text{font-size:14px;color:var(--navy);line-height:1.7;margin-bottom:20px;font-style:italic;}
+.testi-author{display:flex;align-items:center;gap:12px;}
+.testi-avatar{width:38px;height:38px;border-radius:50%;background:var(--navy);color:var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:700;flex-shrink:0;}
+.testi-name{font-size:13px;font-weight:600;}
+.testi-dest{font-size:12px;color:var(--gray);}
+.cta-banner{background:var(--navy);padding:80px 6%;text-align:center;position:relative;overflow:hidden;}
+.cta-banner::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 100% at 50% 0%,rgba(212,168,67,0.08),transparent);}
+.cta-banner h2{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,48px);color:var(--white);margin-bottom:16px;position:relative;}
+.cta-banner p{font-size:15px;color:rgba(255,255,255,0.55);margin-bottom:36px;position:relative;font-weight:300;}
+.inner-hero{background:var(--navy);padding:80px 6% 60px;position:relative;overflow:hidden;}
+.inner-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(212,168,67,0.4),transparent);}
+.inner-hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4vw,52px);color:var(--white);margin-bottom:12px;}
+.inner-hero p{color:rgba(255,255,255,0.55);font-size:15px;font-weight:300;max-width:560px;}
+.services-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);padding:0 6%;background:var(--white);position:sticky;top:70px;z-index:10;overflow-x:auto;}
+.svc-tab{padding:16px 24px;font-size:14px;font-weight:500;cursor:pointer;border-bottom:2px solid transparent;color:var(--gray);transition:color 0.2s,border-color 0.2s;white-space:nowrap;}
+.svc-tab.active{color:var(--navy);border-bottom-color:var(--gold);}
+.svc-panels{padding:60px 6%;}
+.svc-panel{display:none;}
+.svc-panel.active{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;animation:rise 0.35s ease;}
+.svc-info h2{font-family:'Cormorant Garamond',serif;font-size:34px;margin-bottom:16px;}
+.svc-info p{font-size:14px;color:var(--gray);line-height:1.75;margin-bottom:28px;}
+.svc-features{display:flex;flex-direction:column;gap:16px;}
+.svc-feat{display:flex;align-items:flex-start;gap:14px;padding:16px;border:1px solid var(--border);border-radius:8px;transition:border-color 0.2s;}
+.svc-feat:hover{border-color:var(--gold);}
+.svc-feat-icon{width:36px;height:36px;background:var(--cream);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.svc-feat h4{font-size:14px;font-weight:600;margin-bottom:4px;}
+.svc-feat p{font-size:13px;color:var(--gray);line-height:1.5;margin:0;}
+.svc-right{background:var(--cream);border-radius:10px;padding:36px;}
+.svc-right h3{font-family:'Cormorant Garamond',serif;font-size:22px;margin-bottom:20px;}
+.process-list{display:flex;flex-direction:column;gap:0;}
+.p-step{display:flex;gap:16px;padding:18px 0;border-bottom:1px solid var(--border);}
+.p-step:last-child{border-bottom:none;}
+.p-circle{width:32px;height:32px;border-radius:50%;background:var(--navy);color:var(--gold);font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.p-step h5{font-size:13px;font-weight:600;margin-bottom:3px;}
+.p-step p{font-size:12px;color:var(--gray);line-height:1.5;margin:0;}
+.gallery-filters{display:flex;gap:10px;flex-wrap:wrap;padding:32px 6% 0;}
+.gf-btn{padding:8px 20px;border-radius:40px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:var(--white);color:var(--navy);transition:all 0.2s;}
+.gf-btn.active,.gf-btn:hover{background:var(--navy);color:var(--white);border-color:var(--navy);}
+.gallery-masonry{columns:3;column-gap:16px;padding:24px 6% 60px;}
+.gal-item{break-inside:avoid;margin-bottom:16px;border-radius:10px;overflow:hidden;position:relative;cursor:pointer;}
+.gal-item .gbg{width:100%;display:flex;align-items:center;justify-content:center;font-size:60px;transition:transform 0.4s;}
+.gal-item:hover .gbg{transform:scale(1.04);}
+.gal-item .gover{position:absolute;inset:0;background:rgba(8,23,46,0);transition:background 0.3s;display:flex;flex-direction:column;justify-content:flex-end;padding:20px;}
+.gal-item:hover .gover{background:rgba(8,23,46,0.7);}
+.gover-title{color:var(--white);font-size:14px;font-weight:600;transform:translateY(10px);opacity:0;transition:all 0.3s;}
+.gover-tag{color:var(--gold);font-size:12px;transform:translateY(10px);opacity:0;transition:all 0.3s 0.05s;}
+.gal-item:hover .gover-title,.gal-item:hover .gover-tag{transform:translateY(0);opacity:1;}
+.blog-layout{display:grid;grid-template-columns:1fr 320px;gap:48px;padding:60px 6%;}
+.featured-post{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:40px;cursor:pointer;transition:box-shadow 0.2s;}
+.featured-post:hover{box-shadow:0 8px 32px rgba(8,23,46,0.08);}
+.fp-img{background:#C9D9E8;display:flex;align-items:center;justify-content:center;font-size:72px;}
+.fp-body{padding:36px;}
+.fp-tag{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold3);margin-bottom:12px;}
+.fp-body h2{font-family:'Cormorant Garamond',serif;font-size:26px;margin-bottom:12px;line-height:1.3;}
+.fp-body p{font-size:14px;color:var(--gray);line-height:1.7;margin-bottom:20px;}
+.fp-meta{font-size:12px;color:var(--gray);display:flex;gap:16px;}
+.blog-posts-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.bp-card{border:1px solid var(--border);border-radius:8px;overflow:hidden;cursor:pointer;transition:all 0.2s;}
+.bp-card:hover{border-color:var(--gold);transform:translateY(-3px);}
+.bp-img{height:140px;display:flex;align-items:center;justify-content:center;font-size:44px;}
+.bp-body{padding:18px;}
+.bp-tag{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold3);margin-bottom:8px;}
+.bp-body h3{font-family:'Cormorant Garamond',serif;font-size:17px;line-height:1.4;margin-bottom:8px;}
+.bp-body p{font-size:13px;color:var(--gray);line-height:1.6;margin-bottom:12px;}
+.bp-meta{font-size:12px;color:var(--gray);display:flex;justify-content:space-between;align-items:center;}
+.bp-read{font-size:12px;font-weight:600;color:var(--gold3);}
+.blog-sidebar{}
+.sidebar-widget{border:1px solid var(--border);border-radius:8px;padding:24px;margin-bottom:24px;}
+.sw-title{font-size:14px;font-weight:600;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border);}
+.contact-wrapper{display:grid;grid-template-columns:380px 1fr;}
+.contact-left{background:var(--navy);padding:60px 48px;position:relative;overflow:hidden;}
+.contact-left h2{font-family:'Cormorant Garamond',serif;font-size:32px;color:var(--white);margin-bottom:14px;}
+.contact-left > p{color:rgba(255,255,255,0.5);font-size:14px;line-height:1.7;margin-bottom:48px;}
+.c-info-list{display:flex;flex-direction:column;gap:24px;}
+.c-info{display:flex;gap:16px;align-items:flex-start;}
+.c-icon{width:40px;height:40px;border-radius:8px;background:rgba(212,168,67,0.12);border:1px solid rgba(212,168,67,0.2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.c-info strong{display:block;color:rgba(255,255,255,0.8);font-size:13px;font-weight:500;margin-bottom:3px;}
+.c-info span{color:rgba(255,255,255,0.4);font-size:13px;}
+.contact-right{padding:60px 5%;}
+.contact-right h2{font-family:'Cormorant Garamond',serif;font-size:28px;margin-bottom:8px;}
+.contact-right > p{font-size:14px;color:var(--gray);margin-bottom:36px;}
+.form-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.fg{display:flex;flex-direction:column;gap:6px;margin-bottom:18px;}
+.fg.full{grid-column:1/-1;}
+.fg label{font-size:13px;font-weight:500;color:var(--navy);}
+.fg input,.fg select,.fg textarea{padding:12px 16px;border:1px solid var(--border);border-radius:6px;font-family:'Inter',sans-serif;font-size:14px;color:var(--navy);background:var(--white);outline:none;transition:border-color 0.2s;}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--gold);}
+.fg textarea{height:120px;resize:vertical;}
+.form-submit{background:var(--navy);color:var(--white);width:100%;padding:15px;border-radius:4px;font-size:15px;font-weight:600;border:none;cursor:pointer;font-family:'Inter',sans-serif;transition:background 0.2s;margin-top:4px;}
+.form-submit:hover{background:var(--gold);color:var(--navy);}
+.success-msg{display:none;text-align:center;padding:40px;}
+.success-msg.show{display:block;animation:rise 0.4s ease;}
+.success-icon{font-size:56px;margin-bottom:16px;}
+.success-msg h3{font-family:'Cormorant Garamond',serif;font-size:26px;margin-bottom:10px;}
+.footer{background:var(--navy);}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;padding:64px 6% 48px;border-bottom:1px solid rgba(255,255,255,0.06);}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;color:var(--white);margin-bottom:14px;}
+.footer-logo span{color:var(--gold);}
+.footer-brand p{font-size:13px;color:rgba(255,255,255,0.4);line-height:1.7;max-width:260px;}
+.footer-col h4{font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:20px;}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:12px;}
+.footer-col ul li a{font-size:13px;color:rgba(255,255,255,0.55);text-decoration:none;cursor:pointer;transition:color 0.2s;}
+.footer-col ul li a:hover{color:var(--gold);}
+.footer-bottom{padding:20px 6%;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:rgba(255,255,255,0.3);}
+.wa-float{position:fixed;bottom:28px;left:28px;z-index:150;background:#25D366;color:var(--white);width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 4px 16px rgba(37,211,102,0.4);cursor:pointer;transition:transform 0.2s;text-decoration:none;}
+.wa-float:hover{transform:scale(1.1);}
+.blog-article{display:none;padding:60px 6%;max-width:800px;animation:rise 0.35s ease;}
+.blog-article.open{display:block;}
+.back-btn{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:var(--gray);cursor:pointer;margin-bottom:32px;border:1px solid var(--border);padding:8px 16px;border-radius:4px;transition:all 0.2s;background:none;font-family:'Inter',sans-serif;}
+.back-btn:hover{color:var(--navy);border-color:var(--navy);}
+.article-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,44px);line-height:1.2;margin-bottom:16px;}
+.article-meta{font-size:13px;color:var(--gray);margin-bottom:32px;padding-bottom:24px;border-bottom:1px solid var(--border);}
+.article-body{font-size:15px;color:var(--navy);line-height:1.85;}
+.article-body h3{font-family:'Cormorant Garamond',serif;font-size:22px;margin:32px 0 12px;}
+.article-body p{margin-bottom:18px;color:#334155;}
+.article-body ul{margin:0 0 18px 20px;}
+.article-body li{margin-bottom:8px;color:#334155;font-size:14px;}
+.lightbox{display:none;position:fixed;inset:0;background:rgba(8,23,46,0.95);z-index:500;align-items:center;justify-content:center;}
+.lightbox.open{display:flex;}
+.lb-content{background:var(--white);border-radius:12px;max-width:600px;width:90%;overflow:hidden;}
+.lb-img{width:100%;height:320px;display:flex;align-items:center;justify-content:center;font-size:80px;}
+.lb-info{padding:24px;}
+.lb-info h3{font-family:'Cormorant Garamond',serif;font-size:22px;margin-bottom:6px;}
+.lb-info p{font-size:14px;color:var(--gray);}
+.lb-close{position:absolute;top:20px;right:24px;color:var(--white);font-size:28px;cursor:pointer;background:none;border:none;}
+.admin-access-btn{position:fixed;bottom:28px;right:28px;z-index:150;background:var(--navy);color:rgba(255,255,255,0.6);width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;border:1px solid rgba(255,255,255,0.15);transition:all 0.2s;}
+.admin-access-btn:hover{background:var(--gold);color:var(--navy);border-color:var(--gold);}
+</style>
+</head>
+<body>
+
+<!-- ══ LOGIN VIEW ══ -->
+<div id="view-login">
+  <div class="login-wrap">
+    <div class="login-box">
+      <div class="login-logo">Nexora<span> Admin</span></div>
+      <p class="login-sub">Sign in to manage your website</p>
+      <div class="fg"><label>Username</label><input type="text" id="li-user" placeholder="admin" /></div>
+      <div class="fg"><label>Password</label><input type="password" id="li-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()" /></div>
+      <button class="login-btn" onclick="doLogin()">Sign In</button>
+      <div class="login-err" id="login-err">Invalid username or password.</div>
+      <div style="margin-top:20px;font-size:12px;color:var(--gray);border-top:1px solid var(--border);padding-top:16px;">
+        <a onclick="showSite()" style="color:var(--gold3);cursor:pointer;">← Back to website</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ADMIN VIEW ══ -->
+<div id="view-admin">
+  <div class="admin-wrap">
+    <div class="admin-sidebar">
+      <div class="admin-brand">
+        <div class="logo">Nexora<span> Admin</span></div>
+        <p>Content Management</p>
+      </div>
+      <div class="admin-nav">
+        <div class="admin-nav-sep">Overview</div>
+        <div class="admin-nav-item active" onclick="switchPanel('dashboard',this)"><span class="admin-nav-icon">📊</span>Dashboard</div>
+        <div class="admin-nav-sep">Content</div>
+        <div class="admin-nav-item" onclick="switchPanel('hero',this)"><span class="admin-nav-icon">🏠</span>Homepage Hero</div>
+        <div class="admin-nav-item" onclick="switchPanel('services',this)"><span class="admin-nav-icon">📋</span>Services</div>
+        <div class="admin-nav-item" onclick="switchPanel('testimonials',this)"><span class="admin-nav-icon">💬</span>Testimonials</div>
+        <div class="admin-nav-item" onclick="switchPanel('gallery',this)"><span class="admin-nav-icon">🖼️</span>Gallery</div>
+        <div class="admin-nav-item" onclick="switchPanel('blog',this)"><span class="admin-nav-icon">📝</span>Blog Posts</div>
+        <div class="admin-nav-sep">Business</div>
+        <div class="admin-nav-item" onclick="switchPanel('contact-info',this)"><span class="admin-nav-icon">📍</span>Contact Info</div>
+        <div class="admin-nav-item" onclick="switchPanel('inquiries',this)"><span class="admin-nav-icon">📬</span>Inquiries</div>
+        <div class="admin-nav-sep">Settings</div>
+        <div class="admin-nav-item" onclick="switchPanel('appearance',this)"><span class="admin-nav-icon">🎨</span>Appearance</div>
+        <div class="admin-nav-item" onclick="switchPanel('settings',this)"><span class="admin-nav-icon">⚙️</span>Settings</div>
+      </div>
+      <div class="admin-bottom">
+        <div class="admin-bottom-btns">
+          <button class="abot-btn view" onclick="showSite()">🌐 View Site</button>
+          <button class="abot-btn" onclick="doLogout()">Sign Out</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="admin-main">
+      <div class="admin-topbar">
+        <h2 id="panel-title">Dashboard</h2>
+        <div class="save-indicator" id="save-indicator">✓ All changes saved</div>
+      </div>
+
+      <!-- DASHBOARD -->
+      <div class="admin-panel active" id="panel-dashboard">
+        <div class="stats-overview">
+          <div class="stat-ov"><div class="stat-ov-icon">📬</div><div class="stat-ov-num" id="ov-inquiries">0</div><div class="stat-ov-lbl">Total Inquiries</div></div>
+          <div class="stat-ov"><div class="stat-ov-icon">📝</div><div class="stat-ov-num" id="ov-posts">0</div><div class="stat-ov-lbl">Blog Posts</div></div>
+          <div class="stat-ov"><div class="stat-ov-icon">🖼️</div><div class="stat-ov-num" id="ov-gallery">0</div><div class="stat-ov-lbl">Gallery Items</div></div>
+          <div class="stat-ov"><div class="stat-ov-icon">💬</div><div class="stat-ov-num" id="ov-testi">0</div><div class="stat-ov-lbl">Testimonials</div></div>
+        </div>
+        <div class="acard">
+          <div class="acard-title"><span>📬</span> Recent Inquiries</div>
+          <div id="dash-inquiries-list"></div>
+        </div>
+        <div class="acard">
+          <div class="acard-title"><span>⚡</span> Quick Actions</div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            <button class="li-btn primary" onclick="switchPanelById('blog')">+ New Blog Post</button>
+            <button class="li-btn primary" onclick="switchPanelById('gallery')">+ Add Gallery Item</button>
+            <button class="li-btn primary" onclick="switchPanelById('testimonials')">+ Add Testimonial</button>
+            <button class="li-btn" onclick="switchPanelById('hero')">Edit Hero Section</button>
+            <button class="li-btn" onclick="switchPanelById('contact-info')">Update Contact Info</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- HERO EDITOR -->
+      <div class="admin-panel" id="panel-hero">
+        <div class="acard">
+          <div class="acard-title"><span>🏠</span> Hero Section</div>
+          <div class="form-row-2">
+            <div class="afield"><label>Badge Text</label><input type="text" id="hero-badge" oninput="markDirty()"/></div>
+            <div class="afield"><label>CTA Button Text</label><input type="text" id="hero-btn1" oninput="markDirty()"/></div>
+          </div>
+          <div class="afield"><label>Main Headline (use [em]...[/em] for italic gold)</label><input type="text" id="hero-title" oninput="markDirty()"/></div>
+          <div class="afield"><label>Subheadline</label><textarea id="hero-sub" oninput="markDirty()"></textarea></div>
+          <div class="form-row-2">
+            <div class="afield"><label>Stat 1 Number</label><input type="text" id="stat1-num" oninput="markDirty()"/></div>
+            <div class="afield"><label>Stat 1 Label</label><input type="text" id="stat1-lbl" oninput="markDirty()"/></div>
+          </div>
+          <div class="form-row-2">
+            <div class="afield"><label>Stat 2 Number</label><input type="text" id="stat2-num" oninput="markDirty()"/></div>
+            <div class="afield"><label>Stat 2 Label</label><input type="text" id="stat2-lbl" oninput="markDirty()"/></div>
+          </div>
+          <div class="form-row-2">
+            <div class="afield"><label>Stat 3 Number</label><input type="text" id="stat3-num" oninput="markDirty()"/></div>
+            <div class="afield"><label>Stat 3 Label</label><input type="text" id="stat3-lbl" oninput="markDirty()"/></div>
+          </div>
+          <div class="form-row-2">
+            <div class="afield"><label>Stat 4 Number</label><input type="text" id="stat4-num" oninput="markDirty()"/></div>
+            <div class="afield"><label>Stat 4 Label</label><input type="text" id="stat4-lbl" oninput="markDirty()"/></div>
+          </div>
+          <div class="afield"><label>Floating Badge Text</label><input type="text" id="hero-float-badge" oninput="markDirty()"/></div>
+        </div>
+      </div>
+
+      <!-- SERVICES -->
+      <div class="admin-panel" id="panel-services">
+        <div class="acard">
+          <div class="acard-title"><span>📋</span> Services</div>
+          <div id="services-list"></div>
+          <div class="add-form" id="add-service-form" style="display:none;">
+            <div class="add-form-title">Add New Service</div>
+            <div class="form-row-2">
+              <div class="afield"><label>Icon (emoji)</label><input type="text" id="new-svc-icon" placeholder="🎓"/></div>
+              <div class="afield"><label>Title</label><input type="text" id="new-svc-title" placeholder="Service Name"/></div>
+            </div>
+            <div class="afield"><label>Description</label><textarea id="new-svc-desc" placeholder="Service description..."></textarea></div>
+            <div class="add-btn-row">
+              <button class="btn-add" onclick="addService()">Add Service</button>
+              <button class="btn-cancel" onclick="document.getElementById('add-service-form').style.display='none'">Cancel</button>
+            </div>
+          </div>
+          <button class="li-btn primary" style="margin-top:16px;" onclick="document.getElementById('add-service-form').style.display=''">+ Add Service</button>
+        </div>
+      </div>
+
+      <!-- TESTIMONIALS -->
+      <div class="admin-panel" id="panel-testimonials">
+        <div class="acard">
+          <div class="acard-title"><span>💬</span> Testimonials</div>
+          <div id="testimonials-list"></div>
+          <div class="add-form" id="add-testi-form" style="display:none;">
+            <div class="add-form-title">Add New Testimonial</div>
+            <div class="form-row-2">
+              <div class="afield"><label>Student Name</label><input type="text" id="new-testi-name" placeholder="Full Name"/></div>
+              <div class="afield"><label>University & Country</label><input type="text" id="new-testi-dest" placeholder="Uni, Country 🇬🇧"/></div>
+            </div>
+            <div class="afield"><label>Testimonial Text</label><textarea id="new-testi-text" placeholder="What the student said..."></textarea></div>
+            <div class="add-btn-row">
+              <button class="btn-add" onclick="addTestimonial()">Add Testimonial</button>
+              <button class="btn-cancel" onclick="document.getElementById('add-testi-form').style.display='none'">Cancel</button>
+            </div>
+          </div>
+          <button class="li-btn primary" style="margin-top:16px;" onclick="document.getElementById('add-testi-form').style.display=''">+ Add Testimonial</button>
+        </div>
+      </div>
+
+      <!-- GALLERY -->
+      <div class="admin-panel" id="panel-gallery">
+        <div class="acard">
+          <div class="acard-title"><span>🖼️</span> Gallery Items</div>
+          <div id="gallery-list"></div>
+          <div class="add-form" id="add-gallery-form" style="display:none;">
+            <div class="add-form-title">Add Gallery Item</div>
+            <div class="form-row-3">
+              <div class="afield"><label>Icon (emoji)</label><input type="text" id="new-gal-icon" placeholder="🎓"/></div>
+              <div class="afield"><label>Title</label><input type="text" id="new-gal-title" placeholder="Event Name"/></div>
+              <div class="afield"><label>Category</label>
+                <select id="new-gal-cat">
+                  <option value="events">Events &amp; Seminars</option>
+                  <option value="success">Student Success</option>
+                  <option value="workshop">Workshops</option>
+                  <option value="departure">Departures</option>
+                </select>
+              </div>
+            </div>
+            <div class="afield"><label>Description</label><textarea id="new-gal-desc" placeholder="Brief description of the event..."></textarea></div>
+            <div class="add-btn-row">
+              <button class="btn-add" onclick="addGalleryItem()">Add Item</button>
+              <button class="btn-cancel" onclick="document.getElementById('add-gallery-form').style.display='none'">Cancel</button>
+            </div>
+          </div>
+          <button class="li-btn primary" style="margin-top:16px;" onclick="document.getElementById('add-gallery-form').style.display=''">+ Add Gallery Item</button>
+        </div>
+      </div>
+
+      <!-- BLOG -->
+      <div class="admin-panel" id="panel-blog">
+        <div class="acard">
+          <div class="acard-title"><span>📝</span> Blog Posts</div>
+          <div id="blog-list-admin"></div>
+          <div class="add-form" id="add-blog-form" style="display:none;">
+            <div class="add-form-title">Add New Blog Post</div>
+            <div class="form-row-2">
+              <div class="afield"><label>Title</label><input type="text" id="new-blog-title" placeholder="Post Title"/></div>
+              <div class="afield"><label>Category</label><input type="text" id="new-blog-cat" placeholder="e.g. UK Admission"/></div>
+            </div>
+            <div class="form-row-2">
+              <div class="afield"><label>Emoji Icon</label><input type="text" id="new-blog-icon" placeholder="🇬🇧"/></div>
+              <div class="afield"><label>Date</label><input type="text" id="new-blog-date" placeholder="Dec 10, 2024"/></div>
+            </div>
+            <div class="afield"><label>Summary (shown in blog list)</label><textarea id="new-blog-summary" placeholder="Brief summary..."></textarea></div>
+            <div class="afield"><label>Full Article Content</label><textarea id="new-blog-content" style="min-height:200px;" placeholder="Full article text. Use [h3]...[/h3] for subheadings, [ul]...[/ul] for lists, [li]...[/li] for list items."></textarea></div>
+            <div class="add-btn-row">
+              <button class="btn-add" onclick="addBlogPost()">Publish Post</button>
+              <button class="btn-cancel" onclick="document.getElementById('add-blog-form').style.display='none'">Cancel</button>
+            </div>
+          </div>
+          <button class="li-btn primary" style="margin-top:16px;" onclick="document.getElementById('add-blog-form').style.display=''">+ New Post</button>
+        </div>
+      </div>
+
+      <!-- CONTACT INFO -->
+      <div class="admin-panel" id="panel-contact-info">
+        <div class="acard">
+          <div class="acard-title"><span>📍</span> Contact Information</div>
+          <div class="form-row-2">
+            <div class="afield"><label>Business Name</label><input type="text" id="ci-name" oninput="markDirty()"/></div>
+            <div class="afield"><label>Phone</label><input type="text" id="ci-phone" oninput="markDirty()"/></div>
+          </div>
+          <div class="form-row-2">
+            <div class="afield"><label>Email</label><input type="email" id="ci-email" oninput="markDirty()"/></div>
+            <div class="afield"><label>WhatsApp Number (with country code)</label><input type="text" id="ci-wa" oninput="markDirty()"/></div>
+          </div>
+          <div class="afield"><label>Address</label><input type="text" id="ci-address" oninput="markDirty()"/></div>
+          <div class="form-row-2">
+            <div class="afield"><label>Office Hours</label><input type="text" id="ci-hours" oninput="markDirty()"/></div>
+            <div class="afield"><label>Facebook URL</label><input type="text" id="ci-fb" oninput="markDirty()"/></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- INQUIRIES -->
+      <div class="admin-panel" id="panel-inquiries">
+        <div class="acard">
+          <div class="acard-title"><span>📬</span> All Inquiries</div>
+          <div style="overflow-x:auto;">
+            <table class="inq-table" id="inquiries-table">
+              <thead><tr><th>Name</th><th>Phone</th><th>Email</th><th>Destination</th><th>Service</th><th>Status</th><th>Action</th></tr></thead>
+              <tbody id="inquiries-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- APPEARANCE -->
+      <div class="admin-panel" id="panel-appearance">
+        <div class="acard">
+          <div class="acard-title"><span>🎨</span> Brand Colors</div>
+          <div class="form-row-2">
+            <div class="afield">
+              <label>Primary Color (Navy)</label>
+              <input type="color" id="color-navy" oninput="applyColors()"/>
+            </div>
+            <div class="afield">
+              <label>Accent Color (Gold)</label>
+              <input type="color" id="color-gold" oninput="applyColors()"/>
+            </div>
+          </div>
+          <div class="afield">
+            <label>Quick Gold Presets</label>
+            <div class="color-row">
+              <div class="color-swatch" style="background:#D4A843;" onclick="setGold('#D4A843')" title="Classic Gold"></div>
+              <div class="color-swatch" style="background:#C0392B;" onclick="setGold('#C0392B')" title="Deep Red"></div>
+              <div class="color-swatch" style="background:#27AE60;" onclick="setGold('#27AE60')" title="Emerald"></div>
+              <div class="color-swatch" style="background:#2980B9;" onclick="setGold('#2980B9')" title="Royal Blue"></div>
+              <div class="color-swatch" style="background:#8E44AD;" onclick="setGold('#8E44AD')" title="Purple"></div>
+              <div class="color-swatch" style="background:#E67E22;" onclick="setGold('#E67E22')" title="Orange"></div>
+            </div>
+          </div>
+        </div>
+        <div class="acard">
+          <div class="acard-title"><span>🏷️</span> Site Identity</div>
+          <div class="form-row-2">
+            <div class="afield"><label>Business Name</label><input type="text" id="site-name" oninput="markDirty()"/></div>
+            <div class="afield"><label>Tagline</label><input type="text" id="site-tagline" oninput="markDirty()"/></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SETTINGS -->
+      <div class="admin-panel" id="panel-settings">
+        <div class="acard">
+          <div class="acard-title"><span>🔒</span> Security</div>
+          <div class="form-row-2">
+            <div class="afield"><label>New Username</label><input type="text" id="new-username" placeholder="Leave blank to keep current"/></div>
+            <div class="afield"><label>New Password</label><input type="password" id="new-password" placeholder="Leave blank to keep current"/></div>
+          </div>
+          <button class="btn-add" onclick="changeCredentials()">Update Credentials</button>
+        </div>
+        <div class="acard">
+          <div class="acard-title"><span>⚙️</span> Website Features</div>
+          <div class="toggle-row"><div class="toggle-row-info"><strong>WhatsApp Float Button</strong><span>Show WhatsApp chat button on website</span></div><div class="toggle" id="tog-wa" onclick="toggleFeature('wa')"></div></div>
+          <div class="toggle-row"><div class="toggle-row-info"><strong>Destinations Ticker</strong><span>Scrolling destinations ticker on home</span></div><div class="toggle on" id="tog-ticker" onclick="toggleFeature('ticker')"></div></div>
+          <div class="toggle-row"><div class="toggle-row-info"><strong>Testimonials Section</strong><span>Show student testimonials on home page</span></div><div class="toggle on" id="tog-testi" onclick="toggleFeature('testi')"></div></div>
+          <div class="toggle-row"><div class="toggle-row-info"><strong>CTA Banner</strong><span>Show call-to-action banner on home page</span></div><div class="toggle on" id="tog-cta" onclick="toggleFeature('cta')"></div></div>
+        </div>
+        <div class="acard">
+          <div class="acard-title"><span>🗑️</span> Data Management</div>
+          <p style="font-size:13px;color:var(--gray);margin-bottom:16px;">Clear all inquiry data. This cannot be undone.</p>
+          <button class="li-btn danger" onclick="clearInquiries()">Clear All Inquiries</button>
+        </div>
+      </div>
+
+    </div><!-- /admin-main -->
+  </div><!-- /admin-wrap -->
+  <div class="save-bar" id="save-bar">
+    <span style="font-size:14px;">You have unsaved changes</span>
+    <button class="save-bar-btn" onclick="saveAll()">Save All Changes</button>
+  </div>
+</div>
+
+<!-- ══ SITE VIEW ══ -->
+<div id="view-site">
+<nav>
+  <div class="logo" id="site-logo-el">Nexora<span> Consultancy</span></div>
+  <ul class="nav-links">
+    <li><a onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
+    <li><a onclick="showPage('services')" id="nav-services">Services</a></li>
+    <li><a onclick="showPage('gallery')" id="nav-gallery">Gallery</a></li>
+    <li><a onclick="showPage('blog')" id="nav-blog">Blog</a></li>
+    <li><a onclick="showPage('contact')" id="nav-contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta" onclick="showPage('contact')">Free Consultation</button>
+</nav>
+
+<!-- HOME -->
+<div class="page active" id="page-home">
+  <section class="hero">
+    <div class="hero-grid-bg"></div>
+    <div class="hero-inner">
+      <div>
+        <div class="hero-eyebrow"><div class="hero-dot"></div><span id="s-hero-badge">Dhaka's Most Trusted Study Abroad Consultancy</span></div>
+        <h1 id="s-hero-title">Shape Your Future at a <em>World-Class</em> University</h1>
+        <p class="hero-sub" id="s-hero-sub">From choosing the right university to landing your visa — Nexora's expert counselors guide you every step of the way across 12+ countries and 150+ partner universities.</p>
+        <div class="hero-btns">
+          <button class="btn-gold" onclick="showPage('contact')" id="s-hero-btn1">Book Free Consultation</button>
+          <button class="btn-ghost" onclick="showPage('services')">Our Services →</button>
+        </div>
+        <div class="trust-bar">
+          <div class="trust-item">✓ ISO Certified</div>
+          <span class="trust-sep">·</span>
+          <div class="trust-item">✓ 98% Visa Success Rate</div>
+          <span class="trust-sep">·</span>
+          <div class="trust-item">✓ 12+ Years Experience</div>
+        </div>
+      </div>
+      <div style="position:relative;">
+        <div class="hero-stats-card">
+          <div class="stats-grid">
+            <div class="stat-cell"><span class="stat-num" id="s-stat1-num">5K+</span><span class="stat-lbl" id="s-stat1-lbl">Students placed abroad</span></div>
+            <div class="stat-cell"><span class="stat-num" id="s-stat2-num">98%</span><span class="stat-lbl" id="s-stat2-lbl">Visa approval rate</span></div>
+            <div class="stat-cell"><span class="stat-num" id="s-stat3-num">150+</span><span class="stat-lbl" id="s-stat3-lbl">Partner universities</span></div>
+            <div class="stat-cell"><span class="stat-num" id="s-stat4-num">12+</span><span class="stat-lbl" id="s-stat4-lbl">Years of expertise</span></div>
+          </div>
+          <p class="card-footer-text">Serving students since 2012 · <strong id="s-float-badge-text">Dhaka's #1 rated consultancy</strong></p>
+        </div>
+        <div class="float-badge"><span>🎓</span><div><div style="font-size:11px;opacity:0.7">New intake open</div><div>UK &amp; Canada 2025</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ticker-wrap" id="s-ticker-wrap">
+    <div class="ticker-label">Destinations</div>
+    <div class="ticker-track">
+      <div class="ticker-item">🇬🇧 United Kingdom</div><div class="ticker-item">🇺🇸 United States</div><div class="ticker-item">🇨🇦 Canada</div><div class="ticker-item">🇦🇺 Australia</div><div class="ticker-item">🇩🇪 Germany</div><div class="ticker-item">🇳🇱 Netherlands</div><div class="ticker-item">🇸🇪 Sweden</div><div class="ticker-item">🇳🇿 New Zealand</div><div class="ticker-item">🇮🇪 Ireland</div><div class="ticker-item">🇫🇷 France</div>
+      <div class="ticker-item">🇬🇧 United Kingdom</div><div class="ticker-item">🇺🇸 United States</div><div class="ticker-item">🇨🇦 Canada</div><div class="ticker-item">🇦🇺 Australia</div><div class="ticker-item">🇩🇪 Germany</div><div class="ticker-item">🇳🇱 Netherlands</div><div class="ticker-item">🇸🇪 Sweden</div><div class="ticker-item">🇳🇿 New Zealand</div><div class="ticker-item">🇮🇪 Ireland</div><div class="ticker-item">🇫🇷 France</div>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="s-label">How It Works</div>
+    <div class="s-title">Your Journey to Global Education</div>
+    <div class="s-sub">A clear, guided path from your first consultation to stepping on campus abroad.</div>
+    <div class="steps-grid">
+      <div class="step"><div class="step-num">01</div><h4>Free Counseling</h4><p>Meet our expert counselors to map your academic goals and ideal destinations.</p></div>
+      <div class="step"><div class="step-num">02</div><h4>University Selection</h4><p>Shortlist the best-fit universities based on your profile, budget, and goals.</p></div>
+      <div class="step"><div class="step-num">03</div><h4>Application &amp; Offer</h4><p>We prepare and submit strong applications; you receive your offer letter.</p></div>
+      <div class="step"><div class="step-num">04</div><h4>Visa &amp; Departure</h4><p>Expert visa guidance and pre-departure briefing to set you up for success.</p></div>
+    </div>
+  </section>
+
+  <section class="section alt">
+    <div class="s-label">Why Nexora</div>
+    <div class="s-title">The Nexora Difference</div>
+    <div class="s-sub">We're not just an agent — we're your dedicated partner in building a global future.</div>
+    <div class="why-grid" id="s-why-grid">
+      <div class="why-card"><div class="why-icon">🎯</div><h3>Personalized Approach</h3><p>Every student is unique. We tailor our guidance to your specific profile, aspirations, and budget.</p></div>
+      <div class="why-card"><div class="why-icon">🏆</div><h3>Proven Track Record</h3><p>Over 5,000 students placed at top universities worldwide with a 98% visa success rate.</p></div>
+      <div class="why-card"><div class="why-icon">🌐</div><h3>150+ Partner Universities</h3><p>Strong partnerships with top-ranked institutions in the UK, USA, Canada, Australia, and Europe.</p></div>
+      <div class="why-card"><div class="why-icon">💬</div><h3>End-to-End Support</h3><p>From the first counseling session through to post-arrival support — we never leave your side.</p></div>
+      <div class="why-card"><div class="why-icon">💰</div><h3>Scholarship Expertise</h3><p>Dedicated scholarship counselors help you identify and secure funding and grants.</p></div>
+      <div class="why-card"><div class="why-icon">📞</div><h3>Always Accessible</h3><p>Reach your counselor anytime via WhatsApp, phone, or in-office visits.</p></div>
+    </div>
+  </section>
+
+  <section class="section" id="s-testi-section">
+    <div class="s-label">Student Stories</div>
+    <div class="s-title">What Our Students Say</div>
+    <div class="testi-grid" id="s-testi-grid"></div>
+  </section>
+
+  <div class="cta-banner" id="s-cta-banner">
+    <h2>Ready to Start Your Global Journey?</h2>
+    <p>Book a free consultation today — no commitment, just expert guidance tailored to you.</p>
+    <button class="btn-gold" onclick="showPage('contact')" style="font-size:15px;padding:17px 40px;position:relative;">Get Your Free Consultation</button>
+  </div>
+</div><!-- /home -->
+
+<!-- SERVICES -->
+<div class="page" id="page-services">
+  <div class="inner-hero">
+    <div class="s-label" style="color:var(--gold2)">What We Offer</div>
+    <h1>Our Services</h1>
+    <p>Comprehensive, end-to-end support for every stage of your study abroad journey.</p>
+  </div>
+  <div class="services-tabs" id="s-svc-tabs"></div>
+  <div class="svc-panels" id="s-svc-panels"></div>
+</div>
+
+<!-- GALLERY -->
+<div class="page" id="page-gallery">
+  <div class="inner-hero">
+    <div class="s-label" style="color:var(--gold2)">Our Moments</div>
+    <h1>Gallery</h1>
+    <p>Celebrating our students' milestones — from seminars and workshops to visa approvals and departures.</p>
+  </div>
+  <div class="gallery-filters" id="s-gallery-filters">
+    <button class="gf-btn active" onclick="filterGallery('all',this)">All</button>
+    <button class="gf-btn" onclick="filterGallery('events',this)">Events &amp; Seminars</button>
+    <button class="gf-btn" onclick="filterGallery('success',this)">Student Success</button>
+    <button class="gf-btn" onclick="filterGallery('workshop',this)">Workshops</button>
+    <button class="gf-btn" onclick="filterGallery('departure',this)">Departures</button>
+  </div>
+  <div class="gallery-masonry" id="s-gallery-masonry"></div>
+</div>
+
+<!-- BLOG -->
+<div class="page" id="page-blog">
+  <div class="inner-hero">
+    <div class="s-label" style="color:var(--gold2)">Knowledge Hub</div>
+    <h1>Blog &amp; Resources</h1>
+    <p>Expert guides, tips, and news to help you navigate your study abroad journey.</p>
+  </div>
+  <div id="s-blog-list">
+    <div class="blog-layout">
+      <div class="blog-main" id="s-blog-main"></div>
+      <div class="blog-sidebar">
+        <div class="sidebar-widget">
+          <div class="sw-title">Categories</div>
+          <div id="s-blog-cats"></div>
+        </div>
+        <div class="sidebar-widget" style="background:var(--navy);border-color:var(--navy);">
+          <div style="color:var(--white);font-size:16px;font-family:'Cormorant Garamond',serif;font-weight:600;margin-bottom:10px;">Free Consultation</div>
+          <p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:16px;">Talk to an expert — no cost, no obligation.</p>
+          <button class="btn-gold" style="width:100%;padding:11px;" onclick="showPage('contact')">Book Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="s-blog-articles"></div>
+</div>
+
+<!-- CONTACT -->
+<div class="page" id="page-contact">
+  <div class="contact-wrapper">
+    <div class="contact-left">
+      <div class="s-label" style="color:var(--gold2);margin-bottom:16px;">Get In Touch</div>
+      <h2>Let's Plan Your Future Together</h2>
+      <p>Our expert counselors are ready to help. Walk in, call, or send us a message — we respond within 24 hours, guaranteed.</p>
+      <div class="c-info-list">
+        <div class="c-info"><div class="c-icon">📍</div><div><strong>Address</strong><span id="s-ci-address">House 12, Road 5, Dhanmondi, Dhaka-1205</span></div></div>
+        <div class="c-info"><div class="c-icon">📞</div><div><strong>Phone</strong><span id="s-ci-phone">+880 1711-000000</span></div></div>
+        <div class="c-info"><div class="c-icon">✉️</div><div><strong>Email</strong><span id="s-ci-email">info@nexorabd.com</span></div></div>
+        <div class="c-info"><div class="c-icon">🕐</div><div><strong>Office Hours</strong><span id="s-ci-hours">Saturday – Thursday: 10 AM – 7 PM</span></div></div>
+      </div>
+    </div>
+    <div class="contact-right">
+      <h2>Book a Free Consultation</h2>
+      <p>Fill in your details and a counselor will reach out to schedule your session.</p>
+      <div id="s-contact-form-wrap">
+        <div class="form-grid-2">
+          <div class="fg"><label>Full Name *</label><input type="text" id="cf-name" placeholder="Your full name"/></div>
+          <div class="fg"><label>Phone *</label><input type="text" id="cf-phone" placeholder="+880"/></div>
+          <div class="fg"><label>Email *</label><input type="email" id="cf-email" placeholder="your@email.com"/></div>
+          <div class="fg"><label>Preferred Destination</label>
+            <select id="cf-dest"><option value="">Select country</option><option>United Kingdom</option><option>United States</option><option>Canada</option><option>Australia</option><option>Germany</option><option>Other</option></select>
+          </div>
+          <div class="fg"><label>Education Level</label>
+            <select id="cf-level"><option value="">Select level</option><option>Undergraduate</option><option>Postgraduate</option><option>PhD / Research</option><option>Foundation / Diploma</option></select>
+          </div>
+          <div class="fg"><label>Service Interested In</label>
+            <select id="cf-service"><option value="">Select service</option><option>Career Counseling</option><option>Admission Processing</option><option>Visa Assistance</option><option>Test Preparation</option><option>Scholarships</option></select>
+          </div>
+          <div class="fg full"><label>Message</label><textarea id="cf-msg" placeholder="Tell us about your goals and questions..."></textarea></div>
+        </div>
+        <button class="form-submit" onclick="submitContactForm()">Send Message &amp; Book Consultation →</button>
+      </div>
+      <div class="success-msg" id="s-success-msg">
+        <div class="success-icon">🎉</div>
+        <h3>Message Sent!</h3>
+        <p>One of our expert counselors will contact you within 24 hours to schedule your free consultation.</p>
+        <button class="btn-gold" style="margin-top:20px;" onclick="resetContactForm()">Send Another Message</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo" id="s-footer-logo">Nexora<span> Consultancy</span></div>
+      <p>Dhaka's most trusted study abroad consultancy — guiding Bangladeshi students to world-class universities since 2012.</p>
+    </div>
+    <div class="footer-col"><h4>Services</h4><ul><li><a onclick="showPage('services')">Career Counseling</a></li><li><a onclick="showPage('services')">Admission Processing</a></li><li><a onclick="showPage('services')">Visa Assistance</a></li><li><a onclick="showPage('services')">Test Preparation</a></li><li><a onclick="showPage('services')">Scholarships</a></li></ul></div>
+    <div class="footer-col"><h4>Destinations</h4><ul><li><a>United Kingdom</a></li><li><a>United States</a></li><li><a>Canada</a></li><li><a>Australia</a></li><li><a>Germany</a></li></ul></div>
+    <div class="footer-col"><h4>Company</h4><ul><li><a onclick="showPage('home')">Home</a></li><li><a onclick="showPage('gallery')">Gallery</a></li><li><a onclick="showPage('blog')">Blog</a></li><li><a onclick="showPage('contact')">Contact</a></li></ul></div>
+  </div>
+  <div class="footer-bottom">
+    <span id="s-footer-copy">&copy; 2025 Nexora Consultancy. All rights reserved.</span>
+    <span id="s-footer-addr">House 12, Road 5, Dhanmondi, Dhaka-1205</span>
+  </div>
+</div>
+
+<a class="wa-float" id="s-wa-btn" href="#" target="_blank" title="Chat on WhatsApp">💬</a>
+<button class="admin-access-btn" onclick="showAdmin()" title="Admin Panel">⚙</button>
+</div><!-- /view-site -->
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLightbox()">
+  <button class="lb-close" onclick="closeLightbox()">✕</button>
+  <div class="lb-content">
+    <div class="lb-img" id="lbImg"></div>
+    <div class="lb-info"><h3 id="lbTitle"></h3><p id="lbDesc"></p></div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════
+// DATA — default state
+// ══════════════════════════════════════════════
+const STORAGE_KEY = 'nexora_cms_v2';
+const galColors = ['#C9E4F5','#F5E4C9','#C9F5E4','#F5C9E4','#E4F5C9','#E4C9F5','#F5F0C9','#C9EEF5','#F5C9C9'];
+
+function defaultData(){
+  return {
+    credentials:{user:'admin',pass:'nexora2025'},
+    hero:{badge:'Dhaka\'s Most Trusted Study Abroad Consultancy',title:'Shape Your Future at a [em]World-Class[/em] University',sub:'From choosing the right university to landing your visa — Nexora\'s expert counselors guide you every step of the way across 12+ countries and 150+ partner universities.',btn1:'Book Free Consultation',floatBadge:'Dhaka\'s #1 rated consultancy',stats:[{num:'5K+',lbl:'Students placed abroad'},{num:'98%',lbl:'Visa approval rate'},{num:'150+',lbl:'Partner universities'},{num:'12+',lbl:'Years of expertise'}]},
+    contact:{name:'Nexora Consultancy',phone:'+880 1711-000000',email:'info@nexorabd.com',wa:'8801711000000',address:'House 12, Road 5, Dhanmondi, Dhaka-1205',hours:'Saturday – Thursday: 10 AM – 7 PM',fb:''},
+    appearance:{navy:'#08172E',gold:'#D4A843',siteName:'Nexora Consultancy',tagline:'Study Abroad Experts'},
+    features:{wa:true,ticker:true,testi:true,cta:true},
+    services:[
+      {id:1,icon:'🎯',title:'Career Counseling',desc:'Personalized one-on-one guidance to find the right course, country, and university based on your profile, goals, and budget.'},
+      {id:2,icon:'📋',title:'Admission Processing',desc:'End-to-end application management — from university shortlisting and SOP writing to document submission and offer follow-up.'},
+      {id:3,icon:'✈️',title:'Visa Assistance',desc:'Expert visa counseling with a 98% success rate. We prepare your documentation, coach you for the interview, and track your application.'},
+      {id:4,icon:'📝',title:'Test Preparation',desc:'IELTS, TOEFL, GRE, and GMAT coaching by certified trainers. Achieve your target scores with structured classes and mock tests.'},
+      {id:5,icon:'💰',title:'Scholarship Guidance',desc:'Identify and apply for fully funded scholarships including Chevening, Commonwealth, Erasmus+, and Australia Awards.'}
+    ],
+    testimonials:[
+      {id:1,name:'Rafi Ahmed',dest:'University of Manchester, UK 🇬🇧',text:'Nexora made the whole process incredibly smooth. I got into the University of Manchester with a partial scholarship — something I couldn\'t have done without their expert guidance.',initials:'RA'},
+      {id:2,name:'Sadia Islam',dest:'University of Toronto, Canada 🇨🇦',text:'The visa counseling was top-notch. My counselor knew exactly what documents to prepare and coached me perfectly for the interview. Got approved first try!',initials:'SI'},
+      {id:3,name:'Tanvir Hossain',dest:'Monash University, Australia 🇦🇺',text:'From SOP writing to pre-departure briefing, everything was handled professionally. I\'m now studying at Monash University and couldn\'t be happier.',initials:'TH'}
+    ],
+    gallery:[
+      {id:1,icon:'🎓',title:'UK University Fair 2024',cat:'events',desc:'A packed session with representatives from 25+ UK universities. Students received direct admission information and counseling.'},
+      {id:2,icon:'✈️',title:'Pre-Departure — Canada',cat:'departure',desc:'32 students depart for Canadian universities. Pre-departure briefing covered banking, accommodation, and cultural adaptation.'},
+      {id:3,icon:'🏆',title:'Scholarship Winners 2023',cat:'success',desc:'Our students secured over BDT 2 crore in scholarships including Chevening, Commonwealth, and university merit awards.'},
+      {id:4,icon:'📚',title:'IELTS Intensive Workshop',cat:'workshop',desc:'A 3-day intensive IELTS workshop focusing on writing and speaking. Average band improvement: 0.5–1.0.'},
+      {id:5,icon:'🌏',title:'Australia Info Seminar',cat:'events',desc:'Direct interaction with Monash, ANU, and Melbourne university reps. Visa and scholarship Q&A session included.'},
+      {id:6,icon:'🎉',title:'100 Visa Approvals Milestone',cat:'success',desc:'Celebrating 100 consecutive student visa approvals for UK, Canada, and Australia in a single quarter.'}
+    ],
+    blog:[
+      {id:1,icon:'🇬🇧',title:'How to Apply to UK Universities in 2025: The Complete Guide',cat:'UK Admission',date:'Dec 10, 2024',summary:'Everything Bangladeshi students need to know about the UCAS system, application deadlines, personal statements, and what UK universities look for.',content:'Applying to UK universities is one of the most rewarding yet complex processes for international students.\n\n[h3]Understanding the UCAS System[/h3]\nAll undergraduate applications to UK universities go through UCAS. You can apply to up to 5 universities per cycle.\n\n[h3]Key Deadlines for 2025 Entry[/h3]\n[ul][li]Oxford & Cambridge: 15 October 2024[/li][li]All other universities: 31 January 2025[/li][li]Art & Design courses: 24 March 2025[/li][/ul]\n\n[h3]Entry Requirements[/h3]\nMost undergraduate programs require strong HSC results with GPA 4.5+ and IELTS 6.5 overall.\n\n[h3]How Nexora Can Help[/h3]\nOur UK specialists manage your entire UCAS application — from choosing the right 5 universities, writing a compelling personal statement, and tracking your application through to offer and confirmation.'},
+      {id:2,icon:'💰',title:'Top 10 Fully Funded Scholarships for Bangladeshi Students 2025',cat:'Scholarships',date:'Nov 22, 2024',summary:'Discover Chevening, Commonwealth, Erasmus+ and more fully funded opportunities covering tuition, living costs, and flights.',content:'Studying abroad on a full scholarship is absolutely achievable for Bangladeshi students.\n\n[h3]1. Chevening Scholarship (UK)[/h3]\nThe UK government\'s flagship global scholarship program funds exceptional emerging leaders for a one-year Master\'s degree at any UK university. Covers full tuition, living allowance, flights, and visa fees.\n\n[h3]2. Commonwealth Scholarship (UK)[/h3]\nOffered by the Commonwealth Scholarship Commission, these awards cover tuition, living costs, and return airfare for students from Commonwealth countries including Bangladesh.\n\n[h3]3. Erasmus+ Program (Europe)[/h3]\nThe EU\'s flagship education program offers study and research mobility grants. Monthly stipends range from €500 to €1,000 depending on the destination country.\n\n[h3]How to Maximize Your Chances[/h3]\nOur scholarship counselors work with you 6–12 months before deadlines to craft compelling scholarship essays and prepare for interviews.'},
+      {id:3,icon:'📝',title:'Score 7+ in IELTS: Proven Strategies from Our Top Students',cat:'IELTS Tips',date:'Nov 5, 2024',summary:'Expert techniques for reading, listening, writing, and speaking modules from our certified IELTS trainers.',content:'Achieving a band 7+ in IELTS opens doors to top universities worldwide.\n\n[h3]Reading: Speed and Strategy[/h3]\nDon\'t read the entire passage first. Skim for structure, then scan for answers. Practice skimming daily with English newspapers.\n\n[h3]Writing Task 1 & 2[/h3]\n[ul][li]Always plan for 5 minutes before writing[/li][li]Task 2: use a clear 4-paragraph structure[/li][li]Use a range of vocabulary — never repeat the same word twice in a paragraph[/li][li]Aim for 160+ words in Task 1 and 280+ in Task 2[/li][/ul]\n\n[h3]Speaking: Confidence and Expansion[/h3]\nNever give one-word answers. Always expand with reasons, examples, and contrasts.\n\n[h3]Join Our IELTS Classes[/h3]\nNexora\'s certified IELTS trainers run both group and one-on-one coaching sessions. Our students average a 0.5–1.0 band improvement within 8 weeks.'}
+    ],
+    inquiries:[]
+  };
+}
+
+// ══ STORAGE ══
+let D = {};
+async function loadData(){
+  try{
+    const r = await window.storage.get(STORAGE_KEY);
+    D = r ? JSON.parse(r.value) : defaultData();
+  }catch(e){ D = defaultData(); }
+}
+async function saveData(){
+  try{ await window.storage.set(STORAGE_KEY, JSON.stringify(D)); }catch(e){ console.error(e); }
+}
+
+// ══ DIRTY / SAVE BAR ══
+let dirty = false;
+function markDirty(){ dirty=true; document.getElementById('save-bar').classList.add('show'); document.getElementById('save-indicator').textContent='● Unsaved changes'; document.getElementById('save-indicator').className='save-indicator saving'; }
+async function saveAll(){
+  collectFormData();
+  await saveData();
+  dirty=false;
+  document.getElementById('save-bar').classList.remove('show');
+  document.getElementById('save-indicator').textContent='✓ All changes saved';
+  document.getElementById('save-indicator').className='save-indicator';
+  applySiteData();
+}
+
+function collectFormData(){
+  // hero
+  D.hero.badge = v('hero-badge');
+  D.hero.title = v('hero-title');
+  D.hero.sub = v('hero-sub');
+  D.hero.btn1 = v('hero-btn1');
+  D.hero.floatBadge = v('hero-float-badge');
+  D.hero.stats[0]={num:v('stat1-num'),lbl:v('stat1-lbl')};
+  D.hero.stats[1]={num:v('stat2-num'),lbl:v('stat2-lbl')};
+  D.hero.stats[2]={num:v('stat3-num'),lbl:v('stat3-lbl')};
+  D.hero.stats[3]={num:v('stat4-num'),lbl:v('stat4-lbl')};
+  // contact
+  D.contact.name=v('ci-name'); D.contact.phone=v('ci-phone'); D.contact.email=v('ci-email');
+  D.contact.wa=v('ci-wa'); D.contact.address=v('ci-address'); D.contact.hours=v('ci-hours');
+  D.contact.fb=v('ci-fb');
+  // appearance
+  D.appearance.navy=v('color-navy'); D.appearance.gold=v('color-gold');
+  D.appearance.siteName=v('site-name'); D.appearance.tagline=v('site-tagline');
+}
+
+function v(id){ const el=document.getElementById(id); return el?el.value:''; }
+
+// ══ AUTH ══
+let loggedIn = false;
+function doLogin(){
+  const u=document.getElementById('li-user').value;
+  const p=document.getElementById('li-pass').value;
+  if(u===D.credentials.user && p===D.credentials.pass){
+    loggedIn=true;
+    document.getElementById('view-login').style.display='none';
+    document.getElementById('view-admin').style.display='block';
+    refreshAdminUI();
+  } else {
+    document.getElementById('login-err').style.display='block';
+  }
+}
+function doLogout(){ loggedIn=false; document.getElementById('view-admin').style.display='none'; showSite(); }
+function showAdmin(){
+  if(loggedIn){ document.getElementById('view-site').style.display='none'; document.getElementById('view-admin').style.display='block'; refreshAdminUI(); return; }
+  document.getElementById('view-site').style.display='none';
+  document.getElementById('view-login').style.display='block';
+}
+function showSite(){
+  document.getElementById('view-login').style.display='none';
+  document.getElementById('view-admin').style.display='none';
+  document.getElementById('view-site').style.display='block';
+  applySiteData();
+}
+function changeCredentials(){
+  const nu=document.getElementById('new-username').value.trim();
+  const np=document.getElementById('new-password').value.trim();
+  if(nu) D.credentials.user=nu;
+  if(np) D.credentials.pass=np;
+  saveData();
+  alert('Credentials updated! New username: '+(nu||D.credentials.user));
+}
+function clearInquiries(){ if(confirm('Clear all inquiries?')){ D.inquiries=[]; saveData(); renderInquiries(); updateDashboard(); } }
+
+// ══ PANEL SWITCHING ══
+function switchPanel(name, el){
+  document.querySelectorAll('.admin-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.admin-nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('panel-'+name).classList.add('active');
+  if(el) el.classList.add('active');
+  document.getElementById('panel-title').textContent = el ? el.textContent.trim() : name;
+}
+function switchPanelById(name){
+  const el = [...document.querySelectorAll('.admin-nav-item')].find(e=>e.getAttribute('onclick') && e.getAttribute('onclick').includes("'"+name+"'"));
+  switchPanel(name, el);
+}
+
+// ══ REFRESH ADMIN UI ══
+function refreshAdminUI(){
+  // hero fields
+  sv('hero-badge',D.hero.badge); sv('hero-title',D.hero.title); sv('hero-sub',D.hero.sub);
+  sv('hero-btn1',D.hero.btn1); sv('hero-float-badge',D.hero.floatBadge);
+  sv('stat1-num',D.hero.stats[0].num); sv('stat1-lbl',D.hero.stats[0].lbl);
+  sv('stat2-num',D.hero.stats[1].num); sv('stat2-lbl',D.hero.stats[1].lbl);
+  sv('stat3-num',D.hero.stats[2].num); sv('stat3-lbl',D.hero.stats[2].lbl);
+  sv('stat4-num',D.hero.stats[3].num); sv('stat4-lbl',D.hero.stats[3].lbl);
+  // contact
+  sv('ci-name',D.contact.name); sv('ci-phone',D.contact.phone); sv('ci-email',D.contact.email);
+  sv('ci-wa',D.contact.wa); sv('ci-address',D.contact.address); sv('ci-hours',D.contact.hours);
+  sv('ci-fb',D.contact.fb||'');
+  // appearance
+  sv('color-navy',D.appearance.navy); sv('color-gold',D.appearance.gold);
+  sv('site-name',D.appearance.siteName); sv('site-tagline',D.appearance.tagline);
+  // toggles
+  setToggle('tog-wa',D.features.wa); setToggle('tog-ticker',D.features.ticker);
+  setToggle('tog-testi',D.features.testi); setToggle('tog-cta',D.features.cta);
+  renderServices(); renderTestimonials(); renderGalleryAdmin(); renderBlogAdmin(); renderInquiries(); updateDashboard();
+}
+function sv(id,val){ const el=document.getElementById(id); if(el) el.value=val||''; }
+function setToggle(id,on){ const el=document.getElementById(id); if(el){ el.classList.toggle('on',on); } }
+
+function toggleFeature(key){
+  D.features[key] = !D.features[key];
+  setToggle('tog-'+key, D.features[key]);
+  markDirty();
+}
+
+// ══ SERVICES ADMIN ══
+function renderServices(){
+  const el=document.getElementById('services-list');
+  el.innerHTML = D.services.map(s=>`
+    <div class="list-item">
+      <div class="li-icon">${s.icon}</div>
+      <div class="li-body"><strong>${s.title}</strong><span>${s.desc.substring(0,80)}...</span></div>
+      <div class="li-actions">
+        <button class="li-btn danger" onclick="deleteService(${s.id})">Delete</button>
+      </div>
+    </div>`).join('');
+}
+function addService(){
+  const icon=v('new-svc-icon')||'📋', title=v('new-svc-title'), desc=v('new-svc-desc');
+  if(!title){ alert('Please enter a service title.'); return; }
+  D.services.push({id:Date.now(),icon,title,desc});
+  document.getElementById('new-svc-icon').value=''; document.getElementById('new-svc-title').value=''; document.getElementById('new-svc-desc').value='';
+  document.getElementById('add-service-form').style.display='none';
+  renderServices(); markDirty(); updateDashboard();
+}
+function deleteService(id){ if(confirm('Delete this service?')){ D.services=D.services.filter(s=>s.id!==id); renderServices(); markDirty(); } }
+
+// ══ TESTIMONIALS ADMIN ══
+function renderTestimonials(){
+  const el=document.getElementById('testimonials-list');
+  el.innerHTML = D.testimonials.map(t=>`
+    <div class="list-item">
+      <div class="li-icon" style="width:38px;height:38px;border-radius:50%;background:var(--navy);color:var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:700;">${t.initials}</div>
+      <div class="li-body"><strong>${t.name}</strong><span>${t.dest}</span></div>
+      <div class="li-actions"><button class="li-btn danger" onclick="deleteTestimonial(${t.id})">Delete</button></div>
+    </div>`).join('');
+}
+function addTestimonial(){
+  const name=v('new-testi-name'), dest=v('new-testi-dest'), text=v('new-testi-text');
+  if(!name){ alert('Please enter student name.'); return; }
+  const initials = name.split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase();
+  D.testimonials.push({id:Date.now(),name,dest,text,initials});
+  document.getElementById('new-testi-name').value=''; document.getElementById('new-testi-dest').value=''; document.getElementById('new-testi-text').value='';
+  document.getElementById('add-testi-form').style.display='none';
+  renderTestimonials(); markDirty(); updateDashboard();
+}
+function deleteTestimonial(id){ if(confirm('Delete?')){ D.testimonials=D.testimonials.filter(t=>t.id!==id); renderTestimonials(); markDirty(); } }
+
+// ══ GALLERY ADMIN ══
+function renderGalleryAdmin(){
+  const el=document.getElementById('gallery-list');
+  el.innerHTML = D.gallery.map(g=>`
+    <div class="list-item">
+      <div class="li-icon">${g.icon}</div>
+      <div class="li-body"><strong>${g.title}</strong><span>${g.cat}</span></div>
+      <div class="li-actions"><button class="li-btn danger" onclick="deleteGalleryItem(${g.id})">Delete</button></div>
+    </div>`).join('');
+}
+function addGalleryItem(){
+  const icon=v('new-gal-icon')||'🎓', title=v('new-gal-title'), cat=v('new-gal-cat'), desc=v('new-gal-desc');
+  if(!title){ alert('Please enter a title.'); return; }
+  D.gallery.push({id:Date.now(),icon,title,cat,desc});
+  document.getElementById('new-gal-icon').value=''; document.getElementById('new-gal-title').value=''; document.getElementById('new-gal-desc').value='';
+  document.getElementById('add-gallery-form').style.display='none';
+  renderGalleryAdmin(); markDirty(); updateDashboard();
+}
+function deleteGalleryItem(id){ if(confirm('Delete?')){ D.gallery=D.gallery.filter(g=>g.id!==id); renderGalleryAdmin(); markDirty(); } }
+
+// ══ BLOG ADMIN ══
+function renderBlogAdmin(){
+  const el=document.getElementById('blog-list-admin');
+  el.innerHTML = D.blog.map(b=>`
+    <div class="list-item">
+      <div class="li-icon">${b.icon}</div>
+      <div class="li-body"><strong>${b.title}</strong><span>${b.cat} · ${b.date}</span></div>
+      <div class="li-actions"><button class="li-btn danger" onclick="deleteBlogPost(${b.id})">Delete</button></div>
+    </div>`).join('');
+}
+function addBlogPost(){
+  const title=v('new-blog-title'), cat=v('new-blog-cat'), icon=v('new-blog-icon')||'📝',
+        date=v('new-blog-date'), summary=v('new-blog-summary'), content=v('new-blog-content');
+  if(!title){ alert('Please enter a title.'); return; }
+  D.blog.push({id:Date.now(),icon,title,cat,date,summary,content});
+  ['new-blog-title','new-blog-cat','new-blog-icon','new-blog-date','new-blog-summary','new-blog-content'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
+  document.getElementById('add-blog-form').style.display='none';
+  renderBlogAdmin(); markDirty(); updateDashboard();
+}
+function deleteBlogPost(id){ if(confirm('Delete?')){ D.blog=D.blog.filter(b=>b.id!==id); renderBlogAdmin(); markDirty(); } }
+
+// ══ INQUIRIES ══
+function renderInquiries(){
+  const tbody=document.getElementById('inquiries-tbody');
+  if(!tbody) return;
+  if(!D.inquiries.length){ tbody.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--gray);padding:32px;">No inquiries yet</td></tr>'; return; }
+  tbody.innerHTML = D.inquiries.map((inq,i)=>`
+    <tr>
+      <td><strong>${inq.name}</strong></td>
+      <td>${inq.phone}</td>
+      <td>${inq.email}</td>
+      <td>${inq.dest||'—'}</td>
+      <td>${inq.service||'—'}</td>
+      <td><span class="status-badge ${inq.read?'status-read':'status-new'}">${inq.read?'Read':'New'}</span></td>
+      <td><button class="li-btn" onclick="markRead(${i})">${inq.read?'Unread':'Mark Read'}</button></td>
+    </tr>`).join('');
+  const dashList=document.getElementById('dash-inquiries-list');
+  if(dashList){
+    const recent=D.inquiries.slice(-5).reverse();
+    dashList.innerHTML=recent.length?recent.map(inq=>`<div class="list-item"><div class="li-icon">👤</div><div class="li-body"><strong>${inq.name}</strong><span>${inq.email} · ${inq.dest||'No destination'} · ${inq.service||'General'}</span></div><span class="status-badge ${inq.read?'status-read':'status-new'}" style="flex-shrink:0;">${inq.read?'Read':'New'}</span></div>`).join(''):'<p style="color:var(--gray);font-size:14px;">No inquiries yet.</p>';
+  }
+}
+function markRead(i){ D.inquiries[i].read=!D.inquiries[i].read; saveData(); renderInquiries(); }
+function updateDashboard(){
+  const setEl=(id,val)=>{ const e=document.getElementById(id); if(e) e.textContent=val; };
+  setEl('ov-inquiries', D.inquiries.length);
+  setEl('ov-posts', D.blog.length);
+  setEl('ov-gallery', D.gallery.length);
+  setEl('ov-testi', D.testimonials.length);
+  renderInquiries();
+}
+
+// ══ APPEARANCE ══
+function applyColors(){
+  const navy=v('color-navy'), gold=v('color-gold');
+  if(navy) document.documentElement.style.setProperty('--navy', navy);
+  if(gold){ document.documentElement.style.setProperty('--gold', gold); document.documentElement.style.setProperty('--gold3', gold); }
+  markDirty();
+}
+function setGold(hex){
+  document.getElementById('color-gold').value=hex;
+  document.documentElement.style.setProperty('--gold', hex);
+  document.documentElement.style.setProperty('--gold3', hex);
+  markDirty();
+}
+
+// ══ APPLY SITE DATA ══
+function applySiteData(){
+  // colors
+  document.documentElement.style.setProperty('--navy', D.appearance.navy);
+  document.documentElement.style.setProperty('--gold', D.appearance.gold);
+  document.documentElement.style.setProperty('--gold3', D.appearance.gold);
+  // hero
+  const setTxt=(id,val)=>{ const e=document.getElementById(id); if(e) e.textContent=val; };
+  setTxt('s-hero-badge', D.hero.badge);
+  const titleEl=document.getElementById('s-hero-title');
+  if(titleEl) titleEl.innerHTML=D.hero.title.replace(/\[em\](.*?)\[\/em\]/g,'<em>$1</em>');
+  setTxt('s-hero-sub', D.hero.sub);
+  const b1=document.getElementById('s-hero-btn1'); if(b1) b1.textContent=D.hero.btn1;
+  setTxt('s-float-badge-text', D.hero.floatBadge);
+  D.hero.stats.forEach((s,i)=>{ setTxt('s-stat'+(i+1)+'-num',s.num); setTxt('s-stat'+(i+1)+'-lbl',s.lbl); });
+  // contact
+  setTxt('s-ci-address', D.contact.address); setTxt('s-ci-phone', D.contact.phone);
+  setTxt('s-ci-email', D.contact.email); setTxt('s-ci-hours', D.contact.hours);
+  const waBtn=document.getElementById('s-wa-btn'); if(waBtn){ waBtn.href='https://wa.me/'+D.contact.wa; waBtn.style.display=D.features.wa?'flex':'none'; }
+  // features
+  const ticker=document.getElementById('s-ticker-wrap'); if(ticker) ticker.style.display=D.features.ticker?'':'none';
+  const testiSec=document.getElementById('s-testi-section'); if(testiSec) testiSec.style.display=D.features.testi?'':'none';
+  const ctaBanner=document.getElementById('s-cta-banner'); if(ctaBanner) ctaBanner.style.display=D.features.cta?'':'none';
+  // logo / footer
+  const logoEl=document.getElementById('site-logo-el'); if(logoEl){ const parts=D.appearance.siteName.split(' '); logoEl.innerHTML=parts[0]+(parts.length>1?'<span> '+parts.slice(1).join(' ')+'</span>':''); }
+  const fLogo=document.getElementById('s-footer-logo'); if(fLogo){ const parts=D.appearance.siteName.split(' '); fLogo.innerHTML=parts[0]+(parts.length>1?'<span> '+parts.slice(1).join(' ')+'</span>':''); }
+  setTxt('s-footer-copy','© 2025 '+D.appearance.siteName+'. All rights reserved.');
+  setTxt('s-footer-addr', D.contact.address);
+  // render dynamic sections
+  renderSiteTestimonials(); renderSiteGallery(); renderSiteBlog(); renderSiteServices();
+}
+
+function renderSiteTestimonials(){
+  const el=document.getElementById('s-testi-grid'); if(!el) return;
+  el.innerHTML=D.testimonials.map(t=>`
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-text">"${t.text}"</p>
+      <div class="testi-author"><div class="testi-avatar">${t.initials}</div><div><div class="testi-name">${t.name}</div><div class="testi-dest">${t.dest}</div></div></div>
+    </div>`).join('');
+}
+
+function renderSiteGallery(){
+  const el=document.getElementById('s-gallery-masonry'); if(!el) return;
+  const heights=[200,260,180,300,200,240,210,270,190];
+  el.innerHTML=D.gallery.map((g,i)=>`
+    <div class="gal-item" data-cat="${g.cat}" onclick="openLightbox('${g.icon}','${g.title.replace(/'/g,"\\'")}','${(g.desc||'').replace(/'/g,"\\'")}')">
+      <div class="gbg" style="background:${galColors[i%galColors.length]};height:${heights[i%heights.length]}px">${g.icon}</div>
+      <div class="gover"><div class="gover-title">${g.title}</div><div class="gover-tag">${g.cat}</div></div>
+    </div>`).join('');
+}
+
+function renderSiteBlog(){
+  const mainEl=document.getElementById('s-blog-main'); if(!mainEl) return;
+  const articlesEl=document.getElementById('s-blog-articles'); if(!articlesEl) return;
+  const catsEl=document.getElementById('s-blog-cats'); if(!catsEl) return;
+  if(!D.blog.length){ mainEl.innerHTML='<p style="color:var(--gray);">No posts yet.</p>'; return; }
+  const bgColors=['#C9D9E8','#F0E6D4','#C9F0E4','#F0D4E8','#E8F0D4'];
+  const [first,...rest]=D.blog;
+  mainEl.innerHTML=`
+    <div class="featured-post" onclick="openBlogArticle(${first.id})">
+      <div class="fp-img" style="background:${bgColors[0]}">${first.icon}</div>
+      <div class="fp-body"><div class="fp-tag">Featured · ${first.cat}</div><h2>${first.title}</h2><p>${first.summary}</p><div class="fp-meta"><span>📅 ${first.date}</span><span style="color:var(--gold3);font-weight:600;">Read now →</span></div></div>
+    </div>
+    <div class="blog-posts-grid">${rest.map((b,i)=>`
+      <div class="bp-card" onclick="openBlogArticle(${b.id})">
+        <div class="bp-img" style="background:${bgColors[(i+1)%bgColors.length]}">${b.icon}</div>
+        <div class="bp-body"><div class="bp-tag">${b.cat}</div><h3>${b.title}</h3><p>${b.summary}</p><div class="bp-meta"><span>${b.date}</span><span class="bp-read">Read →</span></div></div>
+      </div>`).join('')}</div>`;
+  // categories
+  const cats={};
+  D.blog.forEach(b=>{ cats[b.cat]=(cats[b.cat]||0)+1; });
+  catsEl.innerHTML='<div style="display:flex;flex-direction:column;gap:10px;">'+Object.entries(cats).map(([cat,count])=>`<div style="display:flex;justify-content:space-between;font-size:13px;cursor:pointer;padding:6px 0;" onclick=""><span>${cat}</span><span style="background:var(--cream);padding:2px 8px;border-radius:20px;font-size:12px;color:var(--gray);">${count}</span></div>`).join('')+'</div>';
+  // articles
+  articlesEl.innerHTML=D.blog.map(b=>`
+    <div class="blog-article" id="s-article-${b.id}">
+      <div style="padding:0 6%">
+        <button class="back-btn" onclick="closeBlogArticle()">← Back to Blog</button>
+        <div class="fp-tag">${b.cat}</div>
+        <h1 class="article-title">${b.title}</h1>
+        <div class="article-meta">By Nexora Team · ${b.date}</div>
+        <div class="article-body">${parseContent(b.content)}</div>
+      </div>
+    </div>`).join('');
+}
+
+function parseContent(txt){
+  return (txt||'').replace(/\[h3\](.*?)\[\/h3\]/g,'<h3>$1</h3>').replace(/\[ul\]([\s\S]*?)\[\/ul\]/g,'<ul>$1</ul>').replace(/\[li\](.*?)\[\/li\]/g,'<li>$1</li>').split('\n').map(l=>l.trim()&&!l.startsWith('<')?`<p>${l}</p>`:l).join('');
+}
+
+function renderSiteServices(){
+  const tabsEl=document.getElementById('s-svc-tabs'); if(!tabsEl) return;
+  const panelsEl=document.getElementById('s-svc-panels'); if(!panelsEl) return;
+  tabsEl.innerHTML=D.services.map((s,i)=>`<div class="svc-tab ${i===0?'active':''}" onclick="switchSvc(${i},this)">${s.title}</div>`).join('');
+  panelsEl.innerHTML=D.services.map((s,i)=>`
+    <div class="svc-panel ${i===0?'active':''}">
+      <div class="svc-info">
+        <div class="s-label">Service 0${i+1}</div>
+        <h2>${s.title}</h2>
+        <p>${s.desc}</p>
+      </div>
+      <div class="svc-right" style="background:var(--cream);border-radius:10px;padding:36px;">
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:22px;margin-bottom:20px;">Book This Service</h3>
+        <p style="font-size:14px;color:var(--gray);margin-bottom:20px;">Ready to get started? Book a free consultation and let our experts guide you.</p>
+        <button class="btn-gold" onclick="showPage('contact')" style="width:100%;">Book Free Consultation</button>
+      </div>
+    </div>`).join('');
+}
+
+// ══ SITE INTERACTIONS ══
+function showPage(name){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  document.getElementById('nav-'+name).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(name==='blog') closeBlogArticle();
+}
+function switchSvc(idx,el){
+  document.querySelectorAll('.svc-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.svc-panel').forEach(p=>p.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.svc-panel')[idx].classList.add('active');
+}
+function filterGallery(cat,btn){
+  document.querySelectorAll('.gf-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.gal-item').forEach(item=>{ item.style.display=(cat==='all'||item.dataset.cat===cat)?'':'none'; });
+}
+function openLightbox(icon,title,desc){
+  document.getElementById('lbImg').textContent=icon;
+  document.getElementById('lbTitle').textContent=title;
+  document.getElementById('lbDesc').textContent=desc;
+  document.getElementById('lightbox').classList.add('open');
+}
+function closeLightbox(){ document.getElementById('lightbox').classList.remove('open'); }
+function openBlogArticle(id){
+  document.getElementById('s-blog-list').style.display='none';
+  document.querySelectorAll('.blog-article').forEach(a=>a.classList.remove('open'));
+  const art=document.getElementById('s-article-'+id); if(art) art.classList.add('open');
+  window.scrollTo({top:70,behavior:'smooth'});
+}
+function closeBlogArticle(){
+  document.querySelectorAll('.blog-article').forEach(a=>a.classList.remove('open'));
+  document.getElementById('s-blog-list').style.display='';
+  window.scrollTo({top:70,behavior:'smooth'});
+}
+function submitContactForm(){
+  const name=document.getElementById('cf-name').value.trim();
+  const phone=document.getElementById('cf-phone').value.trim();
+  const email=document.getElementById('cf-email').value.trim();
+  if(!name||!phone||!email){ alert('Please fill in name, phone, and email.'); return; }
+  D.inquiries.push({name,phone,email,dest:document.getElementById('cf-dest').value,level:document.getElementById('cf-level').value,service:document.getElementById('cf-service').value,msg:document.getElementById('cf-msg').value,read:false,time:new Date().toLocaleString()});
+  saveData();
+  document.getElementById('s-contact-form-wrap').style.display='none';
+  document.getElementById('s-success-msg').classList.add('show');
+  updateDashboard();
+}
+function resetContactForm(){
+  ['cf-name','cf-phone','cf-email','cf-msg'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('s-contact-form-wrap').style.display='';
+  document.getElementById('s-success-msg').classList.remove('show');
+}
+
+// ══ BOOT ══
+(async function init(){
+  await loadData();
+  applySiteData();
+})();
+</script>
+</body>
+</html>
