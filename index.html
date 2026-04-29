@@ -1,1065 +1,1308 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta name="description" content="Nexora Consultancy — Dhaka's most trusted study abroad consultancy. Expert guidance for UK, USA, Canada, Australia admissions, visa assistance, and scholarships."/>
-<meta name="keywords" content="study abroad Bangladesh, UK admission, Canada student visa, IELTS coaching, scholarship guidance, Dhaka consultancy"/>
-<meta property="og:title" content="Nexora Consultancy — Study Abroad Experts"/>
-<meta property="og:description" content="5000+ students placed at world-class universities. 98% visa success rate. Free consultation available."/>
-<meta property="og:type" content="website"/>
-<meta property="og:url" content="https://nexoraconsultancies.com"/>
-<title>Nexora Consultancy — Study Abroad Experts | Dhaka, Bangladesh</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%235b5ef4'/><polygon points='16,4 19.5,12 28,13 22,19 23.5,28 16,24 8.5,28 10,19 4,13 12.5,12' fill='white'/></svg>">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TopCandidate.pro — Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --navy:#08172E;--navy2:#0F2444;--gold:#D4A843;--gold2:#F0C96A;--gold3:#A07820;
-  --cream:#FAF7F2;--white:#fff;--gray:#64748B;--border:rgba(8,23,46,0.1);
-  --red:#EF4444;--green:#10B981;
+  --navy:#1e1b4b;--indigo:#5b5ef4;--indigo2:#4a4de0;
+  --ig:rgba(91,94,244,.1);--ib:rgba(91,94,244,.25);
+  --orange:#fb923c;--orange2:#f97316;--og:rgba(251,146,60,.1);--ob:rgba(251,146,60,.25);
+  --bg:#07080f;--surface:#0f1117;--s2:#151a24;--s3:#1b2130;--s4:#212840;
+  --border:#1b2130;--border2:#212840;--border3:#2a3350;
+  --text:#eef0f8;--t2:#8b95b0;--t3:#4a5570;
+  --green:#10b981;--gg:rgba(16,185,129,.1);--gb:rgba(16,185,129,.25);
+  --red:#f43f5e;--rg:rgba(244,63,94,.1);--rb:rgba(244,63,94,.25);
+  --amber:#f59e0b;--amg:rgba(245,158,11,.1);--amb:rgba(245,158,11,.25);
+  --blue:#38bdf8;--blg:rgba(56,189,248,.1);--blb:rgba(56,189,248,.25);
+  --r:12px;--rs:8px;--rxs:6px;
 }
-html{scroll-behavior:smooth;}
-body{font-family:'Inter',sans-serif;color:var(--navy);background:var(--white);overflow-x:hidden;}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
 
-/* ── SCROLL PROGRESS ── */
-#scroll-progress{position:fixed;top:0;left:0;height:3px;background:var(--gold);z-index:999;transition:width 0.1s;}
+/* ── TOPBAR ── */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;background:rgba(10,11,20,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 1.25rem;gap:.75rem}
+.t-logo{display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0}
+.t-icon{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--indigo),var(--orange));display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.t-name{font-size:15px;font-weight:800;letter-spacing:-.3px;color:var(--text)}
+.t-by{font-size:10px;color:var(--t3);background:var(--s2);border:1px solid var(--border2);border-radius:20px;padding:2px 7px;margin-left:2px}
+.t-sep{width:1px;height:20px;background:var(--border2);flex-shrink:0}
+.t-nav{display:flex;align-items:center;gap:1px}
+.tn{font-size:12px;font-weight:500;color:var(--t2);padding:5px 10px;border-radius:6px;cursor:pointer;transition:all .12s;background:none;border:none;font-family:inherit}
+.tn:hover,.tn.act{background:var(--s2);color:var(--text)}
+.tn.act{font-weight:600}
+.t-right{margin-left:auto;display:flex;align-items:center;gap:6px}
+.t-plan{font-size:10px;font-weight:700;background:var(--og);color:var(--orange);border:1px solid var(--ob);border-radius:20px;padding:3px 9px}
+.t-avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--indigo),var(--orange));display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;cursor:pointer;border:2px solid var(--border2);flex-shrink:0}
+.t-btn{padding:5px 11px;border-radius:var(--rs);font-size:11px;font-weight:500;cursor:pointer;font-family:inherit;border:1px solid var(--border2);background:var(--s2);color:var(--t2);transition:all .12s;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
+.t-btn:hover{background:var(--s3);color:var(--text)}
+.t-btn.accent{background:var(--indigo);color:#fff;border-color:var(--indigo)}
+.t-btn.accent:hover{background:var(--indigo2)}
 
-/* ── NAV ── */
-nav{display:flex;align-items:center;justify-content:space-between;padding:0 6%;height:70px;background:rgba(8,23,46,0.97);backdrop-filter:blur(12px);position:fixed;top:3px;left:0;right:0;z-index:200;border-bottom:1px solid rgba(212,168,67,0.15);transition:all 0.3s;}
-nav.scrolled{height:60px;background:rgba(8,23,46,0.99);}
-.logo{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;color:var(--white);letter-spacing:0.5px;cursor:pointer;}
-.logo span{color:var(--gold);}
-.nav-links{display:flex;gap:28px;list-style:none;}
-.nav-links a{text-decoration:none;font-size:13px;font-weight:500;color:rgba(255,255,255,0.65);transition:color 0.2s;cursor:pointer;position:relative;padding-bottom:2px;}
-.nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1px;background:var(--gold);transition:width 0.25s;}
-.nav-links a:hover,.nav-links a.active{color:var(--white);}
-.nav-links a:hover::after,.nav-links a.active::after{width:100%;}
-.nav-cta{background:var(--gold);color:var(--navy);padding:9px 22px;border-radius:3px;font-size:13px;font-weight:600;border:none;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s;}
-.nav-cta:hover{background:var(--gold2);transform:translateY(-1px);}
-.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;}
-.hamburger span{width:24px;height:2px;background:var(--white);border-radius:2px;transition:all 0.3s;}
-.mobile-menu{display:none;position:fixed;top:70px;left:0;right:0;background:var(--navy);padding:20px 6%;z-index:199;border-bottom:1px solid rgba(212,168,67,0.15);}
-.mobile-menu.open{display:block;}
-.mobile-menu a{display:block;color:rgba(255,255,255,0.7);font-size:15px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.07);cursor:pointer;text-decoration:none;}
-.mobile-menu a:last-child{border-bottom:none;}
+/* ── LAYOUT ── */
+.shell{display:flex;padding-top:56px;min-height:100vh}
 
-/* ── PAGES ── */
-.page{display:none;padding-top:73px;}
-.page.active{display:block;animation:rise 0.45s cubic-bezier(0.22,1,0.36,1);}
-@keyframes rise{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+/* ── SIDEBAR ── */
+.sidebar{width:210px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);padding:.75rem .6rem;position:fixed;top:56px;left:0;height:calc(100vh - 56px);overflow-y:auto;display:flex;flex-direction:column;z-index:100}
+.sb-sec{font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--t3);padding:0 8px;margin:1rem 0 3px}
+.sb-sec:first-child{margin-top:0}
+.sb-item{display:flex;align-items:center;gap:7px;padding:7px 9px;border-radius:var(--rs);font-size:12px;font-weight:500;color:var(--t2);cursor:pointer;transition:all .12s;margin-bottom:1px;background:none;border:none;font-family:inherit;width:100%;text-align:left;position:relative}
+.sb-item:hover{background:var(--s2);color:var(--text)}
+.sb-item.act{background:var(--ig);color:#a5b4fc;font-weight:600}
+.sb-item.act::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:2px;height:14px;background:var(--indigo);border-radius:0 2px 2px 0}
+.sb-badge{margin-left:auto;font-size:9px;font-weight:700;background:var(--s3);color:var(--t3);border-radius:8px;padding:1px 6px}
+.sb-item.act .sb-badge{background:var(--ig);color:#a5b4fc}
+.sb-footer{margin-top:auto;padding:.6rem 6px 0;border-top:1px solid var(--border);font-size:11px}
+.sb-company{font-weight:600;color:var(--t2);margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sb-status{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--t3)}
+.sb-dot{width:5px;height:5px;border-radius:50%;background:var(--green);flex-shrink:0}
 
-/* ══ HOME HERO ══ */
-.hero{min-height:calc(100vh - 73px);background:var(--navy);display:flex;flex-direction:column;justify-content:center;padding:80px 6% 60px;position:relative;overflow:hidden;}
-.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 70% at 85% 40%,rgba(212,168,67,0.09) 0%,transparent 60%),radial-gradient(ellipse 40% 50% at 10% 80%,rgba(212,168,67,0.05) 0%,transparent 50%);}
-.hero-grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(212,168,67,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(212,168,67,0.04) 1px,transparent 1px);background-size:60px 60px;}
-.hero-inner{position:relative;z-index:2;display:grid;grid-template-columns:1.1fr 0.9fr;gap:80px;align-items:center;}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;background:rgba(212,168,67,0.1);border:1px solid rgba(212,168,67,0.25);padding:7px 16px;border-radius:2px;margin-bottom:28px;}
-.hero-eyebrow span{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold2);}
-.hero-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;animation:pulse 2s infinite;}
-@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;};}
-.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(40px,5vw,66px);line-height:1.08;color:var(--white);margin-bottom:24px;font-weight:600;}
-.hero h1 em{color:var(--gold);font-style:italic;}
-.hero-sub{font-size:16px;color:rgba(255,255,255,0.6);line-height:1.75;max-width:480px;margin-bottom:40px;font-weight:300;}
-.hero-btns{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:48px;}
-.btn-gold{background:var(--gold);color:var(--navy);padding:15px 32px;border-radius:3px;font-weight:600;font-size:14px;border:none;cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s;}
-.btn-gold:hover{background:var(--gold2);transform:translateY(-2px);}
-.btn-ghost{background:transparent;color:var(--white);padding:15px 32px;border-radius:3px;font-weight:500;font-size:14px;border:1px solid rgba(255,255,255,0.25);cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.2s;}
-.btn-ghost:hover{border-color:var(--gold);color:var(--gold);}
-.trust-bar{display:flex;gap:24px;flex-wrap:wrap;}
-.trust-item{display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.5);}
-.trust-check{color:var(--gold);font-size:14px;}
-.hero-right{position:relative;}
-.hero-stats-card{background:rgba(255,255,255,0.04);border:1px solid rgba(212,168,67,0.2);border-radius:12px;padding:36px;position:relative;}
-.hero-stats-card::before{content:'';position:absolute;top:-1px;left:30px;right:30px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
-.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:rgba(255,255,255,0.05);border-radius:8px;overflow:hidden;}
-.stat-cell{padding:26px 20px;text-align:center;background:rgba(8,23,46,0.6);}
-.stat-num{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:700;color:var(--gold);line-height:1;margin-bottom:6px;display:block;}
-.stat-lbl{font-size:12px;color:rgba(255,255,255,0.45);}
-.card-footer-text{margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,0.06);font-size:13px;color:rgba(255,255,255,0.4);text-align:center;}
-.card-footer-text strong{color:var(--gold);font-weight:500;}
-.float-badge{position:absolute;bottom:-20px;left:-24px;background:var(--gold);color:var(--navy);padding:12px 18px;border-radius:8px;font-size:13px;font-weight:600;box-shadow:0 8px 24px rgba(212,168,67,0.35);display:flex;align-items:center;gap:10px;animation:float 3s ease-in-out infinite;}
-@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);};}
+/* ── MAIN ── */
+.main{margin-left:210px;flex:1;padding:1.5rem 1.75rem 4rem;min-height:calc(100vh - 56px)}
+.page{display:none}
+.page.act{display:block}
 
-/* ── TICKER ── */
-.ticker-wrap{background:var(--cream);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:16px 0;overflow:hidden;position:relative;}
-.ticker-label{position:absolute;left:0;top:0;bottom:0;z-index:2;background:linear-gradient(90deg,var(--cream) 70%,transparent);padding:0 20px 0 6%;display:flex;align-items:center;font-size:11px;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;color:var(--gray);white-space:nowrap;}
-.ticker-track{display:flex;width:max-content;animation:ticker 30s linear infinite;}
-@keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%)};}
-.ticker-item{display:flex;align-items:center;gap:10px;padding:0 28px;font-size:14px;font-weight:500;white-space:nowrap;color:var(--navy);border-right:1px solid var(--border);}
+/* ── PAGE HEADER ── */
+.ph{margin-bottom:1.25rem}
+.ph h1{font-size:19px;font-weight:800;letter-spacing:-.4px;margin-bottom:3px}
+.ph p{font-size:12px;color:var(--t2)}
+.ph-row{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1.25rem}
 
-/* ── SECTIONS ── */
-.section{padding:90px 6%;}
-.section.alt{background:var(--cream);}
-.s-label{font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold3);margin-bottom:12px;}
-.s-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3.5vw,44px);font-weight:600;line-height:1.2;color:var(--navy);margin-bottom:16px;}
-.s-sub{font-size:15px;color:var(--gray);line-height:1.75;max-width:560px;font-weight:300;}
+/* ── CARDS ── */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.1rem}
+.card+.card{margin-top:10px}
+.card-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:.85rem}
+.card-title{font-size:13px;font-weight:700;display:flex;align-items:center;gap:6px}
+.card-sub{font-size:11px;color:var(--t3)}
 
-/* COUNTERS */
-.counters-row{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:56px;}
-.counter-card{text-align:center;padding:36px 20px;border:1px solid var(--border);border-radius:10px;transition:all 0.3s;}
-.counter-card:hover{border-color:var(--gold);transform:translateY(-4px);}
-.counter-num{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:700;color:var(--gold);line-height:1;}
-.counter-label{font-size:14px;color:var(--gray);margin-top:8px;}
+/* ── STAT CARDS ── */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
+.stats-grid-7{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:10px}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:.85rem 1rem;position:relative;overflow:hidden;transition:border-color .2s,transform .15s}
+.stat:hover{border-color:var(--border3);transform:translateY(-1px)}
+.stat-bar{position:absolute;top:0;left:0;right:0;height:2px}
+.stat-lbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--t3);margin-bottom:5px}
+.stat-val{font-size:22px;font-weight:800;letter-spacing:-.5px;margin-bottom:2px}
+.stat-sub{font-size:10px;color:var(--t3)}
+.stat-trend{font-size:10px;font-weight:600;margin-top:3px}
+.stat-trend.up{color:var(--green)}.stat-trend.dn{color:var(--red)}
 
-/* STEPS */
-.steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:60px;position:relative;}
-.steps-grid::before{content:'';position:absolute;top:28px;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,var(--gold),var(--gold),transparent);opacity:0.3;z-index:0;}
-.step{text-align:center;padding:0 16px;position:relative;z-index:1;}
-.step-num{width:56px;height:56px;border-radius:50%;background:var(--navy);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;color:var(--gold);transition:all 0.2s;}
-.step:hover .step-num{background:var(--gold);color:var(--navy);}
-.step h4{font-size:14px;font-weight:600;margin-bottom:8px;}
-.step p{font-size:13px;color:var(--gray);line-height:1.6;}
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:5px;padding:7px 13px;border-radius:var(--rs);font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .12s;border:none;text-decoration:none;white-space:nowrap}
+.btn-primary{background:var(--indigo);color:#fff;box-shadow:0 2px 8px rgba(91,94,244,.25)}
+.btn-primary:hover{background:var(--indigo2)}
+.btn-orange{background:var(--orange);color:#fff}
+.btn-orange:hover{background:var(--orange2)}
+.btn-ghost{background:var(--s2);color:var(--t2);border:1px solid var(--border2)}
+.btn-ghost:hover{background:var(--s3);color:var(--text)}
+.btn-sm{padding:4px 9px;font-size:11px}
+.btn-xs{padding:3px 7px;font-size:10px;border-radius:5px}
+.btn-green{background:var(--gg);color:var(--green);border:1px solid var(--gb)}
+.btn-red{background:var(--rg);color:#fda4af;border:1px solid var(--rb)}
+.btn-amber{background:var(--amg);color:var(--amber);border:1px solid var(--amb)}
 
-/* WHY CARDS */
-.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px;}
-.why-card{padding:30px 26px;border:1px solid var(--border);border-radius:8px;transition:all 0.25s;}
-.why-card:hover{border-color:var(--gold);transform:translateY(-4px);box-shadow:0 8px 32px rgba(212,168,67,0.1);}
-.why-icon{width:48px;height:48px;border-radius:10px;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px;border:1px solid var(--border);}
-.why-card h3{font-size:15px;font-weight:600;margin-bottom:8px;}
-.why-card p{font-size:13px;color:var(--gray);line-height:1.65;}
+/* ── BADGES ── */
+.badge{font-size:10px;font-weight:600;padding:2px 7px;border-radius:20px;border:1px solid;display:inline-block;white-space:nowrap}
+.b-green{background:var(--gg);color:var(--green);border-color:var(--gb)}
+.b-red{background:var(--rg);color:#fda4af;border-color:var(--rb)}
+.b-amber{background:var(--amg);color:var(--amber);border-color:var(--amb)}
+.b-indigo{background:var(--ig);color:#a5b4fc;border-color:var(--ib)}
+.b-orange{background:var(--og);color:var(--orange);border-color:var(--ob)}
+.b-blue{background:var(--blg);color:var(--blue);border-color:var(--blb)}
 
-/* TESTIMONIALS */
-.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:56px;}
-.testi-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:26px;transition:all 0.25s;position:relative;}
-.testi-card:hover{box-shadow:0 8px 32px rgba(8,23,46,0.08);border-color:rgba(212,168,67,0.3);}
-.testi-quote{position:absolute;top:20px;right:20px;font-size:48px;color:rgba(212,168,67,0.15);font-family:'Cormorant Garamond',serif;line-height:1;}
-.testi-stars{color:var(--gold);font-size:14px;margin-bottom:12px;letter-spacing:2px;}
-.testi-text{font-size:14px;color:var(--navy);line-height:1.7;margin-bottom:18px;font-style:italic;}
-.testi-author{display:flex;align-items:center;gap:12px;}
-.testi-avatar{width:40px;height:40px;border-radius:50%;background:var(--navy);color:var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:700;flex-shrink:0;}
-.testi-name{font-size:13px;font-weight:600;}
-.testi-dest{font-size:12px;color:var(--gray);}
-.testi-add-btn{display:inline-flex;align-items:center;gap:8px;margin-top:32px;padding:12px 24px;background:var(--navy);color:var(--white);border:none;border-radius:6px;font-size:14px;font-weight:500;cursor:pointer;font-family:'Inter',sans-serif;transition:background 0.2s;}
-.testi-add-btn:hover{background:var(--gold);color:var(--navy);}
+/* ── TABLES ── */
+.tbl-wrap{overflow-x:auto}
+.tbl{width:100%;border-collapse:collapse;font-size:12px}
+.tbl th{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--t3);padding:7px 10px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap;background:var(--s2)}
+.tbl td{padding:9px 10px;color:var(--t2);border-bottom:1px solid var(--border);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:var(--s2);cursor:pointer}
+.tbl-empty{text-align:center;padding:2.5rem;color:var(--t3);font-size:12px}
+.tbl-link{color:var(--indigo);font-weight:600;text-decoration:none}
+.tbl-link:hover{text-decoration:underline}
 
-/* TESTIMONIAL FORM MODAL */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(8,23,46,0.85);z-index:500;align-items:center;justify-content:center;padding:20px;}
-.modal-overlay.open{display:flex;}
-.modal-box{background:var(--white);border-radius:12px;padding:40px;max-width:500px;width:100%;position:relative;animation:rise 0.35s ease;}
-.modal-close{position:absolute;top:16px;right:20px;font-size:22px;cursor:pointer;background:none;border:none;color:var(--gray);}
-.modal-title{font-family:'Cormorant Garamond',serif;font-size:26px;margin-bottom:6px;}
-.modal-sub{font-size:14px;color:var(--gray);margin-bottom:24px;}
-.mfield{margin-bottom:16px;}
-.mfield label{display:block;font-size:12px;font-weight:600;color:var(--gray);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.5px;}
-.mfield input,.mfield textarea,.mfield select{width:100%;padding:11px 14px;border:1px solid var(--border);border-radius:6px;font-family:'Inter',sans-serif;font-size:14px;color:var(--navy);outline:none;transition:border-color 0.2s;}
-.mfield input:focus,.mfield textarea:focus,.mfield select:focus{border-color:var(--gold);}
-.mfield textarea{height:100px;resize:vertical;}
-.star-select{display:flex;gap:8px;margin-top:6px;}
-.star-select span{font-size:24px;cursor:pointer;opacity:0.3;transition:opacity 0.2s;}
-.star-select span.active{opacity:1;}
-.modal-submit{width:100%;padding:13px;background:var(--navy);color:var(--white);border:none;border-radius:6px;font-size:15px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:background 0.2s;margin-top:8px;}
-.modal-submit:hover{background:var(--gold);color:var(--navy);}
+/* ── SCORE BAR ── */
+.score-bar{display:flex;align-items:center;gap:6px}
+.score-bar-bg{flex:1;height:4px;background:var(--border2);border-radius:2px;overflow:hidden;min-width:50px}
+.score-bar-fill{height:100%;border-radius:2px}
+.score-num{font-weight:700;min-width:24px;font-size:12px}
 
-/* GALLERY */
-.gallery-filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:32px;}
-.gf-btn{padding:8px 20px;border-radius:40px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:var(--white);color:var(--navy);transition:all 0.2s;}
-.gf-btn.active,.gf-btn:hover{background:var(--navy);color:var(--white);border-color:var(--navy);}
-.gallery-upload-btn{margin-left:auto;display:flex;align-items:center;gap:8px;padding:8px 18px;background:var(--gold);color:var(--navy);border:none;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;}
-.gallery-masonry{columns:3;column-gap:16px;}
-.gal-item{break-inside:avoid;margin-bottom:16px;border-radius:10px;overflow:hidden;position:relative;cursor:pointer;}
-.gal-item .gbg{width:100%;display:flex;align-items:center;justify-content:center;font-size:56px;transition:transform 0.4s;}
-.gal-item:hover .gbg{transform:scale(1.05);}
-.gal-item .gover{position:absolute;inset:0;background:rgba(8,23,46,0);transition:background 0.3s;display:flex;flex-direction:column;justify-content:flex-end;padding:18px;}
-.gal-item:hover .gover{background:rgba(8,23,46,0.75);}
-.gover-title{color:var(--white);font-size:14px;font-weight:600;transform:translateY(10px);opacity:0;transition:all 0.3s;}
-.gover-tag{color:var(--gold);font-size:12px;transform:translateY(10px);opacity:0;transition:all 0.3s 0.05s;}
-.gal-item:hover .gover-title,.gal-item:hover .gover-tag{transform:translateY(0);opacity:1;}
-/* gallery upload zone */
-.gallery-upload-zone{border:2px dashed var(--border);border-radius:10px;padding:40px;text-align:center;cursor:pointer;transition:all 0.2s;margin-bottom:24px;}
-.gallery-upload-zone:hover{border-color:var(--gold);background:rgba(212,168,67,0.03);}
-.gallery-upload-zone p{font-size:14px;color:var(--gray);margin-top:10px;}
+/* ── PIPELINE FUNNEL ── */
+.funnel{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;margin-bottom:10px}
+.funnel-stage{background:var(--surface);border:1px solid var(--border);border-radius:var(--rs);padding:.75rem .6rem;text-align:center;transition:all .2s;cursor:pointer}
+.funnel-stage:hover{border-color:var(--indigo);transform:translateY(-2px)}
+.funnel-stage.act{border-color:var(--indigo);background:var(--ig)}
+.funnel-num{font-size:20px;font-weight:800;letter-spacing:-.5px;margin-bottom:3px}
+.funnel-lbl{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--t3)}
+.funnel-bar{height:3px;border-radius:2px;margin-top:8px}
 
-/* BLOG */
-.blog-layout{display:grid;grid-template-columns:1fr 300px;gap:48px;}
-.featured-post{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:36px;cursor:pointer;transition:box-shadow 0.2s;}
-.featured-post:hover{box-shadow:0 8px 32px rgba(8,23,46,0.08);}
-.fp-img{display:flex;align-items:center;justify-content:center;font-size:72px;}
-.fp-body{padding:32px;}
-.fp-tag{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold3);margin-bottom:10px;}
-.fp-body h2{font-family:'Cormorant Garamond',serif;font-size:24px;margin-bottom:10px;line-height:1.3;}
-.fp-body p{font-size:14px;color:var(--gray);line-height:1.7;margin-bottom:18px;}
-.fp-meta{font-size:12px;color:var(--gray);display:flex;gap:16px;align-items:center;}
-.blog-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
-.bp-card{border:1px solid var(--border);border-radius:8px;overflow:hidden;cursor:pointer;transition:all 0.2s;}
-.bp-card:hover{border-color:var(--gold);transform:translateY(-3px);}
-.bp-img{height:130px;display:flex;align-items:center;justify-content:center;font-size:40px;}
-.bp-body{padding:16px;}
-.bp-tag{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold3);margin-bottom:6px;}
-.bp-body h3{font-family:'Cormorant Garamond',serif;font-size:16px;line-height:1.4;margin-bottom:8px;}
-.bp-body p{font-size:13px;color:var(--gray);line-height:1.6;margin-bottom:10px;}
-.bp-meta{font-size:12px;color:var(--gray);display:flex;justify-content:space-between;align-items:center;}
-.bp-read{font-size:12px;font-weight:600;color:var(--gold3);}
-.sidebar-widget{border:1px solid var(--border);border-radius:8px;padding:22px;margin-bottom:20px;}
-.sw-title{font-size:14px;font-weight:600;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border);}
-.blog-article{display:none;animation:rise 0.35s ease;}
-.blog-article.open{display:block;}
-.back-btn{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:var(--gray);cursor:pointer;margin-bottom:28px;border:1px solid var(--border);padding:8px 16px;border-radius:4px;background:none;font-family:'Inter',sans-serif;transition:all 0.2s;}
-.back-btn:hover{color:var(--navy);border-color:var(--navy);}
-.article-tag{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold3);margin-bottom:12px;}
-.article-title{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,4vw,42px);line-height:1.2;margin-bottom:14px;}
-.article-meta{font-size:13px;color:var(--gray);margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--border);}
-.article-body{font-size:15px;color:var(--navy);line-height:1.85;}
-.article-body h3{font-family:'Cormorant Garamond',serif;font-size:22px;margin:28px 0 10px;}
-.article-body p{margin-bottom:16px;color:#334155;}
-.article-body ul{margin:0 0 16px 20px;}
-.article-body li{margin-bottom:6px;color:#334155;font-size:14px;}
+/* ── FILTERS ── */
+.filters-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;align-items:center}
+.filter-select{padding:6px 10px;background:var(--s2);border:1px solid var(--border2);border-radius:var(--rs);font-size:11px;font-family:inherit;color:var(--t2);outline:none;transition:border-color .12s;cursor:pointer}
+.filter-select:focus{border-color:var(--indigo)}
+.filter-input{padding:6px 10px;background:var(--s2);border:1px solid var(--border2);border-radius:var(--rs);font-size:11px;font-family:inherit;color:var(--text);outline:none;transition:border-color .12s}
+.filter-input::placeholder{color:var(--t3)}
+.filter-input:focus{border-color:var(--indigo)}
+.filter-clear{font-size:11px;color:var(--t3);cursor:pointer;padding:6px 8px;border:none;background:none;font-family:inherit}
+.filter-clear:hover{color:var(--text)}
 
-/* SERVICES */
-.inner-hero{background:var(--navy);padding:70px 6% 56px;position:relative;overflow:hidden;}
-.inner-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(212,168,67,0.4),transparent);}
-.inner-hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(30px,4vw,50px);color:var(--white);margin-bottom:10px;}
-.inner-hero p{color:rgba(255,255,255,0.55);font-size:15px;font-weight:300;max-width:560px;}
-.services-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);background:var(--white);position:sticky;top:73px;z-index:10;overflow-x:auto;}
-.svc-tab{padding:16px 22px;font-size:13px;font-weight:500;cursor:pointer;border-bottom:2px solid transparent;color:var(--gray);transition:all 0.2s;white-space:nowrap;}
-.svc-tab.active{color:var(--navy);border-bottom-color:var(--gold);}
-.svc-panels{padding:56px 6%;}
-.svc-panel{display:none;}
-.svc-panel.active{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;animation:rise 0.35s ease;}
-.svc-info h2{font-family:'Cormorant Garamond',serif;font-size:32px;margin-bottom:14px;}
-.svc-info p{font-size:14px;color:var(--gray);line-height:1.75;margin-bottom:26px;}
-.svc-features{display:flex;flex-direction:column;gap:14px;}
-.svc-feat{display:flex;align-items:flex-start;gap:14px;padding:14px;border:1px solid var(--border);border-radius:8px;transition:border-color 0.2s;}
-.svc-feat:hover{border-color:var(--gold);}
-.svc-feat-icon{width:36px;height:36px;background:var(--cream);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
-.svc-feat h4{font-size:14px;font-weight:600;margin-bottom:3px;}
-.svc-feat p{font-size:13px;color:var(--gray);line-height:1.5;margin:0;}
-.svc-right{background:var(--cream);border-radius:10px;padding:32px;}
-.svc-right h3{font-family:'Cormorant Garamond',serif;font-size:22px;margin-bottom:18px;}
-.process-list{display:flex;flex-direction:column;}
-.p-step{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--border);}
-.p-step:last-child{border-bottom:none;}
-.p-circle{width:30px;height:30px;border-radius:50%;background:var(--navy);color:var(--gold);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.p-step h5{font-size:13px;font-weight:600;margin-bottom:2px;}
-.p-step p{font-size:12px;color:var(--gray);line-height:1.5;margin:0;}
+/* ── FORM ── */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.form-group{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
+.form-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--t2)}
+.form-input,.form-select,.form-textarea{width:100%;padding:9px 12px;background:var(--bg);border:1px solid var(--border2);border-radius:var(--rs);font-size:12px;font-family:inherit;color:var(--text);outline:none;transition:border-color .12s}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--indigo);box-shadow:0 0 0 3px var(--ig)}
+.form-input::placeholder,.form-textarea::placeholder{color:var(--t3)}
+.form-textarea{resize:vertical;line-height:1.6}
+.form-hint{font-size:10px;color:var(--t3);margin-top:2px}
 
-/* CONTACT */
-.contact-wrapper{display:grid;grid-template-columns:360px 1fr;}
-.contact-left{background:var(--navy);padding:56px 44px;position:relative;overflow:hidden;}
-.contact-left::after{content:'';position:absolute;bottom:-60px;right:-60px;width:200px;height:200px;border-radius:50%;border:1px solid rgba(212,168,67,0.1);}
-.contact-left h2{font-family:'Cormorant Garamond',serif;font-size:30px;color:var(--white);margin-bottom:12px;}
-.contact-left>p{color:rgba(255,255,255,0.5);font-size:14px;line-height:1.7;margin-bottom:40px;}
-.c-info-list{display:flex;flex-direction:column;gap:20px;}
-.c-info{display:flex;gap:14px;align-items:flex-start;}
-.c-icon{width:38px;height:38px;border-radius:8px;background:rgba(212,168,67,0.12);border:1px solid rgba(212,168,67,0.2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
-.c-info strong{display:block;color:rgba(255,255,255,0.8);font-size:13px;font-weight:500;margin-bottom:2px;}
-.c-info span{color:rgba(255,255,255,0.4);font-size:13px;}
-.contact-right{padding:56px 5%;}
-.contact-right h2{font-family:'Cormorant Garamond',serif;font-size:26px;margin-bottom:6px;}
-.contact-right>p{font-size:14px;color:var(--gray);margin-bottom:32px;}
-.form-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-.fg{display:flex;flex-direction:column;gap:5px;margin-bottom:16px;}
-.fg.full{grid-column:1/-1;}
-.fg label{font-size:12px;font-weight:600;color:var(--gray);text-transform:uppercase;letter-spacing:0.5px;}
-.fg input,.fg select,.fg textarea{padding:11px 14px;border:1px solid var(--border);border-radius:6px;font-family:'Inter',sans-serif;font-size:14px;color:var(--navy);background:var(--white);outline:none;transition:border-color 0.2s;}
-.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--gold);}
-.fg textarea{height:110px;resize:vertical;}
-/* inquiry progress */
-.form-progress{display:flex;gap:0;margin-bottom:28px;}
-.fp-step{flex:1;padding:10px;text-align:center;font-size:12px;font-weight:500;color:var(--gray);border-bottom:2px solid var(--border);transition:all 0.2s;cursor:default;}
-.fp-step.active{color:var(--navy);border-bottom-color:var(--gold);}
-.fp-step.done{color:var(--green);border-bottom-color:var(--green);}
-.form-step{display:none;}
-.form-step.active{display:block;animation:rise 0.3s ease;}
-.form-nav{display:flex;gap:12px;margin-top:8px;}
-.btn-next{flex:1;padding:13px;background:var(--navy);color:var(--white);border:none;border-radius:5px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:background 0.2s;}
-.btn-next:hover{background:var(--gold);color:var(--navy);}
-.btn-prev{padding:13px 20px;background:transparent;color:var(--gray);border:1px solid var(--border);border-radius:5px;font-size:14px;cursor:pointer;font-family:'Inter',sans-serif;}
-.success-msg{display:none;text-align:center;padding:40px 20px;}
-.success-msg.show{display:block;animation:rise 0.4s ease;}
-.success-icon{font-size:52px;margin-bottom:14px;}
-.success-msg h3{font-family:'Cormorant Garamond',serif;font-size:26px;margin-bottom:8px;}
-.success-msg p{font-size:14px;color:var(--gray);margin-bottom:20px;}
+/* ── MODAL ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:500;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.modal-overlay.open{display:flex}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.35rem;width:90%;max-width:560px;max-height:85vh;overflow-y:auto}
+.modal-lg{max-width:800px}
+.modal-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.1rem}
+.modal-title{font-size:15px;font-weight:700}
+.modal-close{background:none;border:none;color:var(--t3);cursor:pointer;font-size:18px;padding:0;transition:color .12s}
+.modal-close:hover{color:var(--text)}
+.modal-footer{display:flex;gap:7px;justify-content:flex-end;margin-top:1.1rem;padding-top:1rem;border-top:1px solid var(--border)}
 
-/* CTA BANNER */
-.cta-banner{background:var(--navy);padding:80px 6%;text-align:center;position:relative;overflow:hidden;}
-.cta-banner::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 100% at 50% 0%,rgba(212,168,67,0.08),transparent);}
-.cta-banner h2{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,4vw,46px);color:var(--white);margin-bottom:14px;position:relative;}
-.cta-banner p{font-size:15px;color:rgba(255,255,255,0.55);margin-bottom:32px;position:relative;font-weight:300;}
+/* ── CANDIDATE DETAIL ── */
+.cand-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.dim-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.dim-card{background:var(--s2);border:1px solid var(--border);border-radius:var(--rs);padding:.8rem;position:relative;overflow:hidden}
+.dim-top{height:2px;position:absolute;top:0;left:0;right:0}
+.dim-name{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--t3);margin-bottom:4px;margin-top:2px}
+.dim-score{font-size:17px;font-weight:800;letter-spacing:-.5px;margin-bottom:5px}
+.dim-bar-bg{height:3px;background:var(--border2);border-radius:2px;overflow:hidden;margin-bottom:6px}
+.dim-bar-fill{height:100%;border-radius:2px}
+.dim-fb{font-size:10px;color:var(--t2);line-height:1.5}
 
-/* LIGHTBOX */
-.lightbox{display:none;position:fixed;inset:0;background:rgba(8,23,46,0.95);z-index:500;align-items:center;justify-content:center;padding:20px;}
-.lightbox.open{display:flex;}
-.lb-content{background:var(--white);border-radius:12px;max-width:580px;width:100%;overflow:hidden;}
-.lb-img{width:100%;height:300px;display:flex;align-items:center;justify-content:center;font-size:76px;}
-.lb-info{padding:22px;}
-.lb-info h3{font-family:'Cormorant Garamond',serif;font-size:21px;margin-bottom:5px;}
-.lb-info p{font-size:14px;color:var(--gray);}
-.lb-close{position:absolute;top:18px;right:22px;color:var(--white);font-size:26px;cursor:pointer;background:none;border:none;}
+/* ── DROP ZONE ── */
+.drop-zone{border:2px dashed var(--border2);border-radius:var(--r);padding:2rem 1.5rem;text-align:center;cursor:pointer;transition:all .2s;background:var(--bg)}
+.drop-zone:hover,.drop-zone.over{border-color:var(--indigo);background:var(--ig)}
+.dz-icon{width:44px;height:44px;border-radius:10px;background:var(--s2);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;margin:0 auto 10px}
 
-/* FOOTER */
-.footer{background:var(--navy);}
-.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;padding:60px 6% 44px;border-bottom:1px solid rgba(255,255,255,0.06);}
-.footer-logo{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:700;color:var(--white);margin-bottom:12px;cursor:pointer;}
-.footer-logo span{color:var(--gold);}
-.footer-brand p{font-size:13px;color:rgba(255,255,255,0.4);line-height:1.7;max-width:260px;margin-bottom:20px;}
-.social-row{display:flex;gap:10px;}
-.soc-btn{width:36px;height:36px;border-radius:6px;border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;transition:all 0.2s;color:rgba(255,255,255,0.5);text-decoration:none;font-weight:600;}
-.soc-btn:hover{border-color:var(--gold);background:rgba(212,168,67,0.1);color:var(--gold);}
-.footer-col h4{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:18px;}
-.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
-.footer-col ul li a{font-size:13px;color:rgba(255,255,255,0.5);text-decoration:none;cursor:pointer;transition:color 0.2s;}
-.footer-col ul li a:hover{color:var(--gold);}
-.footer-bottom{padding:18px 6%;display:flex;justify-content:space-between;align-items:center;font-size:12px;color:rgba(255,255,255,0.25);}
-.footer-bottom a{color:rgba(255,255,255,0.35);text-decoration:none;}
+/* ── TOGGLE ── */
+.toggle{position:relative;width:36px;height:20px;cursor:pointer;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0}
+.toggle-track{position:absolute;inset:0;background:var(--border3);border-radius:10px;transition:background .2s}
+.toggle input:checked+.toggle-track{background:var(--indigo)}
+.toggle-thumb{position:absolute;top:3px;left:3px;width:14px;height:14px;background:#fff;border-radius:50%;transition:transform .2s}
+.toggle input:checked~.toggle-thumb{transform:translateX(16px)}
 
-/* WHATSAPP FLOAT */
-.wa-float{position:fixed;bottom:28px;right:28px;z-index:150;background:#25D366;color:var(--white);width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 4px 20px rgba(37,211,102,0.45);cursor:pointer;transition:all 0.2s;text-decoration:none;animation:bounce 2s ease-in-out infinite;}
-@keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);};}
-.wa-float:hover{transform:scale(1.1)!important;animation:none;}
-.wa-tooltip{position:absolute;right:64px;background:var(--navy);color:var(--white);padding:8px 14px;border-radius:6px;font-size:13px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 0.2s;}
-.wa-float:hover .wa-tooltip{opacity:1;}
-.wa-wrap{position:fixed;bottom:28px;right:28px;z-index:150;display:flex;align-items:center;}
+/* ── ALERTS ── */
+.alert{padding:9px 12px;border-radius:var(--rs);font-size:12px;border:1px solid;margin-bottom:10px;display:none}
+.alert-ok{background:var(--gg);border-color:var(--gb);color:var(--green)}
+.alert-err{background:var(--rg);border-color:var(--rb);color:#fda4af}
 
-/* BACK TO TOP */
-.back-to-top{position:fixed;bottom:96px;right:32px;z-index:150;width:40px;height:40px;border-radius:50%;background:var(--navy);color:var(--white);border:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:all 0.2s;opacity:0;pointer-events:none;}
-.back-to-top.visible{opacity:1;pointer-events:auto;}
-.back-to-top:hover{background:var(--gold);color:var(--navy);}
+/* ── ACTIVITY LOG ── */
+.activity-item{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}
+.activity-item:last-child{border-bottom:none}
+.activity-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.activity-txt{font-size:12px;color:var(--t2);flex:1;line-height:1.5}
+.activity-time{font-size:10px;color:var(--t3);flex-shrink:0}
 
-/* COOKIE BANNER */
-.cookie-banner{position:fixed;bottom:0;left:0;right:0;background:var(--navy);color:var(--white);padding:16px 6%;display:flex;align-items:center;justify-content:space-between;gap:20px;z-index:400;border-top:1px solid rgba(212,168,67,0.2);transform:translateY(100%);transition:transform 0.4s;}
-.cookie-banner.show{transform:translateY(0);}
-.cookie-banner p{font-size:13px;color:rgba(255,255,255,0.7);}
-.cookie-accept{padding:9px 22px;background:var(--gold);color:var(--navy);border:none;border-radius:4px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap;}
+/* ── TAGS ── */
+.tag{display:inline-block;font-size:10px;font-weight:500;padding:2px 7px;border-radius:4px;margin:1px;background:var(--s3);color:var(--t2);border:1px solid var(--border2)}
+.tag.matched{background:var(--gg);color:var(--green);border-color:var(--gb)}
+.tag.missing{background:var(--rg);color:#fda4af;border-color:var(--rb)}
 
-/* NOTIFICATION */
-.notification{position:fixed;top:90px;right:24px;background:var(--navy);color:var(--white);padding:14px 20px;border-radius:8px;font-size:14px;border-left:3px solid var(--gold);z-index:999;transform:translateX(120%);transition:transform 0.35s cubic-bezier(0.22,1,0.36,1);}
-.notification.show{transform:translateX(0);}
+/* ── JOB STATUS ── */
+.job-status{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;padding:3px 8px;border-radius:5px;border:1px solid}
 
-/* RESPONSIVE */
-@media(max-width:900px){
-  .hero-inner{grid-template-columns:1fr;}
-  .hero-right{display:none;}
-  .why-grid{grid-template-columns:1fr 1fr;}
-  .testi-grid{grid-template-columns:1fr;}
-  .counters-row{grid-template-columns:1fr 1fr;}
-  .steps-grid{grid-template-columns:1fr 1fr;gap:32px;}
-  .steps-grid::before{display:none;}
-  .contact-wrapper{grid-template-columns:1fr;}
-  .contact-left{padding:40px 6%;}
-  .blog-layout{grid-template-columns:1fr;}
-  .svc-panel.active{grid-template-columns:1fr;}
-  .footer-top{grid-template-columns:1fr 1fr;gap:32px;}
-  .gallery-masonry{columns:2;}
-  .featured-post{grid-template-columns:1fr;}
-  .blog-grid-2{grid-template-columns:1fr;}
-  .form-grid-2{grid-template-columns:1fr;}
-}
-@media(max-width:600px){
-  .nav-links,.nav-cta{display:none;}
-  .hamburger{display:flex;}
-  .why-grid{grid-template-columns:1fr;}
-  .counters-row{grid-template-columns:1fr 1fr;}
-  .steps-grid{grid-template-columns:1fr;}
-  .footer-top{grid-template-columns:1fr;}
-  .gallery-masonry{columns:1;}
-  .hero{padding:60px 5% 40px;}
-  .section{padding:60px 5%;}
-}
+/* ── SPIN ── */
+.spin{width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── STEP INDICATOR ── */
+.steps-bar{display:grid;grid-template-columns:repeat(4,1fr);background:var(--s2);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:1.25rem}
+.step-item{padding:9px 12px;text-align:center;font-size:10px;font-weight:600;color:var(--t3);border-right:1px solid var(--border);transition:all .3s}
+.step-item:last-child{border-right:none}
+.step-item.act{background:var(--ig);color:#a5b4fc}
+.step-item.done{background:var(--gg);color:var(--green)}
+.step-num{display:block;font-size:8px;text-transform:uppercase;letter-spacing:.07em;margin-bottom:2px;opacity:.6}
+
+@media(max-width:1100px){.stats-grid-7{grid-template-columns:repeat(4,1fr)}.funnel{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:860px){.stats-grid{grid-template-columns:1fr 1fr}.dim-grid{grid-template-columns:1fr 1fr}.cand-detail-grid{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}}
+@media(max-width:640px){.sidebar{display:none}.main{margin-left:0}.funnel{grid-template-columns:repeat(4,1fr)}}
 </style>
 </head>
 <body>
 
-<!-- SCROLL PROGRESS -->
-<div id="scroll-progress"></div>
-
-<!-- NAV -->
-<nav id="mainNav">
-  <div class="logo" onclick="showPage('home')">Nexora<span> Consultancy</span></div>
-  <ul class="nav-links">
-    <li><a onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
-    <li><a onclick="showPage('services')" id="nav-services">Services</a></li>
-    <li><a onclick="showPage('gallery')" id="nav-gallery">Gallery</a></li>
-    <li><a onclick="showPage('blog')" id="nav-blog">Blog</a></li>
-    <li><a onclick="showPage('contact')" id="nav-contact">Contact</a></li>
-  </ul>
-  <button class="nav-cta" onclick="showPage('contact')">Free Consultation</button>
-  <div class="hamburger" onclick="toggleMenu()" id="hamburger">
-    <span></span><span></span><span></span>
-  </div>
-</nav>
-<div class="mobile-menu" id="mobileMenu">
-  <a onclick="showPage('home');toggleMenu()">Home</a>
-  <a onclick="showPage('services');toggleMenu()">Services</a>
-  <a onclick="showPage('gallery');toggleMenu()">Gallery</a>
-  <a onclick="showPage('blog');toggleMenu()">Blog</a>
-  <a onclick="showPage('contact');toggleMenu()">Contact</a>
-  <a onclick="showPage('contact');toggleMenu()" style="color:var(--gold);font-weight:600;">Free Consultation →</a>
-</div>
-
-<!-- ══ HOME ══ -->
-<div class="page active" id="page-home">
-  <section class="hero">
-    <div class="hero-grid-bg"></div>
-    <div class="hero-inner">
-      <div>
-        <div class="hero-eyebrow"><div class="hero-dot"></div><span>Dhaka's Most Trusted Study Abroad Consultancy</span></div>
-        <h1>Shape Your Future at a <em>World-Class</em> University</h1>
-        <p class="hero-sub">From choosing the right university to landing your visa — Nexora's expert counselors guide you every step of the way across 12+ countries and 150+ partner universities.</p>
-        <div class="hero-btns">
-          <button class="btn-gold" onclick="showPage('contact')">Book Free Consultation</button>
-          <button class="btn-ghost" onclick="showPage('services')">Our Services →</button>
+<!-- TOPBAR -->
+<header class="topbar">
+  <a href="/app" class="t-logo">
+    <div class="t-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+    <span class="t-name">TopCandidate<span style="color:#fb923c">.pro</span></span>
+    <span class="t-by">by LinkX360</span>
+  </a>
+  <div class="t-sep"></div>
+  <nav class="t-nav">
+    <button class="tn act" onclick="showPage('overview')">Overview</button>
+    <button class="tn" onclick="showPage('candidates')">Candidates</button>
+    <button class="tn" onclick="showPage('jobs')">Jobs</button>
+    <button class="tn" onclick="showPage('analytics')">Analytics</button>
+  </nav>
+  <div class="t-right">
+    <!-- Usage indicator -->
+    <div id="t-usage-wrap" style="display:flex;align-items:center;gap:6px;background:var(--s2);border:1px solid var(--border2);border-radius:var(--rs);padding:4px 10px;cursor:pointer" onclick="showPage('dashboard');showUsageModal()" title="Click to see usage">
+      <div style="display:flex;flex-direction:column;gap:2px;min-width:80px">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--t3)">Screenings</span>
+          <span class="t-plan" id="t-plan" style="font-size:9px;padding:1px 6px">Trial</span>
         </div>
-        <div class="trust-bar">
-          <div class="trust-item"><span class="trust-check">✓</span> ISO Certified</div>
-          <div class="trust-item"><span class="trust-check">✓</span> 98% Visa Success</div>
-          <div class="trust-item"><span class="trust-check">✓</span> 12+ Years Experience</div>
-          <div class="trust-item"><span class="trust-check">✓</span> Free First Consultation</div>
-        </div>
-      </div>
-      <div class="hero-right">
-        <div class="hero-stats-card">
-          <div class="stats-grid">
-            <div class="stat-cell"><span class="stat-num" data-target="5000">0</span><span class="stat-lbl">Students placed abroad</span></div>
-            <div class="stat-cell"><span class="stat-num">98%</span><span class="stat-lbl">Visa approval rate</span></div>
-            <div class="stat-cell"><span class="stat-num" data-target="150">0</span><span class="stat-lbl">Partner universities</span></div>
-            <div class="stat-cell"><span class="stat-num" data-target="12">0</span><span class="stat-lbl">Years of expertise</span></div>
+        <div style="display:flex;align-items:center;gap:5px">
+          <div style="flex:1;height:4px;background:var(--border2);border-radius:2px;overflow:hidden;min-width:50px">
+            <div id="t-usage-bar" style="height:100%;background:var(--indigo);border-radius:2px;width:0%;transition:width .5s"></div>
           </div>
-          <p class="card-footer-text">Serving students since 2012 · <strong>Dhaka's #1 rated consultancy</strong></p>
-        </div>
-        <div class="float-badge"><span>🎓</span><div><div style="font-size:11px;opacity:0.7">New intake open</div><div>UK &amp; Canada 2025</div></div></div>
-      </div>
-    </div>
-  </section>
-
-  <div class="ticker-wrap">
-    <div class="ticker-label">Destinations</div>
-    <div class="ticker-track">
-      <div class="ticker-item">🇬🇧 United Kingdom</div><div class="ticker-item">🇺🇸 United States</div><div class="ticker-item">🇨🇦 Canada</div><div class="ticker-item">🇦🇺 Australia</div><div class="ticker-item">🇩🇪 Germany</div><div class="ticker-item">🇳🇱 Netherlands</div><div class="ticker-item">🇸🇪 Sweden</div><div class="ticker-item">🇳🇿 New Zealand</div><div class="ticker-item">🇮🇪 Ireland</div><div class="ticker-item">🇫🇷 France</div><div class="ticker-item">🇫🇮 Finland</div><div class="ticker-item">🇩🇰 Denmark</div>
-      <div class="ticker-item">🇬🇧 United Kingdom</div><div class="ticker-item">🇺🇸 United States</div><div class="ticker-item">🇨🇦 Canada</div><div class="ticker-item">🇦🇺 Australia</div><div class="ticker-item">🇩🇪 Germany</div><div class="ticker-item">🇳🇱 Netherlands</div><div class="ticker-item">🇸🇪 Sweden</div><div class="ticker-item">🇳🇿 New Zealand</div><div class="ticker-item">🇮🇪 Ireland</div><div class="ticker-item">🇫🇷 France</div><div class="ticker-item">🇫🇮 Finland</div><div class="ticker-item">🇩🇰 Denmark</div>
-    </div>
-  </div>
-
-  <!-- COUNTERS -->
-  <section class="section">
-    <div style="text-align:center;">
-      <div class="s-label">Our Impact</div>
-      <div class="s-title" style="max-width:none;">Numbers That Speak for Themselves</div>
-    </div>
-    <div class="counters-row">
-      <div class="counter-card"><div class="counter-num" data-target="5000" data-suffix="+">0</div><div class="counter-label">Students Placed Abroad</div></div>
-      <div class="counter-card"><div class="counter-num" data-target="98" data-suffix="%">0</div><div class="counter-label">Visa Success Rate</div></div>
-      <div class="counter-card"><div class="counter-num" data-target="150" data-suffix="+">0</div><div class="counter-label">Partner Universities</div></div>
-      <div class="counter-card"><div class="counter-num" data-target="25" data-suffix="M+">0</div><div class="counter-label">BDT in Scholarships Won</div></div>
-    </div>
-  </section>
-
-  <!-- HOW IT WORKS -->
-  <section class="section alt">
-    <div class="s-label">How It Works</div>
-    <div class="s-title">Your Journey to Global Education</div>
-    <div class="s-sub">A clear, guided path from your first consultation to stepping on campus abroad.</div>
-    <div class="steps-grid">
-      <div class="step"><div class="step-num">01</div><h4>Free Counseling</h4><p>Meet our expert counselors to map your academic goals and ideal destinations.</p></div>
-      <div class="step"><div class="step-num">02</div><h4>University Selection</h4><p>Shortlist the best-fit universities based on your profile, budget, and goals.</p></div>
-      <div class="step"><div class="step-num">03</div><h4>Application &amp; Offer</h4><p>We prepare and submit strong applications; you receive your offer letter.</p></div>
-      <div class="step"><div class="step-num">04</div><h4>Visa &amp; Departure</h4><p>Expert visa guidance and pre-departure briefing to set you up for success.</p></div>
-    </div>
-  </section>
-
-  <!-- WHY US -->
-  <section class="section">
-    <div class="s-label">Why Nexora</div>
-    <div class="s-title">The Nexora Difference</div>
-    <div class="s-sub">We're not just an agent — we're your dedicated partner in building a global future.</div>
-    <div class="why-grid">
-      <div class="why-card"><div class="why-icon">🎯</div><h3>Personalized Approach</h3><p>Every student is unique. We tailor our guidance to your specific profile, aspirations, and budget.</p></div>
-      <div class="why-card"><div class="why-icon">🏆</div><h3>Proven Track Record</h3><p>Over 5,000 students placed at top universities worldwide with a 98% visa success rate.</p></div>
-      <div class="why-card"><div class="why-icon">🌐</div><h3>150+ Partner Universities</h3><p>Strong partnerships with top-ranked institutions in the UK, USA, Canada, Australia, and Europe.</p></div>
-      <div class="why-card"><div class="why-icon">💬</div><h3>End-to-End Support</h3><p>From the first counseling session through to post-arrival support — we never leave your side.</p></div>
-      <div class="why-card"><div class="why-icon">💰</div><h3>Scholarship Expertise</h3><p>Dedicated scholarship counselors help you identify and secure funding and grants.</p></div>
-      <div class="why-card"><div class="why-icon">📞</div><h3>Always Accessible</h3><p>Reach your counselor anytime via WhatsApp, phone, or in-office visits. We're always here.</p></div>
-    </div>
-  </section>
-
-  <!-- TESTIMONIALS -->
-  <section class="section alt">
-    <div class="s-label">Student Stories</div>
-    <div class="s-title">What Our Students Say</div>
-    <div class="s-sub">Real stories from students we've helped reach their dream universities.</div>
-    <div class="testi-grid" id="testiGrid">
-      <div class="testi-card"><div class="testi-quote">"</div><div class="testi-stars">★★★★★</div><p class="testi-text">"Nexora made the whole process incredibly smooth. I got into the University of Manchester with a partial scholarship — something I couldn't have done without their expert guidance."</p><div class="testi-author"><div class="testi-avatar">RA</div><div><div class="testi-name">Rafi Ahmed</div><div class="testi-dest">University of Manchester, UK 🇬🇧</div></div></div></div>
-      <div class="testi-card"><div class="testi-quote">"</div><div class="testi-stars">★★★★★</div><p class="testi-text">"The visa counseling was top-notch. My counselor knew exactly what documents to prepare and coached me perfectly for the interview. Got approved first try!"</p><div class="testi-author"><div class="testi-avatar">SI</div><div><div class="testi-name">Sadia Islam</div><div class="testi-dest">University of Toronto, Canada 🇨🇦</div></div></div></div>
-      <div class="testi-card"><div class="testi-quote">"</div><div class="testi-stars">★★★★★</div><p class="testi-text">"From SOP writing to pre-departure briefing, everything was handled professionally. I'm now studying at Monash University and couldn't be happier."</p><div class="testi-author"><div class="testi-avatar">TH</div><div><div class="testi-name">Tanvir Hossain</div><div class="testi-dest">Monash University, Australia 🇦🇺</div></div></div></div>
-    </div>
-    <div style="text-align:center;margin-top:28px;">
-      <button class="testi-add-btn" onclick="document.getElementById('testiModal').classList.add('open')">✍️ Share Your Story</button>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <div class="cta-banner">
-    <h2>Ready to Start Your Global Journey?</h2>
-    <p>Book a free consultation today — no commitment, just expert guidance tailored to you.</p>
-    <button class="btn-gold" onclick="showPage('contact')" style="font-size:15px;padding:16px 40px;position:relative;">Get Your Free Consultation</button>
-  </div>
-</div><!-- /home -->
-
-<!-- ══ SERVICES ══ -->
-<div class="page" id="page-services">
-  <div class="inner-hero">
-    <div class="s-label" style="color:var(--gold2)">What We Offer</div>
-    <h1>Our Services</h1>
-    <p>Comprehensive, end-to-end support for every stage of your study abroad journey.</p>
-  </div>
-  <div class="services-tabs" id="svcTabs">
-    <div class="svc-tab active" onclick="switchSvc(0,this)">Career Counseling</div>
-    <div class="svc-tab" onclick="switchSvc(1,this)">Admission Processing</div>
-    <div class="svc-tab" onclick="switchSvc(2,this)">Visa Assistance</div>
-    <div class="svc-tab" onclick="switchSvc(3,this)">Test Preparation</div>
-    <div class="svc-tab" onclick="switchSvc(4,this)">Scholarships</div>
-  </div>
-  <div class="svc-panels">
-    <div class="svc-panel active">
-      <div class="svc-info"><div class="s-label">Service 01</div><h2>Career Counseling</h2><p>Personalized one-on-one guidance to find the right course, country, and university based on your profile, goals, and budget.</p><div class="svc-features"><div class="svc-feat"><div class="svc-feat-icon">🎯</div><div><h4>One-on-One Sessions</h4><p>Private, in-depth consultations with a dedicated counselor assigned to you.</p></div></div><div class="svc-feat"><div class="svc-feat-icon">📊</div><div><h4>Career Aptitude Assessment</h4><p>Structured profiling to match your skills and interests with the best programs.</p></div></div><div class="svc-feat"><div class="svc-feat-icon">🌍</div><div><h4>Country &amp; Course Comparison</h4><p>Side-by-side analysis of programs, costs, job prospects, and immigration pathways.</p></div></div></div></div>
-      <div class="svc-right"><h3>Our Process</h3><div class="process-list"><div class="p-step"><div class="p-circle">1</div><div><h5>Initial Assessment</h5><p>We review your academic history, English scores, and career goals.</p></div></div><div class="p-step"><div class="p-circle">2</div><div><h5>Profile Building</h5><p>We build a strong student profile highlighting your strengths.</p></div></div><div class="p-step"><div class="p-circle">3</div><div><h5>Destination Matching</h5><p>We suggest the best countries and programs for your profile.</p></div></div><div class="p-step"><div class="p-circle">4</div><div><h5>Action Plan</h5><p>A clear roadmap with deadlines, requirements, and next steps.</p></div></div></div><button class="btn-gold" onclick="showPage('contact')" style="width:100%;margin-top:20px;">Book Free Session</button></div>
-    </div>
-    <div class="svc-panel">
-      <div class="svc-info"><div class="s-label">Service 02</div><h2>Admission Processing</h2><p>Complete management of your university application from start to offer letter — every document polished, every deadline met.</p><div class="svc-features"><div class="svc-feat"><div class="svc-feat-icon">🏛️</div><div><h4>University Shortlisting</h4><p>Curated list of universities that match your profile and goals.</p></div></div><div class="svc-feat"><div class="svc-feat-icon">✍️</div><div><h4>SOP &amp; LOR Writing</h4><p>Expert-crafted Statements of Purpose and recommendation guidance.</p></div></div><div class="svc-feat"><div class="svc-feat-icon">📁</div><div><h4>Document Preparation</h4><p>Complete checklist management and verification of all required documents.</p></div></div></div></div>
-      <div class="svc-right"><h3>Our Process</h3><div class="process-list"><div class="p-step"><div class="p-circle">1</div><div><h5>Shortlisting</h5><p>Select 5–8 universities across safety, target, and reach categories.</p></div></div><div class="p-step"><div class="p-circle">2</div><div><h5>Document Prep</h5><p>Prepare transcripts, CV, SOP, and reference letters.</p></div></div><div class="p-step"><div class="p-circle">3</div><div><h5>Application Submission</h5><p>Submit applications on your behalf before all deadlines.</p></div></div><div class="p-step"><div class="p-circle">4</div><div><h5>Offer &amp; Enrollment</h5><p>Review offers, negotiate conditions, and confirm enrollment.</p></div></div></div><button class="btn-gold" onclick="showPage('contact')" style="width:100%;margin-top:20px;">Book Free Session</button></div>
-    </div>
-    <div class="svc-panel">
-      <div class="svc-info"><div class="s-label">Service 03</div><h2>Visa Assistance</h2><p>Our visa specialists have guided thousands of students with a 98% success rate. We know exactly what embassies look for.</p><div class="svc-features"><div class="svc-feat"><div class="svc-feat-icon">📋</div><div><h4>Documentation Checklist</h4><p>Complete, country-specific visa document preparation.</p></div></div><div class="svc-feat"><div class="svc-feat-icon">💼</div><div><h4>Financial Guidance</h4><p>Bank statement structuring and financial sponsorship letter support.</p></div></div><div class="svc-feat"><div class="svc-feat-icon">🎤</div><div><h4>Mock Interview Training</h4><p>Realistic visa interview simulations with expert feedback.</p></div></div></div></div>
-      <div class="svc-right"><h3>Our Process</h3><div class="process-list"><div class="p-step"><div class="p-circle">1</div><div><h5>Eligibility Check</h5><p>Verify all financial and academic visa requirements.</p></div></div><div class="p-step"><div class="p-circle">2</div><div><h5>File Preparation</h5><p>Compile and verify every required document.</p></div></div><div class="p-step"><div class="p-circle">3</div><div><h5>Mock Interview</h5><p>Practice with our counselors before the real interview.</p></div></div><div class="p-step"><div class="p-circle">4</div><div><h5>Approval &amp; Follow-up</h5><p>Track your application and respond to any embassy queries.</p></div></div></div><button class="btn-gold" onclick="showPage('contact')" style="width:100%;margin-top:20px;">Book Free Session</button></div>
-    </div>
-    <div class="svc-panel">
-      <div class="svc-info"><div class="s-label">Service 04</div><h2>Test Preparation</h2><p>Achieve your target scores in IELTS, TOEFL, GRE, and GMAT with coaching from our certified trainers.</p><div class="svc-features"><div class="svc-feat"><div class="svc-feat-icon">📝</div><div><h4>IELTS &amp; TOEFL</h4><p>Comprehensive coaching targeting band 6.5–8.0 for all four modules.</p></div></div><div class="svc-feat"><div class="svc-feat-icon">🔬</div><div><h4>GRE &amp; GMAT</h4><p>Expert coaching for verbal, quantitative, and analytical writing sections.</p></div></div><div class="svc-feat"><div class="svc-feat-icon">📊</div><div><h4>Mock Tests &amp; Analysis</h4><p>Weekly full-length mock exams with detailed performance breakdowns.</p></div></div></div></div>
-      <div class="svc-right"><h3>Our Process</h3><div class="process-list"><div class="p-step"><div class="p-circle">1</div><div><h5>Diagnostic Test</h5><p>Identify your current level and areas for improvement.</p></div></div><div class="p-step"><div class="p-circle">2</div><div><h5>Structured Classes</h5><p>Regular group or private sessions with certified trainers.</p></div></div><div class="p-step"><div class="p-circle">3</div><div><h5>Practice &amp; Mock Tests</h5><p>Timed practice tests under real exam conditions.</p></div></div><div class="p-step"><div class="p-circle">4</div><div><h5>Score Review</h5><p>Post-exam analysis and guidance on next steps.</p></div></div></div><button class="btn-gold" onclick="showPage('contact')" style="width:100%;margin-top:20px;">Enroll Now</button></div>
-    </div>
-    <div class="svc-panel">
-      <div class="svc-info"><div class="s-label">Service 05</div><h2>Scholarship Guidance</h2><p>Our scholarship specialists help identify and apply for fully funded and partial scholarship opportunities worldwide.</p><div class="svc-features"><div class="svc-feat"><div class="svc-feat-icon">🔍</div><div><h4>Scholarship Search</h4><p>Identify all scholarships you're eligible for — government, university, and private.</p></div></div><div class="svc-feat"><div class="svc-feat-icon">📝</div><div><h4>Application Support</h4><p>Strong scholarship essays and documentation crafted with our experts.</p></div></div><div class="svc-feat"><div class="svc-feat-icon">💸</div><div><h4>Financial Aid Planning</h4><p>Complete cost planning including tuition, living costs, and funding sources.</p></div></div></div></div>
-      <div class="svc-right"><h3>Top Scholarships We Cover</h3><div class="process-list"><div class="p-step"><div class="p-circle">🇬🇧</div><div><h5>Chevening Scholarship</h5><p>UK government's global scholarship for future leaders.</p></div></div><div class="p-step"><div class="p-circle">🌍</div><div><h5>Commonwealth Scholarship</h5><p>Fully funded awards for Commonwealth nations.</p></div></div><div class="p-step"><div class="p-circle">🇪🇺</div><div><h5>Erasmus+ Program</h5><p>EU-funded program for study, training, and research.</p></div></div><div class="p-step"><div class="p-circle">🇦🇺</div><div><h5>Australia Awards</h5><p>Fully funded Australian government scholarships.</p></div></div></div><button class="btn-gold" onclick="showPage('contact')" style="width:100%;margin-top:20px;">Find My Scholarship</button></div>
-    </div>
-  </div>
-</div><!-- /services -->
-
-<!-- ══ GALLERY ══ -->
-<div class="page" id="page-gallery">
-  <div class="inner-hero">
-    <div class="s-label" style="color:var(--gold2)">Our Moments</div>
-    <h1>Gallery</h1>
-    <p>Celebrating our students' milestones — from seminars and workshops to visa approvals and departures.</p>
-  </div>
-  <section class="section">
-    <div style="display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:28px;">
-      <div class="gallery-filters" style="margin-bottom:0;">
-        <button class="gf-btn active" onclick="filterGallery('all',this)">All</button>
-        <button class="gf-btn" onclick="filterGallery('events',this)">Events</button>
-        <button class="gf-btn" onclick="filterGallery('success',this)">Student Success</button>
-        <button class="gf-btn" onclick="filterGallery('workshop',this)">Workshops</button>
-        <button class="gf-btn" onclick="filterGallery('departure',this)">Departures</button>
-      </div>
-      <button class="gallery-upload-btn" onclick="document.getElementById('galleryModal').classList.add('open')">📷 Add Photo</button>
-    </div>
-    <div class="gallery-masonry" id="galleryMasonry"></div>
-  </section>
-</div><!-- /gallery -->
-
-<!-- ══ BLOG ══ -->
-<div class="page" id="page-blog">
-  <div class="inner-hero">
-    <div class="s-label" style="color:var(--gold2)">Knowledge Hub</div>
-    <h1>Blog &amp; Resources</h1>
-    <p>Expert guides, tips, and news to help you navigate your study abroad journey.</p>
-  </div>
-  <section class="section">
-    <div id="blogListWrap">
-      <div class="blog-layout">
-        <div id="blogMain"></div>
-        <div>
-          <div class="sidebar-widget">
-            <div class="sw-title">Categories</div>
-            <div id="blogCats"></div>
-          </div>
-          <div class="sidebar-widget" style="background:var(--navy);border-color:var(--navy);">
-            <div style="color:var(--white);font-size:16px;font-family:'Cormorant Garamond',serif;font-weight:600;margin-bottom:8px;">Free Consultation</div>
-            <p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:14px;">Talk to an expert — no cost, no obligation.</p>
-            <button class="btn-gold" style="width:100%;padding:11px;" onclick="showPage('contact')">Book Now</button>
-          </div>
+          <span id="t-usage-text" style="font-size:10px;font-weight:600;color:var(--t2);white-space:nowrap">0/10</span>
         </div>
       </div>
     </div>
-    <div id="blogArticles"></div>
-  </section>
-</div><!-- /blog -->
+    <a href="/batch" class="t-btn accent" style="background:var(--indigo);color:#fff;border-color:var(--indigo)">⚡ Screen CVs</a>
+    <a href="/settings" class="t-btn">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      Settings
+    </a>
+    <div style="display:flex;align-items:center;gap:5px;background:var(--s2);border:1px solid var(--border2);border-radius:var(--rs);padding:4px 8px;cursor:pointer" onclick="logout()" title="Sign out">
+      <div class="t-avatar" id="t-avatar" style="width:22px;height:22px;font-size:9px">TC</div>
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--t2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+    </div>
+  </div>
+</header>
 
-<!-- ══ CONTACT ══ -->
-<div class="page" id="page-contact">
-  <div class="inner-hero">
-    <div class="s-label" style="color:var(--gold2)">Get In Touch</div>
-    <h1>Book a Free Consultation</h1>
-    <p>Our expert counselors are ready to help. We respond within 24 hours, guaranteed.</p>
-  </div>
-  <div class="contact-wrapper">
-    <div class="contact-left">
-      <h2>Let's Plan Your Future Together</h2>
-      <p>Walk in, call, or fill the form — we're here to help you every step of the way.</p>
-      <div class="c-info-list">
-        <div class="c-info"><div class="c-icon">📍</div><div><strong>Address</strong><span>House 12, Road 5, Dhanmondi, Dhaka-1205</span></div></div>
-        <div class="c-info"><div class="c-icon">📞</div><div><strong>Phone</strong><span>+880 1711-000000</span></div></div>
-        <div class="c-info"><div class="c-icon">✉️</div><div><strong>Email</strong><span>info@nexoraconsultancies.com</span></div></div>
-        <div class="c-info"><div class="c-icon">🕐</div><div><strong>Office Hours</strong><span>Saturday – Thursday: 10 AM – 7 PM</span></div></div>
-        <div class="c-info"><div class="c-icon">💬</div><div><strong>WhatsApp</strong><span><a href="https://wa.me/8801711000000" target="_blank" style="color:rgba(255,255,255,0.5);text-decoration:none;">Chat with us now →</a></span></div></div>
-      </div>
-    </div>
-    <div class="contact-right">
-      <h2>Inquiry Form</h2>
-      <p>Fill in the details below and we'll get back to you within 24 hours.</p>
-      <div id="formWrap">
-        <!-- Progress -->
-        <div class="form-progress">
-          <div class="fp-step active" id="prog-1">① Personal Info</div>
-          <div class="fp-step" id="prog-2">② Study Plans</div>
-          <div class="fp-step" id="prog-3">③ Confirm</div>
-        </div>
-        <!-- Step 1 -->
-        <div class="form-step active" id="fstep-1">
-          <div class="form-grid-2">
-            <div class="fg"><label>Full Name *</label><input type="text" id="cf-name" placeholder="Your full name"/></div>
-            <div class="fg"><label>Phone *</label><input type="text" id="cf-phone" placeholder="+880"/></div>
-            <div class="fg"><label>Email *</label><input type="email" id="cf-email" placeholder="your@email.com"/></div>
-            <div class="fg"><label>Age</label><input type="number" id="cf-age" placeholder="Your age"/></div>
-          </div>
-          <div class="form-nav"><button class="btn-next" onclick="nextStep(1)">Next: Study Plans →</button></div>
-        </div>
-        <!-- Step 2 -->
-        <div class="form-step" id="fstep-2">
-          <div class="form-grid-2">
-            <div class="fg"><label>Preferred Destination</label><select id="cf-dest"><option value="">Select country</option><option>United Kingdom</option><option>United States</option><option>Canada</option><option>Australia</option><option>Germany</option><option>Netherlands</option><option>Sweden</option><option>Other</option></select></div>
-            <div class="fg"><label>Education Level</label><select id="cf-level"><option value="">Select level</option><option>Undergraduate</option><option>Postgraduate (Master's)</option><option>PhD / Research</option><option>Foundation / Diploma</option></select></div>
-            <div class="fg"><label>Service Interested In</label><select id="cf-service"><option value="">Select service</option><option>Career Counseling</option><option>Admission Processing</option><option>Visa Assistance</option><option>Test Preparation</option><option>Scholarship Guidance</option></select></div>
-            <div class="fg"><label>Budget (BDT)</label><select id="cf-budget"><option value="">Select range</option><option>Under 5 Lakh</option><option>5–10 Lakh</option><option>10–20 Lakh</option><option>20–50 Lakh</option><option>50 Lakh+</option></select></div>
-          </div>
-          <div class="fg full"><label>Your Message</label><textarea id="cf-msg" placeholder="Tell us about your goals, qualifications, and any questions..."></textarea></div>
-          <div class="form-nav">
-            <button class="btn-prev" onclick="prevStep(2)">← Back</button>
-            <button class="btn-next" onclick="nextStep(2)">Next: Review →</button>
-          </div>
-        </div>
-        <!-- Step 3 -->
-        <div class="form-step" id="fstep-3">
-          <div id="formReview" style="background:var(--cream);border-radius:8px;padding:20px;margin-bottom:20px;font-size:14px;line-height:2;"></div>
-          <div class="form-nav">
-            <button class="btn-prev" onclick="prevStep(3)">← Edit</button>
-            <button class="btn-next" onclick="submitForm()">✓ Submit Inquiry</button>
-          </div>
-        </div>
-      </div>
-      <div class="success-msg" id="successMsg">
-        <div class="success-icon">🎉</div>
-        <h3>Inquiry Submitted!</h3>
-        <p>Thank you! One of our expert counselors will contact you within 24 hours to schedule your free consultation.</p>
-        <button class="btn-gold" onclick="resetForm()" style="margin-top:16px;">Submit Another →</button>
-      </div>
-    </div>
-  </div>
-</div><!-- /contact -->
+<div class="shell">
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sb-sec">Overview</div>
+  <button class="sb-item act" id="sb-overview" onclick="showPage('overview')">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+    Dashboard
+  </button>
+  <div class="sb-sec">Screening</div>
 
-<!-- FOOTER -->
-<div class="footer">
-  <div class="footer-top">
-    <div class="footer-brand">
-      <div class="footer-logo" onclick="showPage('home')">Nexora<span> Consultancy</span></div>
-      <p>Dhaka's most trusted study abroad consultancy — guiding Bangladeshi students to world-class universities since 2012.</p>
-      <div class="social-row">
-        <a class="soc-btn" href="#" title="Facebook">f</a>
-        <a class="soc-btn" href="#" title="Instagram">in</a>
-        <a class="soc-btn" href="#" title="LinkedIn">Li</a>
-        <a class="soc-btn" href="https://wa.me/8801711000000" target="_blank" title="WhatsApp">W</a>
-        <a class="soc-btn" href="#" title="YouTube">▶</a>
+  <button class="sb-item" id="sb-candidates" onclick="showPage('candidates')">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+    All Candidates
+    <span class="sb-badge" id="sb-cand-cnt">0</span>
+  </button>
+  <button class="sb-item" id="sb-pipeline" onclick="showPage('pipeline')">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+    Pipeline
+  </button>
+  <div class="sb-sec">Jobs</div>
+  <button class="sb-item" id="sb-jobs" onclick="showPage('jobs')">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+    Job Postings
+    <span class="sb-badge" id="sb-job-cnt">0</span>
+  </button>
+  <div class="sb-sec">Analytics</div>
+  <button class="sb-item" id="sb-analytics" onclick="showPage('analytics')">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+    Analytics
+  </button>
+  <button class="sb-item" id="sb-audit" onclick="showPage('audit')">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+    Audit Trail
+  </button>
+  <div class="sb-footer">
+    <div class="sb-company" id="sb-company">Company</div>
+    <a href="/settings" style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--t3);text-decoration:none;padding:4px 0;transition:color .12s" onmouseover="this.style.color='var(--t2)'" onmouseout="this.style.color='var(--t3)'">
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      Account settings
+    </a>
+    <div class="sb-status"><span class="sb-dot"></span>All systems operational</div>
+  </div>
+</aside>
+
+<main class="main">
+
+<!-- ══════════════════════════════════════════
+     1. OVERVIEW / DASHBOARD
+══════════════════════════════════════════ -->
+<div class="page act" id="page-overview">
+  <div class="ph-row">
+    <div class="ph"><h1>Dashboard</h1><p>Your recruitment health at a glance</p></div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <button class="btn btn-ghost btn-sm" onclick="exportAll()">↓ Export all</button>
+      <button class="btn btn-ghost btn-sm" id="claim-btn" onclick="claimScreenings()" title="If you see missing screenings, click this to assign them to your account">⬇ Claim my screenings</button>
+      <a href="/batch" class="btn btn-orange btn-sm">⚡ Screen CVs now</a>
+    </div>
+  </div>
+
+  <!-- 7 key stats -->
+  <div class="stats-grid-7">
+    <div class="stat"><div class="stat-bar" style="background:var(--indigo)"></div><div class="stat-lbl">Total CVs</div><div class="stat-val" id="ov-total">0</div><div class="stat-sub">screened</div></div>
+    <div class="stat"><div class="stat-bar" style="background:var(--green)"></div><div class="stat-lbl">Shortlisted</div><div class="stat-val" id="ov-shortlisted" style="color:var(--green)">0</div><div class="stat-sub">strong hire + hire</div></div>
+    <div class="stat"><div class="stat-bar" style="background:var(--amber)"></div><div class="stat-lbl">Review needed</div><div class="stat-val" id="ov-maybe" style="color:var(--amber)">0</div><div class="stat-sub">maybe candidates</div></div>
+    <div class="stat"><div class="stat-bar" style="background:var(--red)"></div><div class="stat-lbl">Rejected</div><div class="stat-val" id="ov-rejected" style="color:var(--red)">0</div><div class="stat-sub">not suitable</div></div>
+    <div class="stat"><div class="stat-bar" style="background:var(--blue)"></div><div class="stat-lbl">Avg score</div><div class="stat-val" id="ov-avg" style="color:var(--blue)">—</div><div class="stat-sub">out of 100</div></div>
+    <div class="stat"><div class="stat-bar" style="background:var(--orange)"></div><div class="stat-lbl">Jobs posted</div><div class="stat-val" id="ov-jobs" style="color:var(--orange)">0</div><div class="stat-sub">active roles</div></div>
+    <div class="stat"><div class="stat-bar" style="background:#a855f7"></div><div class="stat-lbl">This week</div><div class="stat-val" id="ov-week" style="color:#a855f7">0</div><div class="stat-sub">new applications</div></div>
+  </div>
+
+  <!-- Pipeline funnel -->
+  <div class="card" style="margin-bottom:10px">
+    <div class="card-hd"><div class="card-title">Candidate pipeline funnel</div><span class="card-sub">Click a stage to filter candidates</span></div>
+    <div class="funnel" id="funnel-row">
+      <div class="funnel-stage" onclick="filterByStage('all')"><div class="funnel-num" id="fn-all">0</div><div class="funnel-lbl">Applied</div><div class="funnel-bar" style="background:var(--indigo)"></div></div>
+      <div class="funnel-stage" onclick="filterByStage('screened')"><div class="funnel-num" id="fn-screened">0</div><div class="funnel-lbl">Screened</div><div class="funnel-bar" style="background:#7c7ff7"></div></div>
+      <div class="funnel-stage" onclick="filterByStage('strong')"><div class="funnel-num" id="fn-strong">0</div><div class="funnel-lbl">High Match</div><div class="funnel-bar" style="background:var(--green)"></div></div>
+      <div class="funnel-stage" onclick="filterByStage('maybe')"><div class="funnel-num" id="fn-maybe">0</div><div class="funnel-lbl">Manual Review</div><div class="funnel-bar" style="background:var(--amber)"></div></div>
+      <div class="funnel-stage" onclick="filterByStage('interview')"><div class="funnel-num" id="fn-interview">0</div><div class="funnel-lbl">Interview</div><div class="funnel-bar" style="background:var(--orange)"></div></div>
+      <div class="funnel-stage" onclick="filterByStage('shortlisted')"><div class="funnel-num" id="fn-shortlisted">0</div><div class="funnel-lbl">Shortlisted</div><div class="funnel-bar" style="background:#a855f7"></div></div>
+      <div class="funnel-stage" onclick="filterByStage('rejected')"><div class="funnel-num" id="fn-rejected">0</div><div class="funnel-lbl">Rejected</div><div class="funnel-bar" style="background:var(--red)"></div></div>
+      <div class="funnel-stage" onclick="filterByStage('hired')"><div class="funnel-num" id="fn-hired">0</div><div class="funnel-lbl">Hired</div><div class="funnel-bar" style="background:var(--green)"></div></div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:2fr 1fr;gap:10px;margin-bottom:10px">
+    <!-- Recent applicants -->
+    <div class="card">
+      <div class="card-hd"><div class="card-title">Recent applicants</div><button class="btn btn-ghost btn-sm" onclick="showPage('candidates')">View all →</button></div>
+      <div class="tbl-wrap">
+        <table class="tbl">
+          <thead><tr><th>Candidate</th><th>Score</th><th>Match</th><th>Result</th><th>Action</th></tr></thead>
+          <tbody id="ov-recent-tbl"><tr><td colspan="5" class="tbl-empty">Screen your first CV to see results here</td></tr></tbody>
+        </table>
       </div>
     </div>
-    <div class="footer-col"><h4>Services</h4><ul><li><a onclick="showPage('services')">Career Counseling</a></li><li><a onclick="showPage('services')">Admission Processing</a></li><li><a onclick="showPage('services')">Visa Assistance</a></li><li><a onclick="showPage('services')">Test Preparation</a></li><li><a onclick="showPage('services')">Scholarships</a></li></ul></div>
-    <div class="footer-col"><h4>Destinations</h4><ul><li><a>United Kingdom</a></li><li><a>United States</a></li><li><a>Canada</a></li><li><a>Australia</a></li><li><a>Germany</a></li><li><a>Netherlands</a></li></ul></div>
-    <div class="footer-col"><h4>Company</h4><ul><li><a onclick="showPage('home')">Home</a></li><li><a onclick="showPage('gallery')">Gallery</a></li><li><a onclick="showPage('blog')">Blog</a></li><li><a onclick="showPage('contact')">Contact</a></li></ul></div>
+    <!-- Job performance -->
+    <div class="card">
+      <div class="card-hd"><div class="card-title">Jobs performance</div></div>
+      <div id="jobs-perf-list"><p style="color:var(--t3);font-size:12px;text-align:center;padding:1.5rem">No jobs posted yet</p></div>
+    </div>
   </div>
-  <div class="footer-bottom">
-    <span>&copy; 2025 Nexora Consultancy. All rights reserved.</span>
-    <span>House 12, Road 5, Dhanmondi, Dhaka-1205</span>
+
+  <!-- Activity log -->
+  <div class="card">
+    <div class="card-hd"><div class="card-title">Activity log</div><span class="card-sub">Recent actions</span></div>
+    <div id="activity-log"><p style="color:var(--t3);font-size:12px;padding:.5rem 0">No recent activity</p></div>
   </div>
 </div>
 
-<!-- WHATSAPP -->
-<div class="wa-wrap">
-  <div class="wa-tooltip">Chat with us on WhatsApp!</div>
-  <a class="wa-float" href="https://wa.me/8801711000000" target="_blank">💬</a>
-</div>
-
-<!-- BACK TO TOP -->
-<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
-
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLightbox()">
-  <button class="lb-close" onclick="closeLightbox()">✕</button>
-  <div class="lb-content">
-    <div class="lb-img" id="lbImg"></div>
-    <div class="lb-info"><h3 id="lbTitle"></h3><p id="lbDesc"></p></div>
+<!-- SCREENER REMOVED - redirect to batch -->
+<div class="page" id="page-screener">
+  <div style="text-align:center;padding:4rem 2rem">
+    <div style="font-size:48px;margin-bottom:1rem">⚡</div>
+    <h2 style="font-size:22px;font-weight:700;margin-bottom:8px">Use Batch Screening</h2>
+    <p style="font-size:14px;color:var(--t2);margin-bottom:1.5rem">Screen up to 100 CVs at once for better efficiency.</p>
+    <a href="/batch" class="btn btn-orange" style="font-size:15px;padding:12px 28px">Go to Batch Screener →</a>
   </div>
 </div>
 
-<!-- TESTIMONIAL MODAL -->
-<div class="modal-overlay" id="testiModal" onclick="if(event.target===this)this.classList.remove('open')">
-  <div class="modal-box">
-    <button class="modal-close" onclick="document.getElementById('testiModal').classList.remove('open')">✕</button>
-    <div class="modal-title">Share Your Story</div>
-    <div class="modal-sub">Help other students by sharing your Nexora experience!</div>
-    <div class="mfield"><label>Your Name</label><input type="text" id="tm-name" placeholder="Full name"/></div>
-    <div class="mfield"><label>University &amp; Country</label><input type="text" id="tm-dest" placeholder="e.g. University of Toronto, Canada 🇨🇦"/></div>
-    <div class="mfield"><label>Your Review</label><textarea id="tm-text" placeholder="Tell us about your experience with Nexora..."></textarea></div>
-    <div class="mfield">
-      <label>Rating</label>
-      <div class="star-select" id="starSelect">
-        <span onclick="setStars(1)" data-v="1">★</span>
-        <span onclick="setStars(2)" data-v="2">★</span>
-        <span onclick="setStars(3)" data-v="3">★</span>
-        <span onclick="setStars(4)" data-v="4">★</span>
-        <span onclick="setStars(5)" data-v="5">★</span>
-      </div>
-    </div>
-    <button class="modal-submit" onclick="submitTestimonial()">Submit Review</button>
+<!-- ══════════════════════════════════════════
+     3. ALL CANDIDATES (with filters)
+══════════════════════════════════════════ -->
+<div class="page" id="page-candidates">
+  <div class="ph-row">
+    <div class="ph"><h1>All Candidates</h1><p>Every screened candidate — filter, sort, and take action</p></div>
+    <button class="btn btn-ghost btn-sm" onclick="exportCandidates()">↓ Export CSV</button>
   </div>
-</div>
 
-<!-- GALLERY UPLOAD MODAL -->
-<div class="modal-overlay" id="galleryModal" onclick="if(event.target===this)this.classList.remove('open')">
-  <div class="modal-box">
-    <button class="modal-close" onclick="document.getElementById('galleryModal').classList.remove('open')">✕</button>
-    <div class="modal-title">Add Gallery Photo</div>
-    <div class="modal-sub">Share a moment from your Nexora journey!</div>
-    <div class="gallery-upload-zone" onclick="document.getElementById('photoInput').click()">
-      <div style="font-size:36px;">📸</div>
-      <p>Click to select a photo (or choose an emoji below)</p>
-      <input type="file" id="photoInput" accept="image/*" style="display:none" onchange="handlePhotoUpload(this)"/>
-    </div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;" id="emojiPicker">
-      <span style="font-size:24px;cursor:pointer;" onclick="setGalEmoji(this.textContent)">🎓</span>
-      <span style="font-size:24px;cursor:pointer;" onclick="setGalEmoji(this.textContent)">✈️</span>
-      <span style="font-size:24px;cursor:pointer;" onclick="setGalEmoji(this.textContent)">🏆</span>
-      <span style="font-size:24px;cursor:pointer;" onclick="setGalEmoji(this.textContent)">📚</span>
-      <span style="font-size:24px;cursor:pointer;" onclick="setGalEmoji(this.textContent)">🌏</span>
-      <span style="font-size:24px;cursor:pointer;" onclick="setGalEmoji(this.textContent)">🎉</span>
-      <span style="font-size:24px;cursor:pointer;" onclick="setGalEmoji(this.textContent)">🤝</span>
-      <span style="font-size:24px;cursor:pointer;" onclick="setGalEmoji(this.textContent)">📝</span>
-    </div>
-    <div class="mfield"><label>Photo Title</label><input type="text" id="gal-title" placeholder="e.g. UK University Fair 2025"/></div>
-    <div class="mfield"><label>Category</label>
-      <select id="gal-cat">
-        <option value="events">Events &amp; Seminars</option>
-        <option value="success">Student Success</option>
-        <option value="workshop">Workshops</option>
-        <option value="departure">Departures</option>
+  <!-- Filters -->
+  <div class="card" style="margin-bottom:10px;padding:.85rem">
+    <div class="filters-row">
+      <input class="filter-input" id="f-search" placeholder="🔍 Search by name, skill..." oninput="applyFilters()" style="flex:1;min-width:180px">
+      <select class="filter-select" id="f-job" onchange="applyFilters()"><option value="">All jobs</option></select>
+      <select class="filter-select" id="f-result" onchange="applyFilters()">
+        <option value="">All results</option>
+        <option value="STRONG HIRE">Strong Hire</option>
+        <option value="HIRE">Hire</option>
+        <option value="MAYBE">Maybe</option>
+        <option value="REJECT">Reject</option>
       </select>
+      <select class="filter-select" id="f-score" onchange="applyFilters()">
+        <option value="">Any score</option>
+        <option value="80">80+ (Strong)</option>
+        <option value="60">60+ (Good)</option>
+        <option value="40">40+ (Average)</option>
+        <option value="0">Below 40 (Weak)</option>
+      </select>
+      <select class="filter-select" id="f-exp" onchange="applyFilters()">
+        <option value="">Any experience</option>
+        <option value="0">0–2 years (Junior)</option>
+        <option value="3">3–5 years (Mid)</option>
+        <option value="6">6+ years (Senior)</option>
+      </select>
+      <input type="date" class="filter-input" id="f-date-from" onchange="applyFilters()" title="From date" style="width:130px">
+      <input type="date" class="filter-input" id="f-date-to" onchange="applyFilters()" title="To date" style="width:130px">
+      <select class="filter-select" id="f-sort" onchange="applyFilters()">
+        <option value="score">Highest score</option>
+        <option value="newest">Newest first</option>
+        <option value="exp">Most experienced</option>
+        <option value="name">Name A–Z</option>
+      </select>
+      <button class="filter-clear" onclick="clearFilters()">✕ Clear</button>
     </div>
-    <div class="mfield"><label>Description</label><input type="text" id="gal-desc" placeholder="Brief description..."/></div>
-    <div id="galEmojiPreview" style="font-size:32px;text-align:center;margin-bottom:12px;display:none;"></div>
-    <button class="modal-submit" onclick="submitGalleryItem()">Add to Gallery</button>
+    <div style="font-size:11px;color:var(--t3)" id="filter-count">Showing all candidates</div>
+  </div>
+
+  <div class="card">
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>Candidate</th>
+            <th>Applied job</th>
+            <th>Score</th>
+            <th>Skills matched</th>
+            <th>Missing skills</th>
+            <th>Experience</th>
+            <th>Education</th>
+            <th>Result</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="cands-tbl"><tr><td colspan="10" class="tbl-empty">No candidates yet — run your first CV screening</td></tr></tbody>
+      </table>
+    </div>
   </div>
 </div>
 
-<!-- COOKIE BANNER -->
-<div class="cookie-banner" id="cookieBanner">
-  <p>🍪 We use cookies to improve your experience on our website. By continuing to browse, you agree to our use of cookies.</p>
-  <button class="cookie-accept" onclick="acceptCookies()">Accept</button>
+<!-- ══════════════════════════════════════════
+     4. PIPELINE
+══════════════════════════════════════════ -->
+<div class="page" id="page-pipeline">
+  <div class="ph"><h1>Pipeline</h1><p>Auto-sorted by AI recommendation — unique candidates, duplicates hidden</p></div>
+  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">
+    <span class="badge b-green">STRONG HIRE → Interview</span>
+    <span class="badge b-indigo">HIRE + MAYBE → Screening</span>
+    <span class="badge b-red">REJECT → Rejected</span>
+    <span style="font-size:11px;color:var(--t3);margin-left:auto" id="pipeline-notice"></span>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px" id="kb-grid">
+    <div><div style="background:var(--s2);border:1px solid var(--border);border-radius:var(--rs) var(--rs) 0 0;padding:8px 10px;display:flex;align-items:center;justify-content:space-between"><span style="font-size:12px;font-weight:700">Screening</span><span class="badge b-indigo" id="kb-cnt-0">0</span></div><div style="background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 0 var(--rs) var(--rs);padding:6px;min-height:200px;max-height:420px;overflow-y:auto;display:flex;flex-direction:column;gap:5px" id="kb-0"></div></div>
+    <div><div style="background:var(--s2);border:1px solid var(--border);border-radius:var(--rs) var(--rs) 0 0;padding:8px 10px;display:flex;align-items:center;justify-content:space-between"><span style="font-size:12px;font-weight:700">Interview</span><span class="badge b-amber" id="kb-cnt-1">0</span></div><div style="background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 0 var(--rs) var(--rs);padding:6px;min-height:200px;max-height:420px;overflow-y:auto;display:flex;flex-direction:column;gap:5px" id="kb-1"></div></div>
+    <div><div style="background:var(--s2);border:1px solid var(--border);border-radius:var(--rs) var(--rs) 0 0;padding:8px 10px;display:flex;align-items:center;justify-content:space-between"><span style="font-size:12px;font-weight:700">Offer</span><span class="badge b-orange" id="kb-cnt-2">0</span></div><div style="background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 0 var(--rs) var(--rs);padding:6px;min-height:200px;max-height:420px;overflow-y:auto;display:flex;flex-direction:column;gap:5px" id="kb-2"></div></div>
+    <div><div style="background:var(--s2);border:1px solid var(--border);border-radius:var(--rs) var(--rs) 0 0;padding:8px 10px;display:flex;align-items:center;justify-content:space-between"><span style="font-size:12px;font-weight:700">Rejected</span><span class="badge b-red" id="kb-cnt-3">0</span></div><div style="background:var(--surface);border:1px solid var(--border);border-top:none;border-radius:0 0 var(--rs) var(--rs);padding:6px;min-height:200px;max-height:420px;overflow-y:auto;display:flex;flex-direction:column;gap:5px" id="kb-3"></div></div>
+  </div>
 </div>
 
-<!-- NOTIFICATION -->
-<div class="notification" id="notification"></div>
+<!-- ══════════════════════════════════════════
+     5. JOBS
+══════════════════════════════════════════ -->
+<div class="page" id="page-jobs">
+  <div class="ph-row">
+    <div class="ph"><h1>Job Postings</h1><p>Manage open roles, scoring weights, and applicant flow</p></div>
+    <button class="btn btn-primary btn-sm" onclick="openJobModal()">+ Create new job</button>
+  </div>
+  <div class="card">
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Job title</th><th>Department</th><th>Location</th><th>Type</th><th>Applicants</th><th>Avg score</th><th>Shortlisted</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody id="jobs-tbl"><tr><td colspan="9" class="tbl-empty">No jobs yet — create your first job posting</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     6. ANALYTICS
+══════════════════════════════════════════ -->
+<div class="page" id="page-analytics">
+  <div class="ph"><h1>Analytics & Insights</h1><p>Data-driven insights into your hiring performance</p></div>
+  <div class="stats-grid">
+    <div class="stat"><div class="stat-bar" style="background:var(--indigo)"></div><div class="stat-lbl">Total screened</div><div class="stat-val" id="an-total">0</div></div>
+    <div class="stat"><div class="stat-bar" style="background:var(--green)"></div><div class="stat-lbl">Avg match score</div><div class="stat-val" id="an-avg">—</div></div>
+    <div class="stat"><div class="stat-bar" style="background:var(--orange)"></div><div class="stat-lbl">Shortlist rate</div><div class="stat-val" id="an-rate">—</div></div>
+    <div class="stat"><div class="stat-bar" style="background:var(--amber)"></div><div class="stat-lbl">Time saved</div><div class="stat-val" id="an-time">—</div><div class="stat-sub">vs manual review</div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+    <div class="card"><div class="card-hd"><div class="card-title">Most common missing skills</div><span class="card-sub">Top gaps across all CVs</span></div><div id="gaps-chart"></div></div>
+    <div class="card"><div class="card-hd"><div class="card-title">Score distribution</div></div><canvas id="score-chart" height="180"></canvas></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+    <div class="card"><div class="card-hd"><div class="card-title">Dimension performance</div><span class="card-sub">Avg score per dimension</span></div><div id="dims-chart"></div></div>
+    <div class="card"><div class="card-hd"><div class="card-title">AI insights</div></div>
+      <div style="display:flex;flex-direction:column;gap:8px" id="insights-list">
+        <div style="font-size:12px;color:var(--t3)">Screen more CVs to unlock insights</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     7. AUDIT TRAIL
+══════════════════════════════════════════ -->
+<div class="page" id="page-audit">
+  <div class="ph"><h1>Audit Trail</h1><p>Full transparency — when, what, and how every CV was screened</p></div>
+  <div class="card">
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr><th>Candidate</th><th>Screened at</th><th>AI confidence</th><th>Run 1</th><th>Run 2</th><th>Δ Variance</th><th>Final score</th><th>Result</th><th>JD used</th></tr></thead>
+        <tbody id="audit-tbl"><tr><td colspan="9" class="tbl-empty">No screenings yet</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</main>
+</div>
+
+<!-- CANDIDATE DETAIL MODAL -->
+<div class="modal-overlay" id="cand-modal">
+  <div class="modal modal-lg">
+    <div class="modal-hd"><h3 class="modal-title" id="cand-modal-name">Candidate Report</h3><button class="modal-close" onclick="closeModal('cand-modal')">✕</button></div>
+    <div id="cand-modal-body"></div>
+    <div class="modal-footer">
+      <button class="btn btn-red btn-sm" onclick="actionReject()">✕ Reject</button>
+      <button class="btn btn-amber btn-sm" onclick="actionInterview()">→ Move to interview</button>
+      <button class="btn btn-green btn-sm" onclick="actionShortlist()">✓ Shortlist</button>
+      <button class="btn btn-ghost btn-sm" id="open-full-report">Open full report</button>
+      <button class="btn btn-ghost btn-sm" onclick="closeModal('cand-modal')">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- JOB MODAL -->
+<div class="modal-overlay" id="job-modal">
+  <div class="modal">
+    <div class="modal-hd"><h3 class="modal-title" id="job-modal-title">Create job posting</h3><button class="modal-close" onclick="closeModal('job-modal')">✕</button></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Job title *</label><input class="form-input" id="j-title" placeholder="e.g. Senior Data Engineer"></div>
+      <div class="form-group"><label class="form-label">Department</label><input class="form-input" id="j-dept" placeholder="e.g. Engineering"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Location</label><input class="form-input" id="j-loc" placeholder="e.g. Dhaka, Remote"></div>
+      <div class="form-group"><label class="form-label">Employment type</label>
+        <select class="form-select" id="j-type"><option>Full-time</option><option>Part-time</option><option>Contract</option><option>Remote</option><option>Internship</option></select>
+      </div>
+    </div>
+    <div class="form-group"><label class="form-label">Required skills (comma separated)</label><input class="form-input" id="j-skills" placeholder="Python, SQL, Machine Learning, Data Analysis"></div>
+    <div class="form-group"><label class="form-label">Job description *</label><textarea class="form-textarea" id="j-desc" rows="5" placeholder="Paste the full job description here — this will be auto-filled on the batch screening page when you select this job."></textarea><div class="form-hint">This description will automatically fill the JD field when screening CVs for this role.</div></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Min experience (years)</label><input class="form-input" id="j-exp" type="number" placeholder="2"></div>
+      <div class="form-group"><label class="form-label">Status</label>
+        <select class="form-select" id="j-status"><option value="active">Active</option><option value="paused">Paused</option><option value="closed">Closed</option></select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost btn-sm" onclick="closeModal('job-modal')">Cancel</button>
+      <button class="btn btn-primary btn-sm" onclick="saveJob()">Save job posting</button>
+    </div>
+  </div>
+</div>
 
 <script>
-// ══ DATA ══
-const galColors=['#C9E4F5','#F5E4C9','#C9F5E4','#F5C9E4','#E4F5C9','#E4C9F5','#F5F0C9','#C9EEF5','#F5C9C9'];
-const galHeights=[200,260,180,300,190,240,210,270,200];
+// ── STATE ──
+let allResults=[], allJobs=[], filteredResults=[], currentCandId=null, scoreChart=null;
+const PLAN_LIMITS={trial:10,starter:100,pro:500,enterprise:999999};
 
-let galleryItems=[
-  {id:1,icon:'🎓',title:'UK University Fair 2024',cat:'events',desc:'A packed session with representatives from 25+ UK universities.',bg:'#C9E4F5',h:200},
-  {id:2,icon:'✈️',title:'Pre-Departure — Canada',cat:'departure',desc:'32 students depart for Canadian universities.',bg:'#F5E4C9',h:260},
-  {id:3,icon:'🏆',title:'Scholarship Winners 2023',cat:'success',desc:'Our students secured over BDT 2 crore in scholarships.',bg:'#C9F5E4',h:180},
-  {id:4,icon:'📚',title:'IELTS Intensive Workshop',cat:'workshop',desc:'A 3-day intensive IELTS workshop. Average band improvement: 0.5–1.0.',bg:'#F5C9E4',h:300},
-  {id:5,icon:'🌏',title:'Australia Info Seminar',cat:'events',desc:'Direct interaction with Monash, ANU, and Melbourne university reps.',bg:'#E4F5C9',h:190},
-  {id:6,icon:'🎉',title:'100 Visa Approvals Milestone',cat:'success',desc:'Celebrating 100 consecutive student visa approvals.',bg:'#E4C9F5',h:240},
-  {id:7,icon:'🤝',title:'University Partner Meet',cat:'events',desc:'Annual meet with 30+ partner university representatives.',bg:'#F5F0C9',h:210},
-  {id:8,icon:'🖊️',title:'SOP Writing Masterclass',cat:'workshop',desc:'Expert-led workshop on crafting compelling Statements of Purpose.',bg:'#C9EEF5',h:270},
-  {id:9,icon:'👨‍👩‍👧',title:'UK Departure Batch 2024',cat:'departure',desc:'Students heading to London, Manchester, Birmingham, and Edinburgh.',bg:'#F5C9C9',h:200},
-];
+// ── NAVIGATION ──
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('act'));
+  document.querySelectorAll('.sb-item,.tn').forEach(s=>s.classList.remove('act'));
+  document.getElementById('page-'+id)?.classList.add('act');
+  document.getElementById('sb-'+id)?.classList.add('act');
+  // Update top nav
+  const navMap={overview:'Overview',screener:'Screener',candidates:'Candidates',jobs:'Jobs',analytics:'Analytics'};
+  document.querySelectorAll('.tn').forEach(t=>{if(t.textContent===navMap[id])t.classList.add('act');});
+  if(id==='analytics')renderAnalytics();
+  if(id==='pipeline')renderPipeline();
+  if(id==='audit')renderAudit();
+}
 
-const blogPosts=[
-  {id:1,icon:'🇬🇧',title:'How to Apply to UK Universities in 2025: The Complete Guide',cat:'UK Admission',date:'Dec 10, 2024',summary:'Everything Bangladeshi students need to know about the UCAS system, deadlines, and what UK universities look for.',bg:'#C9D9E8',content:'Applying to UK universities is one of the most rewarding yet complex processes for international students.\n\n[h3]Understanding the UCAS System[/h3]\nAll undergraduate applications go through UCAS. You can apply to up to 5 universities per cycle.\n\n[h3]Key Deadlines for 2025[/h3]\n[ul][li]Oxford & Cambridge: 15 October 2024[/li][li]All other universities: 31 January 2025[/li][li]Art & Design courses: 24 March 2025[/li][/ul]\n\n[h3]Entry Requirements[/h3]\nMost programs require strong HSC results with GPA 4.5+ and IELTS 6.5 overall.\n\n[h3]How Nexora Helps[/h3]\nOur UK specialists manage your entire UCAS application from start to offer letter.'},
-  {id:2,icon:'💰',title:'Top 10 Fully Funded Scholarships for Bangladeshi Students 2025',cat:'Scholarships',date:'Nov 22, 2024',summary:'Discover Chevening, Commonwealth, Erasmus+ and more fully funded opportunities.',bg:'#F0E6D4',content:'Studying abroad on a full scholarship is absolutely achievable for Bangladeshi students.\n\n[h3]1. Chevening Scholarship (UK)[/h3]\nThe UK government\'s flagship scholarship funds exceptional emerging leaders for a one-year Master\'s degree. Covers full tuition, living allowance, flights, and visa fees.\n\n[h3]2. Commonwealth Scholarship (UK)[/h3]\nCovers tuition, living costs, and return airfare for students from Commonwealth countries including Bangladesh.\n\n[h3]3. Erasmus+ Program (Europe)[/h3]\nMonthly stipends range from €500 to €1,000 depending on the destination country.\n\n[h3]How to Apply[/h3]\nOur scholarship counselors work with you 6–12 months before deadlines to craft compelling applications.'},
-  {id:3,icon:'📝',title:'Score 7+ in IELTS: Proven Strategies from Our Top Students',cat:'IELTS Tips',date:'Nov 5, 2024',summary:'Expert techniques for reading, listening, writing, and speaking from our certified trainers.',bg:'#C9F0E4',content:'Achieving band 7+ opens doors to top universities worldwide.\n\n[h3]Reading Strategy[/h3]\nDon\'t read the passage first. Skim for structure, then scan for answers.\n\n[h3]Writing Task 2[/h3]\n[ul][li]Always plan for 5 minutes before writing[/li][li]Use a clear 4-paragraph structure[/li][li]Aim for 280+ words[/li][/ul]\n\n[h3]Speaking Tips[/h3]\nNever give one-word answers. Always expand with reasons and examples.\n\n[h3]Join Our Classes[/h3]\nNexora\'s certified IELTS trainers achieve an average 0.5–1.0 band improvement within 8 weeks.'},
-  {id:4,icon:'🇨🇦',title:'Canada Student Visa: 2025 Updates & What You Must Know',cat:'Canada',date:'Oct 18, 2024',summary:'Recent changes to Canada\'s study permit policy and how it affects applications from Bangladesh.',bg:'#E8F0D4',content:'Canada recently introduced major changes to its international student policies.\n\n[h3]New Study Permit Cap[/h3]\nCanada introduced a cap on study permits starting 2024. Earlier applications are more critical than ever.\n\n[h3]Increased Financial Requirements[/h3]\nStudents must demonstrate CAD $20,635 in addition to first-year tuition fees.\n\n[h3]Provincial Attestation Letter[/h3]\nMost students now need a Provincial Attestation Letter before applying for a study permit.\n\n[h3]How Nexora Navigates This[/h3]\nOur Canada visa specialists stay updated on every policy change and guide you through the entire process.'},
-];
+// ── MODALS ──
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
 
-let selectedStars=5;
-let selectedGalEmoji='🎓';
-let currentFormStep=1;
-let testiList=[...document.querySelectorAll('.testi-card')].map((_,i)=>i);
+// ── HELPERS ──
+function gc(s){if(s>=80)return'#10b981';if(s>=60)return'#f59e0b';return'#f43f5e';}
+function tbcls(r){return{'STRONG HIRE':'b-green','HIRE':'b-green','MAYBE':'b-amber','REJECT':'b-red'}[r]||'b-amber';}
+function fmt(d){if(!d)return'—';try{return new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});}catch{return'—';}}
+function fmtTime(d){if(!d)return'—';try{const dt=new Date(d);return dt.toLocaleDateString('en-GB',{day:'numeric',month:'short'})+' '+dt.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});}catch{return'—';}}
+function isThisWeek(d){if(!d)return false;const now=new Date();const then=new Date(d);const diff=(now-then)/(1000*60*60*24);return diff<=7;}
 
-// ══ SCROLL EFFECTS ══
-window.addEventListener('scroll',()=>{
-  const prog=document.getElementById('scroll-progress');
-  const pct=(window.scrollY/(document.body.scrollHeight-window.innerHeight))*100;
-  prog.style.width=pct+'%';
-  const nav=document.getElementById('mainNav');
-  nav.classList.toggle('scrolled',window.scrollY>50);
-  const btt=document.getElementById('backToTop');
-  btt.classList.toggle('visible',window.scrollY>400);
+// ── CV SCREENER ──
+let sf=null;
+const dz=document.getElementById('drop-zone');
+if(dz){
+  dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('over');});
+  dz.addEventListener('dragleave',()=>dz.classList.remove('over'));
+  dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('over');const f=e.dataTransfer.files[0];if(f&&f.name.endsWith('.pdf'))setFile(f);});
+}
+const cvInput=document.getElementById('cv-input');
+if(cvInput)cvInput.addEventListener('change',e=>{if(e.target.files[0])setFile(e.target.files[0]);});
+const jdEl=document.getElementById('jd');
+if(jdEl)jdEl.addEventListener('input',function(){
+  const cnt=document.getElementById('jd-cnt');
+  if(cnt)cnt.textContent=this.value.length+' chars';
+  checkReady();
 });
 
-// ══ PAGE NAV ══
-function showPage(name){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
-  document.getElementById('page-'+name).classList.add('active');
-  document.getElementById('nav-'+name).classList.add('active');
-  window.scrollTo({top:0,behavior:'smooth'});
-  if(name==='blog'){renderBlog(); closeBlogArticle();}
-  if(name==='gallery'){renderGallery();}
-  if(name==='home'){startCounters();}
+function setFile(f){
+  sf=f;
+  const fp=document.getElementById('file-preview');
+  if(!fp){checkReady();return;}
+  fp.innerHTML=
+    `<div style="display:flex;align-items:center;gap:8px;padding:7px 9px;background:var(--s2);border:1px solid var(--border);border-radius:var(--rs);font-size:11px">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--indigo)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      <span style="flex:1;color:var(--t2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${f.name}</span>
+      <span style="color:var(--t3)">${(f.size/1024).toFixed(0)}KB</span>
+      <button onclick="clearFile()" style="background:none;border:none;color:var(--t3);cursor:pointer;font-size:13px;padding:0">✕</button>
+    </div>`;
+  dz.style.display='none';checkReady();
 }
 
-// ══ HAMBURGER ══
-function toggleMenu(){
-  const m=document.getElementById('mobileMenu');
-  const h=document.getElementById('hamburger');
-  m.classList.toggle('open');
-  const spans=h.querySelectorAll('span');
-  if(m.classList.contains('open')){
-    spans[0].style.transform='rotate(45deg) translate(5px,5px)';
-    spans[1].style.opacity='0';
-    spans[2].style.transform='rotate(-45deg) translate(5px,-5px)';
-  } else {
-    spans.forEach(s=>{s.style.transform='';s.style.opacity='';});
+function clearFile(){sf=null;const fp=document.getElementById('file-preview');if(fp)fp.innerHTML='';const ci=document.getElementById('cv-input');if(ci)ci.value='';if(dz)dz.style.display='';checkReady();}
+function checkReady(){const btn=document.getElementById('screen-btn');const jd=document.getElementById('jd');if(btn&&jd)btn.disabled=!(sf&&jd.value.trim().length>=50);}
+
+function setStep(n){for(let i=1;i<=4;i++){const el=document.getElementById('step'+i);el.classList.remove('act','done');if(i<n)el.classList.add('done');else if(i===n)el.classList.add('act');}}
+
+function fillJdFromJob(){
+  const sel=document.getElementById('jd-job-select');
+  const jobId=sel.value;
+  if(!jobId)return;
+  const job=allJobs.find(j=>j._id===jobId);
+  if(job&&job.description){
+    document.getElementById('jd').value=job.description;
+    document.getElementById('jd-cnt').textContent=job.description.length+' chars';
+    checkReady();
   }
 }
 
-// ══ COUNTERS ══
-let countersStarted=false;
-function startCounters(){
-  if(countersStarted) return;
-  countersStarted=true;
-  document.querySelectorAll('.counter-num[data-target]').forEach(el=>{
-    const target=parseInt(el.dataset.target);
-    const suffix=el.dataset.suffix||'';
-    let current=0;
-    const step=Math.ceil(target/60);
-    const timer=setInterval(()=>{
-      current=Math.min(current+step,target);
-      el.textContent=current.toLocaleString()+suffix;
-      if(current>=target) clearInterval(timer);
-    },30);
-  });
-}
-setTimeout(startCounters,500);
-
-// ══ SERVICES ══
-function switchSvc(idx,el){
-  document.querySelectorAll('.svc-tab').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.svc-panel').forEach(p=>p.classList.remove('active'));
-  el.classList.add('active');
-  document.querySelectorAll('.svc-panel')[idx].classList.add('active');
-}
-
-// ══ GALLERY ══
-function renderGallery(filter='all'){
-  const el=document.getElementById('galleryMasonry');
-  const items=filter==='all'?galleryItems:galleryItems.filter(g=>g.cat===filter);
-  el.innerHTML=items.map(g=>`
-    <div class="gal-item" data-cat="${g.cat}" onclick="openLightbox('${g.icon}','${g.title.replace(/'/g,"\\'")}','${(g.desc||'').replace(/'/g,"\\'")}')">
-      <div class="gbg" style="background:${g.bg};height:${g.h}px">${g.icon}</div>
-      <div class="gover"><div class="gover-title">${g.title}</div><div class="gover-tag">${g.cat}</div></div>
-    </div>`).join('');
-}
-renderGallery();
-
-function filterGallery(cat,btn){
-  document.querySelectorAll('.gf-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  renderGallery(cat);
-}
-
-function setGalEmoji(e){
-  selectedGalEmoji=e;
-  const prev=document.getElementById('galEmojiPreview');
-  prev.textContent=e; prev.style.display='block';
-}
-function handlePhotoUpload(input){
-  if(input.files&&input.files[0]){
-    const reader=new FileReader();
-    reader.onload=e=>{
-      const prev=document.getElementById('galEmojiPreview');
-      prev.textContent='📷'; prev.style.display='block';
-      selectedGalEmoji='📷';
-    };
-    reader.readAsDataURL(input.files[0]);
+async function runScreen(){
+  const jd=document.getElementById('jd').value.trim();
+  const err=document.getElementById('screen-err');
+  err.style.display='none';
+  if(!sf||jd.length<50)return;
+  const btn=document.getElementById('screen-btn');
+  btn.disabled=true;btn.innerHTML='<div class="spin"></div> Analyzing CV...';
+  setStep(2);
+  const fd=new FormData();
+  fd.append('cv_file',sf);fd.append('job_description',jd);
+  const selJob=document.getElementById('jd-job-select')?.value||'';
+  const selJobTitle=document.getElementById('jd-job-select')?.options[document.getElementById('jd-job-select').selectedIndex]?.text||'';
+  if(selJob){fd.append('job_id',selJob);fd.append('job_title',selJobTitle.split(' (')[0]);}
+  try{
+    setStep(3);
+    const res=await fetch('/api/screen',{method:'POST',body:fd,credentials:'include'});
+    const data=await res.json();
+    if(!res.ok)throw new Error(data.detail||'Screening failed');
+    setStep(4);
+    currentCandId=data._id;
+    const r={...data,score:Math.round(data.overall_score||0),rec:(data.recommendation||'MAYBE').toUpperCase(),job_id:selJob||data.job_id,job_title:selJobTitle.split(' (')[0]||data.job_title};
+    allResults.unshift(r);filteredResults=allResults;
+    updateAll();
+    renderResultCard(data);
+    document.getElementById('screen-input').style.display='none';
+    document.getElementById('screen-result').style.display='block';
+    document.getElementById('view-detail-btn').onclick=()=>window.location.href='/candidate?id='+data._id;
+    addActivity('CV screened: '+(data.candidate_name||'Unknown')+' — Score '+Math.round(data.overall_score||0),'var(--indigo)');
+  }catch(e){
+    err.textContent=e.message;err.style.display='block';
+    btn.disabled=false;btn.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Screen this CV with AI';
+    setStep(1);
   }
 }
-function submitGalleryItem(){
-  const title=document.getElementById('gal-title').value.trim();
-  const cat=document.getElementById('gal-cat').value;
-  const desc=document.getElementById('gal-desc').value.trim();
-  if(!title){showNotification('Please enter a photo title.');return;}
-  const colors=['#C9E4F5','#F5E4C9','#C9F5E4','#F5C9E4','#E4F5C9','#E4C9F5'];
-  galleryItems.push({
-    id:Date.now(),icon:selectedGalEmoji,title,cat,desc,
-    bg:colors[Math.floor(Math.random()*colors.length)],
-    h:180+Math.floor(Math.random()*120)
-  });
-  document.getElementById('galleryModal').classList.remove('open');
-  document.getElementById('gal-title').value='';
-  document.getElementById('gal-desc').value='';
-  document.getElementById('galEmojiPreview').style.display='none';
-  renderGallery();
-  showNotification('✅ Photo added to gallery!');
-}
 
-// ══ LIGHTBOX ══
-function openLightbox(icon,title,desc){
-  document.getElementById('lbImg').textContent=icon;
-  document.getElementById('lbTitle').textContent=title;
-  document.getElementById('lbDesc').textContent=desc;
-  document.getElementById('lightbox').classList.add('open');
-}
-function closeLightbox(){document.getElementById('lightbox').classList.remove('open');}
-
-// ══ BLOG ══
-function renderBlog(){
-  const main=document.getElementById('blogMain');
-  const cats={};
-  blogPosts.forEach(b=>{cats[b.cat]=(cats[b.cat]||0)+1;});
-  document.getElementById('blogCats').innerHTML='<div style="display:flex;flex-direction:column;gap:10px;">'+
-    Object.entries(cats).map(([cat,count])=>`<div style="display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px solid var(--border);"><span>${cat}</span><span style="background:var(--cream);padding:2px 8px;border-radius:20px;font-size:11px;color:var(--gray);">${count}</span></div>`).join('')+'</div>';
-  const [first,...rest]=blogPosts;
-  main.innerHTML=`
-    <div class="featured-post" onclick="openBlogArticle(${first.id})">
-      <div class="fp-img" style="background:${first.bg}">${first.icon}</div>
-      <div class="fp-body"><div class="fp-tag">Featured · ${first.cat}</div><h2>${first.title}</h2><p>${first.summary}</p><div class="fp-meta"><span>📅 ${first.date}</span><span style="color:var(--gold3);font-weight:600;">Read now →</span></div></div>
+function renderResultCard(d){
+  const score=Math.round(d.overall_score||0);const col=gc(score);const rec=(d.recommendation||'MAYBE').toUpperCase();const cov=d.skills_coverage_pct||0;
+  document.getElementById('result-card').innerHTML=`
+    <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid var(--border)">
+      <div style="width:64px;height:64px;border-radius:50%;border:3px solid ${col}40;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0">
+        <span style="font-size:20px;font-weight:800;color:${col};letter-spacing:-1px">${score}</span>
+        <span style="font-size:9px;color:var(--t3)">/100</span>
+      </div>
+      <div style="flex:1">
+        <div style="font-size:17px;font-weight:800;margin-bottom:2px">${d.candidate_name||'Unknown Candidate'}</div>
+        <div style="font-size:12px;color:var(--t2);margin-bottom:6px">${d.current_title||'—'} · ${d.years_experience||'?'} yrs exp</div>
+        <div style="display:flex;gap:5px;flex-wrap:wrap">
+          <span class="badge ${tbcls(rec)}">${rec}</span>
+          <span class="badge b-indigo">${cov}% skills matched</span>
+          <span class="badge b-blue">${(d.score_consistency?.confidence||'High')} confidence</span>
+        </div>
+      </div>
     </div>
-    <div class="blog-grid-2">${rest.map((b,i)=>`
-      <div class="bp-card" onclick="openBlogArticle(${b.id})">
-        <div class="bp-img" style="background:${b.bg}">${b.icon}</div>
-        <div class="bp-body"><div class="bp-tag">${b.cat}</div><h3>${b.title}</h3><p>${b.summary}</p><div class="bp-meta"><span>${b.date}</span><span class="bp-read">Read →</span></div></div>
-      </div>`).join('')}</div>`;
-  const articlesEl=document.getElementById('blogArticles');
-  articlesEl.innerHTML=blogPosts.map(b=>`
-    <div class="blog-article" id="art-${b.id}">
-      <button class="back-btn" onclick="closeBlogArticle()">← Back to Blog</button>
-      <div class="article-tag">${b.cat}</div>
-      <h1 class="article-title">${b.title}</h1>
-      <div class="article-meta">By Nexora Team · ${b.date}</div>
-      <div class="article-body">${parseContent(b.content)}</div>
-    </div>`).join('');
+    <div style="font-size:12px;color:var(--t2);line-height:1.75;margin-bottom:1rem">${d.summary||''}</div>
+    <div class="dim-grid">
+      ${(d.dimensions||[]).slice(0,6).map(dim=>{const p=Math.round((dim.score/20)*100);const c=gc(p);
+        return`<div class="dim-card"><div class="dim-top" style="background:${c}"></div>
+          <div class="dim-name">${dim.name}</div>
+          <div class="dim-score" style="color:${c}">${dim.score.toFixed(1)}<span style="font-size:9px;opacity:.5;font-weight:400">/20</span></div>
+          <div class="dim-bar-bg"><div class="dim-bar-fill" style="width:${p}%;background:${c}"></div></div>
+          <div class="dim-fb">${(dim.feedback||'').slice(0,60)}${dim.feedback&&dim.feedback.length>60?'...':''}</div>
+        </div>`;}).join('')}
+    </div>`;
 }
-function parseContent(txt){
-  return (txt||'').replace(/\[h3\](.*?)\[\/h3\]/g,'<h3>$1</h3>').replace(/\[ul\]([\s\S]*?)\[\/ul\]/g,'<ul>$1</ul>').replace(/\[li\](.*?)\[\/li\]/g,'<li>$1</li>').split('\n').map(l=>l.trim()&&!l.startsWith('<')?`<p>${l}</p>`:l).join('');
-}
-function openBlogArticle(id){
-  document.getElementById('blogListWrap').style.display='none';
-  document.querySelectorAll('.blog-article').forEach(a=>a.classList.remove('open'));
-  const art=document.getElementById('art-'+id);
-  if(art) art.classList.add('open');
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-function closeBlogArticle(){
-  document.querySelectorAll('.blog-article').forEach(a=>a.classList.remove('open'));
-  document.getElementById('blogListWrap').style.display='';
-}
-renderBlog();
 
-// ══ MULTI-STEP FORM ══
-function nextStep(step){
-  if(step===1){
-    const name=document.getElementById('cf-name').value.trim();
-    const phone=document.getElementById('cf-phone').value.trim();
-    const email=document.getElementById('cf-email').value.trim();
-    if(!name||!phone||!email){showNotification('⚠️ Please fill in name, phone, and email.');return;}
-  }
-  const cur=document.getElementById('fstep-'+step);
-  const next=document.getElementById('fstep-'+(step+1));
-  if(!next) return;
-  cur.classList.remove('active');
-  next.classList.add('active');
-  document.getElementById('prog-'+step).classList.remove('active');
-  document.getElementById('prog-'+step).classList.add('done');
-  document.getElementById('prog-'+(step+1)).classList.add('active');
-  if(step+1===3) buildReview();
+function resetScreen(){
+  clearFile();document.getElementById('jd').value='';document.getElementById('jd-cnt').textContent='0 chars';
+  document.getElementById('screen-input').style.display='';document.getElementById('screen-result').style.display='none';
+  document.getElementById('screen-btn').innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Screen this CV with AI';
+  setStep(1);
 }
-function prevStep(step){
-  document.getElementById('fstep-'+step).classList.remove('active');
-  document.getElementById('fstep-'+(step-1)).classList.add('active');
-  document.getElementById('prog-'+step).classList.remove('active');
-  document.getElementById('prog-'+(step-1)).classList.remove('done');
-  document.getElementById('prog-'+(step-1)).classList.add('active');
+
+// ── CANDIDATES TABLE ──
+function renderCandidates(results){
+  const tbody=document.getElementById('cands-tbl');
+  if(!results||!results.length){tbody.innerHTML='<tr><td colspan="10" class="tbl-empty">No candidates match your filters</td></tr>';return;}
+  tbody.innerHTML=results.map(r=>{
+    const score=r.score||Math.round(r.overall_score||0);const col=gc(score);const rec=(r.rec||(r.recommendation||'MAYBE')).toUpperCase();
+    const matched=(r.dimensions||[]).flatMap(d=>d.matched_skills||[]).slice(0,3);
+    const missing=(r.critical_gaps||[]).slice(0,2);
+    const edu=r.parsed_cv?.education?.[0];
+    return`<tr>
+      <td><a class="tbl-link" href="/candidate?id=${r._id}">${r.candidate_name||'Unknown'}</a></td>
+      <td><span style="font-size:11px;font-weight:600;color:var(--t2)">${r.job_title||r.company||'—'}</span></td>
+      <td><div class="score-bar"><span class="score-num" style="color:${col}">${score}</span><div class="score-bar-bg"><div class="score-bar-fill" style="width:${score}%;background:${col}"></div></div></div></td>
+      <td>${matched.map(s=>`<span class="tag matched">${s}</span>`).join('')||'<span style="color:var(--t3);font-size:10px">—</span>'}</td>
+      <td>${missing.map(s=>`<span class="tag missing">${s}</span>`).join('')||'<span class="badge b-green" style="font-size:9px">None</span>'}</td>
+      <td style="font-size:11px">${r.years_experience||'?'} yrs</td>
+      <td style="font-size:10px;color:var(--t3)">${edu?(edu.degree||'')+(edu.field?' · '+edu.field:''):'—'}</td>
+      <td><span class="badge ${tbcls(rec)}">${rec}</span></td>
+      <td style="font-size:10px;color:var(--t3)">${fmt(r.created_at)}</td>
+      <td>
+        <div style="display:flex;gap:3px">
+          <button class="btn btn-xs btn-ghost" onclick="openCandModal('${r._id}')">View</button>
+          <button class="btn btn-xs" style="background:var(--gg);color:var(--green);border:1px solid var(--gb)" onclick="quickAction('${r._id}','shortlist')">✓</button>
+          <button class="btn btn-xs" style="background:var(--rg);color:#fda4af;border:1px solid var(--rb)" onclick="quickAction('${r._id}','reject')">✕</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
 }
-function buildReview(){
-  const r=document.getElementById('formReview');
-  r.innerHTML=`
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-      <div><strong>Name:</strong> ${document.getElementById('cf-name').value}</div>
-      <div><strong>Phone:</strong> ${document.getElementById('cf-phone').value}</div>
-      <div><strong>Email:</strong> ${document.getElementById('cf-email').value}</div>
-      <div><strong>Age:</strong> ${document.getElementById('cf-age').value||'—'}</div>
-      <div><strong>Destination:</strong> ${document.getElementById('cf-dest').value||'—'}</div>
-      <div><strong>Level:</strong> ${document.getElementById('cf-level').value||'—'}</div>
-      <div><strong>Service:</strong> ${document.getElementById('cf-service').value||'—'}</div>
-      <div><strong>Budget:</strong> ${document.getElementById('cf-budget').value||'—'}</div>
+
+// ── FILTERS ──
+function applyFilters(){
+  const q=(document.getElementById('f-search')?.value||'').toLowerCase();
+  const job=document.getElementById('f-job')?.value||'';
+  const dateFrom=document.getElementById('f-date-from')?.value||'';
+  const dateTo=document.getElementById('f-date-to')?.value||'';
+  const result=document.getElementById('f-result')?.value||'';
+  const scoreMin=parseInt(document.getElementById('f-score')?.value||'0')||0;
+  const expMin=parseInt(document.getElementById('f-exp')?.value||'-1');
+  const sort=document.getElementById('f-sort')?.value||'score';
+  const scoreMax=document.getElementById('f-score')?.value===''?999:(scoreMin===0?39:scoreMin===80?100:scoreMin===60?79:59);
+
+  let filtered=allResults.filter(r=>{
+    const score=r.score||Math.round(r.overall_score||0);
+    const rec=(r.rec||(r.recommendation||'MAYBE')).toUpperCase();
+    const exp=parseInt(r.years_experience)||0;
+    const matchQ=!q||(r.candidate_name||'').toLowerCase().includes(q)||(r.current_title||'').toLowerCase().includes(q)||((r.critical_gaps||[]).join(' ')).toLowerCase().includes(q)||((r.dimensions||[]).flatMap(d=>d.matched_skills||[]).join(' ')).toLowerCase().includes(q);
+    const matchJ=!job||(r.job_id===job)||(r.job_title===job)||(r.company===job);
+    const rDate=r.created_at?new Date(r.created_at):null;
+    const matchDF=!dateFrom||!rDate||(rDate>=new Date(dateFrom));
+    const matchDT=!dateTo||!rDate||(rDate<=new Date(dateTo+'T23:59:59'));
+    const matchR=!result||rec===result;
+    const matchS=document.getElementById('f-score')?.value===''||score<=scoreMax;
+    const matchE=expMin<0||(expMin===0?exp<=2:expMin===3?exp>=3&&exp<=5:exp>=6);
+    return matchQ&&matchJ&&matchR&&matchS&&matchE&&matchDF&&matchDT;
+  });
+
+  if(sort==='score')filtered.sort((a,b)=>(b.score||b.overall_score||0)-(a.score||a.overall_score||0));
+  else if(sort==='newest')filtered.sort((a,b)=>new Date(b.created_at||0)-new Date(a.created_at||0));
+  else if(sort==='exp')filtered.sort((a,b)=>(parseInt(b.years_experience)||0)-(parseInt(a.years_experience)||0));
+  else if(sort==='name')filtered.sort((a,b)=>(a.candidate_name||'').localeCompare(b.candidate_name||''));
+
+  filteredResults=filtered;
+  document.getElementById('filter-count').textContent=`Showing ${filtered.length} of ${allResults.length} candidates`;
+  renderCandidates(filtered);
+}
+
+function clearFilters(){
+  ['f-search','f-job','f-result','f-score','f-exp','f-date-from','f-date-to'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  document.getElementById('f-sort').value='score';
+  applyFilters();
+}
+
+function filterByStage(stage){
+  showPage('candidates');
+  const mapRec={strong:'STRONG HIRE',shortlisted:'HIRE',maybe:'MAYBE',rejected:'REJECT'};
+  if(mapRec[stage])document.getElementById('f-result').value=mapRec[stage];
+  else document.getElementById('f-result').value='';
+  applyFilters();
+}
+
+// ── CANDIDATE MODAL ──
+function openCandModal(id){
+  const r=allResults.find(x=>x._id===id);
+  if(!r)return;
+  currentCandId=id;
+  const score=r.score||Math.round(r.overall_score||0);const col=gc(score);const rec=(r.rec||(r.recommendation||'MAYBE')).toUpperCase();const cov=r.skills_coverage_pct||0;const sc=r.score_consistency||{};
+  document.getElementById('cand-modal-name').textContent=(r.candidate_name||'Candidate')+' — AI Report';
+  document.getElementById('open-full-report').onclick=()=>{window.location.href='/candidate?id='+id;};
+  document.getElementById('cand-modal-body').innerHTML=`
+    <div class="cand-detail-grid">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--border)">
+          <div style="width:52px;height:52px;border-radius:50%;border:2px solid ${col}50;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0">
+            <span style="font-size:17px;font-weight:800;color:${col}">${score}</span>
+            <span style="font-size:8px;color:var(--t3)">/100</span>
+          </div>
+          <div>
+            <div style="font-size:15px;font-weight:700;margin-bottom:2px">${r.candidate_name||'Unknown'}</div>
+            <div style="font-size:11px;color:var(--t2);margin-bottom:5px">${r.current_title||'—'} · ${r.years_experience||'?'} yrs</div>
+            <span class="badge ${tbcls(rec)}">${rec}</span>
+          </div>
+        </div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--t3);margin-bottom:5px">AI Summary</div>
+        <div style="font-size:12px;color:var(--t2);line-height:1.7;margin-bottom:10px">${r.summary||'—'}</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span style="font-size:10px;color:var(--t3);width:90px">Skills coverage</span>
+          <div style="flex:1;height:5px;background:var(--border2);border-radius:3px;overflow:hidden"><div style="height:100%;width:${cov}%;background:${gc(cov)};border-radius:3px"></div></div>
+          <span style="font-size:11px;font-weight:700;color:${gc(cov)}">${cov}%</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <span style="font-size:10px;color:var(--t3);width:90px">AI Confidence</span>
+          <span class="badge ${sc.confidence==='High'?'b-green':sc.confidence==='Medium'?'b-amber':'b-red'}">${sc.confidence||'High'}</span>
+          <span style="font-size:10px;color:var(--t3)">Run 1: ${sc.run_1||'—'} · Run 2: ${sc.run_2||'—'} · Δ${sc.difference||0}</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+          <div style="background:var(--gg);border:1px solid var(--gb);border-radius:var(--rs);padding:.6rem">
+            <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:var(--green);margin-bottom:4px">Key strengths</div>
+            ${(r.key_strengths||[]).slice(0,3).map(s=>`<div style="font-size:10px;color:var(--t2);padding:2px 0;display:flex;gap:5px"><span style="color:var(--green)">✓</span>${s}</div>`).join('')||'<div style="font-size:10px;color:var(--t3)">None identified</div>'}
+          </div>
+          <div style="background:var(--rg);border:1px solid var(--rb);border-radius:var(--rs);padding:.6rem">
+            <div style="font-size:9px;font-weight:700;text-transform:uppercase;color:var(--red);margin-bottom:4px">Critical gaps</div>
+            ${(r.critical_gaps||[]).slice(0,3).map(s=>`<div style="font-size:10px;color:var(--t2);padding:2px 0;display:flex;gap:5px"><span style="color:var(--red)">✗</span>${s}</div>`).join('')||'<div style="font-size:10px;color:var(--t3)">None identified</div>'}
+          </div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--t3);margin-bottom:6px">Score breakdown</div>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px">
+          ${(r.dimensions||[]).map(d=>{const p=Math.round((d.score/20)*100);const c=gc(p);return`
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px">
+                <span style="color:var(--t2)">${d.name}</span>
+                <span style="font-weight:700;color:${c}">${d.score.toFixed(1)}/20</span>
+              </div>
+              <div style="height:4px;background:var(--border2);border-radius:2px;overflow:hidden"><div style="height:100%;width:${p}%;background:${c};border-radius:2px"></div></div>
+            </div>`;}).join('')}
+        </div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--t3);margin-bottom:5px">Interview questions</div>
+        ${(r.interview_questions||[]).slice(0,3).map((q,i)=>`<div style="font-size:11px;color:var(--t2);padding:5px 0;border-bottom:1px solid var(--border);display:flex;gap:6px"><span style="color:var(--indigo);font-weight:700;flex-shrink:0">${i+1}.</span>${q}</div>`).join('')||'<div style="font-size:11px;color:var(--t3)">No questions generated</div>'}
+        ${r.hiring_risks&&r.hiring_risks.length?`
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--amber);margin-top:8px;margin-bottom:5px">⚠ Hiring risks</div>
+        ${r.hiring_risks.slice(0,2).map(risk=>`<div style="font-size:11px;color:var(--amber);padding:3px 0">${risk}</div>`).join('')}`:''}
+      </div>
     </div>
-    ${document.getElementById('cf-msg').value?`<div style="margin-top:10px;"><strong>Message:</strong> ${document.getElementById('cf-msg').value}</div>`:''}
-  `;
-}
-function submitForm(){
-  document.getElementById('formWrap').style.display='none';
-  document.getElementById('successMsg').classList.add('show');
-  showNotification('✅ Inquiry submitted! We\'ll contact you soon.');
-}
-function resetForm(){
-  currentFormStep=1;
-  ['cf-name','cf-phone','cf-email','cf-age','cf-msg'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
-  ['cf-dest','cf-level','cf-service','cf-budget'].forEach(id=>{const e=document.getElementById(id);if(e)e.selectedIndex=0;});
-  document.querySelectorAll('.form-step').forEach((s,i)=>s.classList.toggle('active',i===0));
-  document.querySelectorAll('.fp-step').forEach((s,i)=>{s.classList.toggle('active',i===0);s.classList.remove('done');});
-  document.getElementById('formWrap').style.display='';
-  document.getElementById('successMsg').classList.remove('show');
+    <div style="background:var(--s2);border:1px solid var(--border);border-radius:var(--rs);padding:8px 12px;font-size:10px;color:var(--t3);margin-top:8px">
+      <strong style="color:var(--t2)">Audit:</strong> Screened ${fmtTime(r.created_at)} · Confidence: ${(r.score_consistency?.confidence||'High')} · Variance: ${r.score_consistency?.difference||0} pts · 2 AI runs averaged
+    </div>`;
+  openModal('cand-modal');
 }
 
-// ══ TESTIMONIALS ══
-function setStars(n){
-  selectedStars=n;
-  document.querySelectorAll('#starSelect span').forEach((s,i)=>s.classList.toggle('active',i<n));
+function quickAction(id,action){
+  addActivity(`Candidate ${action==='shortlist'?'shortlisted':'rejected'}: `+(allResults.find(r=>r._id===id)?.candidate_name||'Unknown'),action==='shortlist'?'var(--green)':'var(--red)');
 }
-setStars(5);
-function submitTestimonial(){
-  const name=document.getElementById('tm-name').value.trim();
-  const dest=document.getElementById('tm-dest').value.trim();
-  const text=document.getElementById('tm-text').value.trim();
-  if(!name||!text){showNotification('⚠️ Please fill in name and review.');return;}
-  const initials=name.split(' ').map(n=>n[0]).join('').substring(0,2).toUpperCase();
-  const stars='★'.repeat(selectedStars)+'☆'.repeat(5-selectedStars);
-  const card=document.createElement('div');
-  card.className='testi-card';
-  card.innerHTML=`<div class="testi-quote">"</div><div class="testi-stars">${stars}</div><p class="testi-text">"${text}"</p><div class="testi-author"><div class="testi-avatar">${initials}</div><div><div class="testi-name">${name}</div><div class="testi-dest">${dest||'Nexora Student'}</div></div></div>`;
-  document.getElementById('testiGrid').appendChild(card);
-  document.getElementById('testiModal').classList.remove('open');
-  document.getElementById('tm-name').value='';
-  document.getElementById('tm-dest').value='';
-  document.getElementById('tm-text').value='';
-  showNotification('✅ Thank you for sharing your story!');
+function actionShortlist(){quickAction(currentCandId,'shortlist');closeModal('cand-modal');}
+function actionReject(){quickAction(currentCandId,'reject');closeModal('cand-modal');}
+function actionInterview(){addActivity('Moved to interview: '+(allResults.find(r=>r._id===currentCandId)?.candidate_name||'Unknown'),'var(--orange)');closeModal('cand-modal');}
+
+// ── OVERVIEW ──
+function renderOverview(){
+  const total=allResults.length;
+  const shortlisted=allResults.filter(r=>(r.rec||r.recommendation||'').toUpperCase()==='STRONG HIRE'||(r.rec||r.recommendation||'').toUpperCase()==='HIRE').length;
+  const maybe=allResults.filter(r=>(r.rec||r.recommendation||'').toUpperCase()==='MAYBE').length;
+  const rejected=allResults.filter(r=>(r.rec||r.recommendation||'').toUpperCase()==='REJECT').length;
+  const avg=total?Math.round(allResults.reduce((a,r)=>a+(r.score||r.overall_score||0),0)/total):0;
+  const thisWeek=allResults.filter(r=>isThisWeek(r.created_at)).length;
+
+  document.getElementById('ov-total').textContent=total;
+  document.getElementById('ov-shortlisted').textContent=shortlisted;
+  document.getElementById('ov-maybe').textContent=maybe;
+  document.getElementById('ov-rejected').textContent=rejected;
+  document.getElementById('ov-avg').textContent=total?avg:'—';
+  document.getElementById('ov-jobs').textContent=allJobs.length;
+  document.getElementById('ov-week').textContent=thisWeek;
+
+  // Funnel
+  document.getElementById('fn-all').textContent=total;
+  document.getElementById('fn-screened').textContent=total;
+  document.getElementById('fn-strong').textContent=allResults.filter(r=>(r.score||r.overall_score||0)>=80).length;
+  document.getElementById('fn-maybe').textContent=maybe;
+  document.getElementById('fn-interview').textContent=allResults.filter(r=>(r.rec||r.recommendation||'').toUpperCase()==='STRONG HIRE').length;
+  document.getElementById('fn-shortlisted').textContent=shortlisted;
+  document.getElementById('fn-rejected').textContent=rejected;
+  document.getElementById('fn-hired').textContent=0;
+
+  // Recent applicants
+  const recent=allResults.slice(0,6);
+  document.getElementById('ov-recent-tbl').innerHTML=recent.length
+    ?recent.map(r=>{const score=r.score||Math.round(r.overall_score||0);const rec=(r.rec||(r.recommendation||'MAYBE')).toUpperCase();return`<tr onclick="openCandModal('${r._id}')">
+        <td><span class="tbl-link">${r.candidate_name||'Unknown'}</span><div style="font-size:10px;color:var(--t3)">${r.current_title||'—'}</div></td>
+        <td style="font-weight:700;color:${gc(score)}">${score}</td>
+        <td style="font-size:10px">${r.skills_coverage_pct||0}%</td>
+        <td><span class="badge ${tbcls(rec)}">${rec}</span></td>
+        <td><button class="btn btn-xs btn-ghost" onclick="event.stopPropagation();openCandModal('${r._id}')">View</button></td>
+      </tr>`;}).join('')
+    :'<tr><td colspan="5" class="tbl-empty">No candidates yet</td></tr>';
+
+  // Jobs performance
+  document.getElementById('jobs-perf-list').innerHTML=allJobs.length
+    ?allJobs.map(j=>{
+        const related=allResults.filter(r=>r.job_id===j._id||r.job_title===j.title||r.company===j.title);
+        const avgS=related.length?Math.round(related.reduce((a,r)=>a+(r.score||r.overall_score||0),0)/related.length):0;
+        const shl=related.filter(r=>(r.rec||r.recommendation||'').toUpperCase()==='STRONG HIRE'||(r.rec||r.recommendation||'').toUpperCase()==='HIRE').length;
+        return`<div style="padding:8px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+          <div><div style="font-size:12px;font-weight:600;color:var(--text)">${j.title}</div><div style="font-size:10px;color:var(--t3)">${related.length} applicants · ${shl} shortlisted</div></div>
+          <div style="text-align:right"><div style="font-size:14px;font-weight:700;color:${avgS>=70?'var(--green)':avgS>=50?'var(--amber)':'var(--red)'}">${avgS||'—'}</div><div style="font-size:9px;color:var(--t3)">avg score</div></div>
+        </div>`;}).join('')
+    :'<p style="color:var(--t3);font-size:12px;text-align:center;padding:1rem">No jobs posted yet</p>';
 }
 
-// ══ NOTIFICATION ══
-function showNotification(msg){
-  const n=document.getElementById('notification');
-  n.textContent=msg;
-  n.classList.add('show');
-  setTimeout(()=>n.classList.remove('show'),3500);
+// ── PIPELINE ──
+function renderPipeline(){
+  const seen=new Set();const unique=[];
+  [...allResults].sort((a,b)=>new Date(b.created_at||0)-new Date(a.created_at||0)).forEach(r=>{
+    const key=(r.candidate_name||'unknown').toLowerCase().trim();
+    if(!seen.has(key)){seen.add(key);unique.push(r);}
+  });
+  const cols=[[],[],[],[]];
+  unique.forEach(r=>{
+    const rec=(r.rec||(r.recommendation||'MAYBE')).toUpperCase();
+    if(rec==='STRONG HIRE')cols[1].push(r);
+    else if(rec==='HIRE')cols[0].push(r);
+    else if(rec==='MAYBE')cols[0].push(r);
+    else cols[3].push(r);
+  });
+  cols.forEach(col=>col.sort((a,b)=>(b.score||b.overall_score||0)-(a.score||a.overall_score||0)));
+  const badgeCls=['b-indigo','b-amber','b-orange','b-red'];
+  for(let i=0;i<4;i++){
+    document.getElementById('kb-cnt-'+i).textContent=cols[i].length;
+    document.getElementById('kb-'+i).innerHTML=cols[i].length
+      ?cols[i].map(r=>{const score=r.score||Math.round(r.overall_score||0);const rec=(r.rec||(r.recommendation||'MAYBE')).toUpperCase();const c=gc(score);
+        return`<div onclick="openCandModal('${r._id}')" style="background:var(--s2);border:1px solid var(--border);border-radius:var(--rs);padding:.65rem;cursor:pointer;transition:all .12s" onmouseover="this.style.borderColor='var(--indigo)'" onmouseout="this.style.borderColor='var(--border)'">
+          <div style="font-size:12px;font-weight:600;color:var(--text);margin-bottom:2px">${r.candidate_name||'Unknown'}</div>
+          <div style="font-size:10px;color:var(--t3);margin-bottom:5px">${r.current_title||'—'}</div>
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <span style="font-size:13px;font-weight:700;color:${c}">${score}/100</span>
+            <span class="badge ${tbcls(rec)}" style="font-size:9px">${rec}</span>
+          </div>
+        </div>`;}).join('')
+      :`<div style="color:var(--t3);font-size:11px;text-align:center;padding:1.5rem">Empty</div>`;
+  }
+  const removed=allResults.length-unique.length;
+  if(removed>0)document.getElementById('pipeline-notice').textContent=removed+' duplicate'+(removed>1?'s':'')+' hidden';
 }
 
-// ══ COOKIE BANNER ══
-if(!localStorage.getItem('nx_cookies')){
-  setTimeout(()=>document.getElementById('cookieBanner').classList.add('show'),2000);
+// ── JOBS ──
+function renderJobs(){
+  const tbody=document.getElementById('jobs-tbl');
+  const sel=document.getElementById('jd-job-select');
+  if(sel){sel.innerHTML='<option value="">— Select job or paste below —</option>';allJobs.forEach(j=>{const o=document.createElement('option');o.value=j._id;o.textContent=j.title;sel.appendChild(o);});}
+  document.getElementById('sb-job-cnt').textContent=allJobs.length;
+  tbody.innerHTML=allJobs.length
+    ?allJobs.map(j=>{
+        const statusCls={'active':'b-green','paused':'b-amber','closed':'b-red'}[j.status||'active']||'b-green';
+        const related=allResults.filter(r=>r.job_id===j._id||r.job_title===j.title||r.company===j.title);
+        const avgS=related.length?Math.round(related.reduce((a,r)=>a+(r.score||r.overall_score||0),0)/related.length):0;
+        const shl=related.filter(r=>(r.rec||r.recommendation||'').toUpperCase()==='STRONG HIRE'||(r.rec||r.recommendation||'').toUpperCase()==='HIRE').length;
+        const hi=related.length?Math.max(...related.map(r=>r.score||r.overall_score||0)):0;
+        const lo=related.length?Math.min(...related.map(r=>r.score||r.overall_score||0)):0;
+        return`<tr>
+          <td style="font-weight:600;color:var(--text)">${j.title}</td>
+          <td>${j.dept||'—'}</td><td>${j.loc||'—'}</td><td>${j.type||'Full-time'}</td>
+          <td style="font-weight:600;color:var(--indigo)">${related.length}</td>
+          <td style="font-weight:600;color:${gc(avgS)}">${avgS||'—'}</td>
+          <td><span class="badge b-green">${shl}</span></td>
+          <td><span class="badge ${statusCls}">${j.status||'active'}</span></td>
+          <td>
+            <div style="display:flex;gap:3px">
+              <button class="btn btn-xs btn-ghost" onclick="editJob('${j._id}')">Edit</button>
+              <button class="btn btn-xs btn-red" onclick="deleteJob('${j._id}')">Delete</button>
+            </div>
+          </td>
+        </tr>`;}).join('')
+    :'<tr><td colspan="9" class="tbl-empty">No jobs yet — create your first job posting to organize screenings</td></tr>';
 }
-function acceptCookies(){
-  localStorage.setItem('nx_cookies','1');
-  document.getElementById('cookieBanner').classList.remove('show');
+
+function openModal(id){document.getElementById(id).classList.add('open');}
+
+// Track which job is being edited. null = creating a new one.
+let editingJobId=null;
+
+function openJobModal(){
+  // Fresh "Create" flow — reset state + clear form
+  editingJobId=null;
+  document.getElementById('job-modal-title').textContent='Create job posting';
+  ['j-title','j-dept','j-loc','j-skills','j-desc','j-exp'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.value='';
+  });
+  const typeEl=document.getElementById('j-type');       if(typeEl)   typeEl.selectedIndex=0;
+  const statusEl=document.getElementById('j-status');   if(statusEl) statusEl.value='active';
+  openModal('job-modal');
 }
+
+async function editJob(id){
+  // Pre-populate modal with the existing job's data, then open in "edit" mode
+  editingJobId=id;
+  document.getElementById('job-modal-title').textContent='Edit job posting';
+  try{
+    const res=await fetch('/api/jobs/'+id+'/details',{credentials:'include'});
+    if(!res.ok)throw new Error('Could not load job');
+    const j=await res.json();
+    document.getElementById('j-title').value   = j.title||'';
+    document.getElementById('j-dept').value    = j.department||'';
+    document.getElementById('j-loc').value     = j.location||'';
+    document.getElementById('j-skills').value  = Array.isArray(j.skills)?j.skills.join(', '):(j.skills||'');
+    document.getElementById('j-desc').value    = j.description||'';
+    document.getElementById('j-exp').value     = j.min_experience||'';
+    const typeEl=document.getElementById('j-type');
+    if(typeEl&&j.employment_type){
+      [...typeEl.options].forEach((o,i)=>{ if(o.value===j.employment_type||o.text===j.employment_type) typeEl.selectedIndex=i; });
+    }
+    const statusEl=document.getElementById('j-status');
+    if(statusEl&&j.status) statusEl.value=j.status;
+    openModal('job-modal');
+  }catch(e){alert('Failed to load job: '+e.message);}
+}
+
+async function saveJob(){
+  const title=document.getElementById('j-title').value.trim();
+  if(!title){alert('Please enter a job title');return;}
+  const desc=document.getElementById('j-desc').value;
+  const fd=new FormData();
+  fd.append('title',title);
+  fd.append('department',document.getElementById('j-dept').value);
+  fd.append('location',document.getElementById('j-loc').value);
+  fd.append('employment_type',document.getElementById('j-type').value);
+  fd.append('skills',document.getElementById('j-skills').value);
+  fd.append('description',desc);
+  fd.append('min_experience',document.getElementById('j-exp').value||'');
+  fd.append('status',document.getElementById('j-status').value||'active');
+  try{
+    let res, data;
+    if(editingJobId){
+      // UPDATE existing job
+      res=await fetch('/api/jobs/'+editingJobId,{method:'PUT',body:fd,credentials:'include'});
+      if(!res.ok){data=await res.json().catch(()=>({}));throw new Error(data.detail||'Failed to update');}
+      // Update the local cache
+      const idx=allJobs.findIndex(j=>j._id===editingJobId);
+      if(idx>=0){
+        allJobs[idx]={...allJobs[idx],
+          title,
+          dept:document.getElementById('j-dept').value,
+          loc:document.getElementById('j-loc').value,
+          type:document.getElementById('j-type').value,
+          description:desc,
+          status:document.getElementById('j-status').value||'active'};
+      }
+      addActivity('Job updated: '+title,'var(--indigo)');
+    } else {
+      // CREATE new job
+      res=await fetch('/api/jobs',{method:'POST',body:fd,credentials:'include'});
+      data=await res.json();
+      if(!res.ok)throw new Error(data.detail||'Failed');
+      allJobs.unshift({title,dept:data.department,loc:data.location,type:data.employment_type,status:'active',description:desc,_id:data._id});
+      addActivity('Job posted: '+title,'var(--orange)');
+    }
+    closeModal('job-modal');renderJobs();renderOverview();
+    editingJobId=null;
+    ['j-title','j-dept','j-loc','j-skills','j-desc','j-exp'].forEach(id=>document.getElementById(id).value='');
+  }catch(e){alert('Failed: '+e.message);}
+}
+async function deleteJob(id){
+  if(!confirm('Delete this job?'))return;
+  await fetch('/api/jobs/'+id,{method:'DELETE',credentials:'include'});
+  allJobs=allJobs.filter(j=>j._id!==id);renderJobs();renderOverview();
+}
+
+// ── ANALYTICS ──
+function renderAnalytics(){
+  const total=allResults.length;
+  const avg=total?Math.round(allResults.reduce((a,r)=>a+(r.score||r.overall_score||0),0)/total):0;
+  const shl=allResults.filter(r=>(r.rec||r.recommendation||'').toUpperCase()==='STRONG HIRE'||(r.rec||r.recommendation||'').toUpperCase()==='HIRE').length;
+  document.getElementById('an-total').textContent=total;
+  document.getElementById('an-avg').textContent=total?avg:'—';
+  document.getElementById('an-rate').textContent=total?Math.round(shl/total*100)+'%':'—';
+  document.getElementById('an-time').textContent=total?(total*8)+'h':'—';
+
+  // Score distribution chart
+  if(scoreChart)scoreChart.destroy();
+  const ctx=document.getElementById('score-chart').getContext('2d');
+  const bins=[0,0,0,0,0];
+  allResults.forEach(r=>{const s=r.score||r.overall_score||0;const b=Math.min(4,Math.floor(s/20));bins[b]++;});
+  scoreChart=new Chart(ctx,{type:'bar',data:{labels:['0–20','21–40','41–60','61–80','81–100'],datasets:[{data:bins,backgroundColor:['#f43f5e','#f43f5e','#f59e0b','#10b981','#10b981'],borderRadius:5,borderSkipped:false}]},options:{plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#4a5570',font:{size:10}}},y:{grid:{color:'rgba(255,255,255,.04)'},ticks:{color:'#4a5570',font:{size:10},stepSize:1}}}}});
+
+  // Gaps chart
+  const gaps={};
+  allResults.forEach(r=>(r.critical_gaps||[]).forEach(g=>{gaps[g]=(gaps[g]||0)+1;}));
+  const topGaps=Object.entries(gaps).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  const maxG=topGaps[0]?.[1]||1;
+  document.getElementById('gaps-chart').innerHTML=topGaps.length
+    ?topGaps.map(([k,v])=>`<div style="display:flex;align-items:center;gap:7px;margin-bottom:5px">
+        <span style="font-size:11px;color:var(--t2);width:110px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${k}</span>
+        <div style="flex:1;height:5px;background:var(--border2);border-radius:3px;overflow:hidden"><div style="height:100%;width:${Math.round(v/maxG*100)}%;background:var(--red);border-radius:3px"></div></div>
+        <span style="font-size:10px;font-weight:700;color:var(--t3);width:18px;text-align:right">${v}</span>
+      </div>`).join('')
+    :'<p style="color:var(--t3);font-size:12px">No data yet</p>';
+
+  // Dims chart
+  const dims={};const dimCnt={};
+  allResults.forEach(r=>(r.dimensions||[]).forEach(d=>{dims[d.name]=(dims[d.name]||0)+d.score;dimCnt[d.name]=(dimCnt[d.name]||0)+1;}));
+  const dimList=Object.entries(dims).map(([k,v])=>([k,v/dimCnt[k]])).sort((a,b)=>b[1]-a[1]);
+  document.getElementById('dims-chart').innerHTML=dimList.length
+    ?dimList.map(([k,v])=>`<div style="display:flex;align-items:center;gap:7px;margin-bottom:5px">
+        <span style="font-size:11px;color:var(--t2);width:110px;flex-shrink:0">${k}</span>
+        <div style="flex:1;height:5px;background:var(--border2);border-radius:3px;overflow:hidden"><div style="height:100%;width:${Math.round(v/20*100)}%;background:${gc(v/20*100)};border-radius:3px"></div></div>
+        <span style="font-size:10px;font-weight:700;color:var(--t3);width:28px;text-align:right">${v.toFixed(1)}</span>
+      </div>`).join('')
+    :'<p style="color:var(--t3);font-size:12px">No data yet</p>';
+
+  // AI insights
+  const insights=[];
+  if(total>0){
+    insights.push({icon:'🎯',txt:`Average match score is <strong style="color:${gc(avg)}">${avg}/100</strong> across ${total} candidates`});
+    if(topGaps[0])insights.push({icon:'❌',txt:`Most common missing skill: <strong>${topGaps[0][0]}</strong> (missing in ${topGaps[0][1]} CVs)`});
+    const strongRate=Math.round(shl/total*100);
+    insights.push({icon:`${strongRate>30?'✅':'⚠️'}`,txt:`<strong>${strongRate}%</strong> of candidates are shortlisted — ${strongRate>30?'good quality pool':'consider widening your search'}`});
+    insights.push({icon:'⏱',txt:`Estimated time saved: <strong style="color:var(--green)">${total*8} hours</strong> vs manual screening`});
+    const highScore=allResults.filter(r=>(r.score||r.overall_score||0)>=80).length;
+    if(highScore>0)insights.push({icon:'⭐',txt:`<strong>${highScore} candidate${highScore>1?'s':''}</strong> scored 80+ and are strong hire recommendations`});
+  }
+  document.getElementById('insights-list').innerHTML=insights.length
+    ?insights.map(i=>`<div style="display:flex;gap:8px;padding:7px 0;border-bottom:1px solid var(--border)"><span style="font-size:14px;flex-shrink:0">${i.icon}</span><div style="font-size:12px;color:var(--t2);line-height:1.5">${i.txt}</div></div>`).join('')
+    :'<div style="font-size:12px;color:var(--t3)">Screen more CVs to unlock AI insights</div>';
+}
+
+// ── AUDIT TRAIL ──
+function renderAudit(){
+  document.getElementById('audit-tbl').innerHTML=allResults.length
+    ?allResults.map(r=>{const sc=r.score_consistency||{};const score=r.score||Math.round(r.overall_score||0);const rec=(r.rec||(r.recommendation||'MAYBE')).toUpperCase();return`<tr>
+        <td><a class="tbl-link" href="/candidate?id=${r._id}">${r.candidate_name||'Unknown'}</a></td>
+        <td style="font-size:10px">${fmtTime(r.created_at)}</td>
+        <td><span class="badge ${sc.confidence==='High'?'b-green':sc.confidence==='Medium'?'b-amber':'b-red'}">${sc.confidence||'High'}</span></td>
+        <td style="font-size:11px">${sc.run_1||'—'}</td>
+        <td style="font-size:11px">${sc.run_2||'—'}</td>
+        <td style="font-size:11px;color:${(sc.difference||0)>10?'var(--amber)':'var(--t3)'}">${sc.difference||0} pts</td>
+        <td style="font-weight:700;color:${gc(score)}">${score}</td>
+        <td><span class="badge ${tbcls(rec)}">${rec}</span></td>
+        <td style="font-size:10px;color:var(--t3)">v1 · standard</td>
+      </tr>`;}).join('')
+    :'<tr><td colspan="9" class="tbl-empty">No screenings yet</td></tr>';
+}
+
+// ── ACTIVITY LOG ──
+const activityItems=[];
+function addActivity(txt,color){
+  activityItems.unshift({txt,color,time:new Date()});
+  renderActivity();
+}
+function renderActivity(){
+  document.getElementById('activity-log').innerHTML=activityItems.slice(0,8).map(a=>`
+    <div class="activity-item">
+      <div class="activity-dot" style="background:${a.color}"></div>
+      <div class="activity-txt">${a.txt}</div>
+      <div class="activity-time">${a.time.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})}</div>
+    </div>`).join('')||'<p style="color:var(--t3);font-size:12px;padding:.5rem 0">No recent activity</p>';
+}
+
+// ── EXPORT ──
+function exportCandidates(){
+  const h=['Name','Title','Score','Skills%','Recommendation','Experience','Date'];
+  const rows=(filteredResults.length?filteredResults:allResults).map(r=>[r.candidate_name,r.current_title,r.score||r.overall_score,r.skills_coverage_pct,r.recommendation,r.years_experience,fmt(r.created_at)]);
+  const csv=[h,...rows].map(r=>r.map(v=>'"'+(v||'')+'"').join(',')).join('\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='topcandidate-candidates.csv';a.click();
+}
+function exportAll(){exportCandidates();}
+
+// ── AUTH & LOAD ──
+async function logout(){await fetch('/api/auth/logout',{method:'POST',credentials:'include'});window.location.href='/login';}
+
+function updateAll(){
+  document.getElementById('sb-cand-cnt').textContent=allResults.length;
+  filteredResults=allResults;
+  renderOverview();
+  renderCandidates(allResults);
+  renderJobs();
+  applyFilters();
+}
+
+async function loadFromDB(){
+  try{
+    // Fetch individually so one failure doesn't break everything
+    const meRes=await fetch('/api/auth/me',{credentials:'include'});
+    if(meRes.status===401){window.location.href='/login';return;}
+    const me=await meRes.json();
+
+    // Fetch screenings, jobs in parallel - don't let stats failure block
+    const [screenRes,jobsRes]=await Promise.all([
+      fetch('/api/screenings?limit=500',{credentials:'include'}),
+      fetch('/api/jobs',{credentials:'include'}),
+    ]);
+    let screenData={screenings:[]},jobsData={jobs:[]};
+    try{
+      const st=screenRes.headers.get('content-type')||'';
+      if(screenRes.ok&&st.includes('application/json'))screenData=await screenRes.json();
+      else if(screenRes.status===401){window.location.href='/login';return;}
+      else console.warn('[SCREEN] bad response:',screenRes.status,await screenRes.text().then(t=>t.slice(0,100)));
+    }catch(e){console.warn('[SCREEN] parse error:',e.message);}
+    try{
+      const jt=jobsRes.headers.get('content-type')||'';
+      if(jobsRes.ok&&jt.includes('application/json'))jobsData=await jobsRes.json();
+    }catch(e){console.warn('[JOBS] parse error:',e.message);}
+    console.log('[DEBUG] screenings:',screenData.screenings?.length,'role:',me.role,'email:',me.email);
+
+    document.getElementById('t-avatar').textContent=(me.company||'TC').slice(0,2).toUpperCase();
+    const planName=(me.plan||'trial').charAt(0).toUpperCase()+(me.plan||'trial').slice(1);
+    document.getElementById('t-plan').textContent=planName;
+    document.getElementById('sb-company').textContent=me.company||'';
+    // Update usage bar
+    const planLimits={trial:10,starter:100,pro:500,enterprise:9999};
+    const limit=planLimits[me.plan||'trial']||10;
+    const used=me.screening_count||0;
+    const pct=Math.min(100,Math.round(used/limit*100));
+    const remaining=Math.max(0,limit-used);
+    const bar=document.getElementById('t-usage-bar');
+    const txt=document.getElementById('t-usage-text');
+    if(bar)bar.style.width=pct+'%';
+    if(bar)bar.style.background=pct>=90?'var(--red)':pct>=70?'var(--amber)':'var(--indigo)';
+    if(txt)txt.textContent=used+'/'+limit;
+    if(txt)txt.style.color=pct>=90?'var(--red)':pct>=70?'var(--amber)':'var(--t2)';
+    // Show upgrade prompt if near limit
+    if(remaining<=2&&remaining>0){
+      const wrap=document.getElementById('t-usage-wrap');
+      if(wrap)wrap.title='Only '+remaining+' screenings left! Click to upgrade.';
+    }
+
+    // Process data
+    allJobs=(jobsData.jobs||[]).map(j=>({...j,dept:j.department,loc:j.location,type:j.employment_type,status:j.status||'active'}));
+    allResults=(screenData.screenings||[]).map(r=>({...r,score:Math.round(r.overall_score||0),rec:(r.recommendation||'MAYBE').toUpperCase()}));
+
+    // Populate job filter safely
+    try{
+      const fJob=document.getElementById('f-job');
+      if(fJob){
+        fJob.innerHTML='<option value="">All jobs</option>';
+        allJobs.forEach(j=>{
+          const o=document.createElement('option');
+          o.value=j._id;
+          o.textContent=j.title+(j.dept?' ('+j.dept+')':'');
+          fJob.appendChild(o);
+        });
+        const jobTitles=[...new Set(allResults.map(r=>r.job_title).filter(Boolean))];
+        const existingTitles=allJobs.map(j=>j.title);
+        jobTitles.filter(t=>!existingTitles.includes(t)).forEach(t=>{
+          const o=document.createElement('option');o.value=t;o.textContent=t+' (unlinked)';fJob.appendChild(o);
+        });
+      }
+    }catch(e){console.warn('[JOBS FILTER]',e);}
+
+    console.log('[FINAL] allResults.length=',allResults.length,'role=',me.role,'user_id=',me.user_id);
+    updateAll();
+    addActivity('Dashboard loaded — '+allResults.length+' candidates','var(--indigo)');
+    fixCountOnLoad();
+    // Show debug info on screen if 0 results
+    if(allResults.length===0){
+      const dbg=document.createElement('div');
+      dbg.style.cssText='position:fixed;bottom:10px;right:10px;background:#1e2333;border:1px solid #5b5ef4;border-radius:8px;padding:12px 16px;font-size:11px;color:#8b95b0;z-index:9999;max-width:400px';
+      dbg.innerHTML='<strong style="color:#a5b4fc">Debug info</strong><br>Email: '+me.email+'<br>Role: '+me.role+'<br>User ID: '+me.user_id+'<br>Screenings from API: '+(screenData.screenings?.length||0)+'<br><button onclick="fetch(\'/api/screenings?limit=3\',{credentials:\'include\'}).then(r=>r.text()).then(t=>alert(t.slice(0,500)))" style="margin-top:6px;padding:3px 8px;background:#5b5ef4;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:11px">Test API</button>';
+      document.body.appendChild(dbg);
+    }
+  }catch(e){console.error('[DB]',e);}
+}
+
+loadFromDB();
 </script>
 </body>
 </html>
